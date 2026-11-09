@@ -136,7 +136,13 @@ namespace Aiursoft.Nupkg.Core.Extensions
             services.TryAddTransient<ISearchService>(provider => provider.GetRequiredService<DatabaseSearchService>());
         }
 
-        private static HttpClient HttpClientFactory(IServiceProvider provider)
+        // Keep the upstream client's decompression, timeout and User-Agent independent of
+        // Template's default HttpClient registration.
+        private sealed class UpstreamHttpClient(HttpMessageHandler handler) : HttpClient(handler)
+        {
+        }
+
+        private static UpstreamHttpClient HttpClientFactory(IServiceProvider provider)
         {
             var options = provider.GetRequiredService<IOptions<MirrorOptions>>().Value;
 
@@ -144,7 +150,7 @@ namespace Aiursoft.Nupkg.Core.Extensions
             var assemblyName = assembly?.GetName().Name ?? "Unknown";
             var assemblyVersion = assembly?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "0.0.0";
 
-            var client = new HttpClient(new HttpClientHandler
+            var client = new UpstreamHttpClient(new HttpClientHandler
             {
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate,
             });
@@ -157,7 +163,7 @@ namespace Aiursoft.Nupkg.Core.Extensions
 
         private static NuGetClientFactory NuGetClientFactoryFactory(IServiceProvider provider)
         {
-            var httpClient = provider.GetRequiredService<HttpClient>();
+            var httpClient = provider.GetRequiredService<UpstreamHttpClient>();
             var options = provider.GetRequiredService<IOptions<MirrorOptions>>();
 
             return new NuGetClientFactory(
