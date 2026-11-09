@@ -1,0 +1,11 @@
+@model Aiursoft.Nupkg.Models.PackagesViewModels.UploadViewModel
+@* ReSharper disable once Razor.SectionNotResolved *@
+@section styles { <link rel="stylesheet" href="~/styles/packages.css" asp-append-version="true" /> }
+<h1 class="h3">@Localizer["Upload packages"]</h1><p class="text-muted">@Localizer["Use the NuGet CLI to publish packages to this server."]</p>
+@if (Model.ReadOnly) { <div class="alert alert-info"><div class="alert-message">@Localizer["This server is read-only. Publishing is disabled."]</div></div> }
+<div class="card"><div class="card-body"><h2 class="h5">@Localizer["Package source"]</h2><div class="package-command"><div class="d-flex justify-content-end"><button type="button" class="btn btn-outline-secondary btn-sm copy-command">@Localizer["Copy"]</button></div><pre class="bg-body-tertiary text-body border rounded p-3 mt-2 mb-0"><code tabindex="-1">dotnet nuget add source @Model.ServiceIndexUrl --name Nupkg</code></pre><p class="copy-status small mb-0 mt-1" role="status"></p></div></div></div>
+<div class="card"><div class="card-body"><h2 class="h5">@Localizer["Publish a package"]</h2><p class="text-muted">@Localizer["Replace the package filename and API key with your own values."]</p><div class="package-command"><div class="d-flex justify-content-end"><button type="button" class="btn btn-outline-secondary btn-sm copy-command">@Localizer["Copy"]</button></div><pre class="bg-body-tertiary text-body border rounded p-3 mt-2 mb-0"><code tabindex="-1">dotnet nuget push package.nupkg --source @Model.ServiceIndexUrl --api-key YOUR_API_KEY</code></pre><p class="copy-status small mb-0 mt-1" role="status"></p></div>
+<details class="mt-3"><summary>@Localizer["About API keys"]</summary><p class="text-muted mt-2 mb-0">@Localizer["Ask this server's administrator for a publishing API key. Signing in to the website does not grant NuGet publishing access."]</p></details>
+</div></div>
+@* ReSharper disable once Razor.SectionNotResolved *@
+@section scripts { <partial name="_PackageCopy" /> }

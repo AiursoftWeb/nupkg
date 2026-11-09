@@ -1,0 +1,7 @@
+.package-command pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+.package-command code { white-space: inherit; overflow-wrap: anywhere; }
+.package-command .copy-status { min-height: 1.5em; }
+.package-readme img { max-width: 100%; height: auto; }
+.package-readme pre { overflow-x: auto; }
+.package-readme table { display: block; max-width: 100%; overflow-x: auto; }
+.package-readme { overflow-wrap: anywhere; }
