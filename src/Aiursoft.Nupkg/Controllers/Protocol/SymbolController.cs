@@ -1,4 +1,4 @@
-using Aiursoft.Nupkg.Core.Authentication;
+using Aiursoft.Nupkg.Services.Authentication;
 using Aiursoft.Nupkg.Core.Configuration;
 using Aiursoft.Nupkg.Core.Indexing;
 using Aiursoft.Nupkg.Core.Storage;
@@ -9,14 +9,14 @@ using Microsoft.Extensions.Options;
 namespace Aiursoft.Nupkg.Controllers.Protocol
 {
     public class SymbolController(
-        IAuthenticationService authentication,
+        PackagePublisherAuthenticationService authentication,
         ISymbolIndexingService indexer,
         ISymbolStorageService storage,
         IOptionsSnapshot<NupkgOptions> options,
         ILogger<SymbolController> logger)
         : Controller
     {
-        private readonly IAuthenticationService _authentication = authentication ?? throw new ArgumentNullException(nameof(authentication));
+        private readonly PackagePublisherAuthenticationService _authentication = authentication ?? throw new ArgumentNullException(nameof(authentication));
         private readonly ISymbolIndexingService _indexer = indexer ?? throw new ArgumentNullException(nameof(indexer));
         private readonly ISymbolStorageService _storage = storage ?? throw new ArgumentNullException(nameof(storage));
         private readonly IOptionsSnapshot<NupkgOptions> _options = options ?? throw new ArgumentNullException(nameof(options));
@@ -27,10 +27,10 @@ namespace Aiursoft.Nupkg.Controllers.Protocol
         [HttpPut]
         public async Task<IActionResult> Upload(CancellationToken cancellationToken)
         {
-            if (_options.Value.IsReadOnlyMode || !await _authentication.AuthenticateAsync(Request.GetApiKey(), cancellationToken))
-            {
-                return Unauthorized();
-            }
+            if (_options.Value.IsReadOnlyMode) return Unauthorized();
+            var publisher = await _authentication.AuthenticateAsync(Request.GetApiKey(), cancellationToken);
+            if (publisher == null) return Unauthorized();
+            if (!publisher.CanPublish && !publisher.CanManagePackages) return StatusCode(403);
 
             try
             {
@@ -41,13 +41,14 @@ namespace Aiursoft.Nupkg.Controllers.Protocol
                         return BadRequest();
                     }
 
-                    var result = await _indexer.IndexAsync(uploadStream, cancellationToken);
+                    var result = await _indexer.IndexAsync(uploadStream, publisher, cancellationToken);
 
                     return result switch
                     {
                         SymbolIndexingResult.InvalidSymbolPackage => BadRequest(),
                         SymbolIndexingResult.PackageNotFound => NotFound(),
                         SymbolIndexingResult.Success => StatusCode(201),
+                        SymbolIndexingResult.Forbidden => StatusCode(403),
                         _ => StatusCode(500)
                     };
                 }

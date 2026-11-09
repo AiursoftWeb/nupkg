@@ -3,6 +3,7 @@ using Aiursoft.Nupkg.Core.Extensions;
 using Aiursoft.Nupkg.Core.Storage;
 using Microsoft.Extensions.Logging;
 using NuGet.Packaging;
+using Aiursoft.Nupkg.Core.Authentication;
 
 namespace Aiursoft.Nupkg.Core.Indexing
 {
@@ -34,8 +35,12 @@ namespace Aiursoft.Nupkg.Core.Indexing
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<SymbolIndexingResult> IndexAsync(Stream stream, CancellationToken cancellationToken)
+        public Task<SymbolIndexingResult> IndexAsync(Stream stream, CancellationToken cancellationToken)
+            => IndexAsync(stream, PackagePublisher.System, cancellationToken);
+
+        public async Task<SymbolIndexingResult> IndexAsync(Stream stream, PackagePublisher publisher, CancellationToken cancellationToken)
         {
+            if (!publisher.CanPublish && !publisher.CanManagePackages) return SymbolIndexingResult.Forbidden;
             try
             {
                 using (var symbolPackage = new PackageArchiveReader(stream, leaveStreamOpen: true))
@@ -55,6 +60,9 @@ namespace Aiursoft.Nupkg.Core.Indexing
                     {
                         return SymbolIndexingResult.PackageNotFound;
                     }
+
+                    if (!await _packages.CanManagePackageAsync(packageId, publisher, cancellationToken))
+                        return SymbolIndexingResult.Forbidden;
 
                     using (var pdbs = new PdbList())
                     {

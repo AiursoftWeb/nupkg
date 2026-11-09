@@ -1,6 +1,7 @@
 using Aiursoft.Nupkg.Entities;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Versioning;
+using Aiursoft.Nupkg.Core.Authentication;
 
 namespace Aiursoft.Nupkg.Core
 {
@@ -10,6 +11,11 @@ namespace Aiursoft.Nupkg.Core
 
         public async Task<PackageAddResult> AddAsync(Package package, CancellationToken cancellationToken)
         {
+            if (package.PackageFamilyId == 0)
+            {
+                var registration = await GetOrCreateFamilyAsync(package, PackagePublisher.System, cancellationToken);
+                package.PackageFamilyId = registration.Id;
+            }
             try
             {
                 _context.Packages.Add(package);
@@ -23,6 +29,51 @@ namespace Aiursoft.Nupkg.Core
                 return PackageAddResult.PackageAlreadyExists;
             }
         }
+
+        public async Task<PackageFamily> GetOrCreateFamilyAsync(
+            Package package, PackagePublisher publisher, CancellationToken cancellationToken)
+        {
+            if (!publisher.CanPublish && !publisher.CanManagePackages) return null;
+            var normalizedId = package.Id.ToLowerInvariant();
+            var registration = await _context.PackageFamilies
+                .SingleOrDefaultAsync(r => r.NormalizedId == normalizedId, cancellationToken);
+            if (registration != null)
+                return Owns(registration, publisher) ? registration : null;
+
+            registration = new PackageFamily
+            {
+                PackageId = package.Id, NormalizedId = normalizedId,
+                OwnerUserId = publisher.UserId, CreatedAt = package.Published
+            };
+            _context.PackageFamilies.Add(registration);
+            try
+            {
+                await _context.SaveChangesAsync(cancellationToken);
+                return registration;
+            }
+            catch (DbUpdateException)
+            {
+                // Another publisher may have reserved the same name. Recheck the
+                // winning owner before writing any package files.
+                _context.Entry(registration).State = EntityState.Detached;
+                var winner = await _context.PackageFamilies
+                    .SingleOrDefaultAsync(r => r.NormalizedId == normalizedId, cancellationToken);
+                if (winner == null) throw;
+                return Owns(winner, publisher) ? winner : null;
+            }
+        }
+
+        public async Task<bool> CanManagePackageAsync(string id, PackagePublisher publisher, CancellationToken cancellationToken)
+        {
+            if (publisher.CanManagePackages) return true;
+            if (!publisher.CanPublish || publisher.UserId == null) return false;
+            var normalizedId = id.ToLowerInvariant();
+            return await _context.PackageFamilies.AnyAsync(
+                r => r.NormalizedId == normalizedId && r.OwnerUserId == publisher.UserId, cancellationToken);
+        }
+
+        private static bool Owns(PackageFamily registration, PackagePublisher publisher) =>
+            publisher.CanManagePackages || (publisher.UserId != null && registration.OwnerUserId == publisher.UserId);
 
         public async Task<bool> ExistsAsync(string id, CancellationToken cancellationToken)
         {

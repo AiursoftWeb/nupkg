@@ -28,6 +28,7 @@ using Aiursoft.ClickhouseLoggerProvider;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Diagnostics.CodeAnalysis;
+using EFCoreSecondLevelCacheInterceptor;
 
 namespace Aiursoft.Nupkg;
 
@@ -41,6 +42,21 @@ public class Startup : IWebStartup
 
         // Relational database
         var (connectionString, dbType, allowCache) = configuration.GetDbSettings();
+        if (allowCache)
+        {
+            // Register before DbTools supplies its default cache settings. Retain its
+            // package-query policy, but always read publishing authority from the database.
+            services.AddEFSecondLevelCache(options =>
+            {
+                options.UseMemoryCacheProvider().ConfigureLogging(enable: false);
+                options.CacheAllQueries(CacheExpirationMode.Sliding, TimeSpan.FromMinutes(30));
+                options.UseDbCallsIfCachingProviderIsDown(TimeSpan.FromMinutes(1));
+                options.SkipCachingCommands(command =>
+                    command.Contains("AspNet", StringComparison.OrdinalIgnoreCase)
+                    || command.Contains("UserApiKeys", StringComparison.OrdinalIgnoreCase)
+                    || command.Contains("PackageFamilies", StringComparison.OrdinalIgnoreCase));
+            });
+        }
         services.AddSwitchableRelationalDatabase(
             dbType: EntryExtends.IsInUnitTests() ? "InMemory" : dbType,
             connectionString: connectionString,
@@ -58,6 +74,7 @@ public class Startup : IWebStartup
 
         // Authentication and Authorization
         services.AddTemplateAuth(configuration);
+        services.AddScoped<PackagePublisherAuthenticationService>();
 
         // Services
         services.AddMemoryCache();

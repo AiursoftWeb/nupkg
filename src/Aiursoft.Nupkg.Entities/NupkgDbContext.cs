@@ -12,6 +12,8 @@ namespace Aiursoft.Nupkg.Entities
     public abstract class NupkgDbContext(DbContextOptions options) : IdentityDbContext<User>(options), ICanMigrate
     {
         public DbSet<GlobalSetting> GlobalSettings => Set<GlobalSetting>();
+        public DbSet<UserApiKey> UserApiKeys => Set<UserApiKey>();
+        public DbSet<PackageFamily> PackageFamilies => Set<PackageFamily>();
 
         public const int DefaultMaxStringLength = 4000;
         public const int MaxPackageIdLength = 128;
@@ -43,6 +45,14 @@ namespace Aiursoft.Nupkg.Entities
             builder.Entity<PackageDependency>(BuildPackageDependencyEntity);
             builder.Entity<PackageType>(BuildPackageTypeEntity);
             builder.Entity<TargetFramework>(BuildTargetFrameworkEntity);
+            builder.Entity<UserApiKey>().HasOne(k => k.User).WithMany()
+                .HasForeignKey(k => k.UserId).OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<PackageFamily>().HasOne(r => r.OwnerUser).WithMany()
+                .HasForeignKey(r => r.OwnerUserId).OnDelete(DeleteBehavior.SetNull);
+            builder.Entity<Package>().HasOne(p => p.PackageFamily).WithMany(r => r.Versions)
+                .HasForeignKey(p => p.PackageFamilyId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Package>().HasOne(p => p.UploadedByUser).WithMany()
+                .HasForeignKey(p => p.UploadedByUserId).OnDelete(DeleteBehavior.SetNull);
         }
 
         private void BuildPackageEntity(EntityTypeBuilder<Package> package)

@@ -8,6 +8,9 @@ namespace Aiursoft.Nupkg.Tests.IntegrationTests;
 [TestClass]
 public class NuGetCompatibilityTests : TestBase
 {
+    [TestInitialize]
+    public void ConfigureLegacyFixture() => Server!.Services.GetRequiredService<IConfiguration>()["ApiKey"] = "nupkg-compatibility-fixture";
+
     private string ApiKey => Server!.Services.GetRequiredService<IConfiguration>()["ApiKey"]!;
 
     [TestMethod]

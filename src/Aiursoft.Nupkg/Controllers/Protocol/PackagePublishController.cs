@@ -1,5 +1,5 @@
 using Aiursoft.Nupkg.Core;
-using Aiursoft.Nupkg.Core.Authentication;
+using Aiursoft.Nupkg.Services.Authentication;
 using Aiursoft.Nupkg.Core.Configuration;
 using Aiursoft.Nupkg.Core.Indexing;
 using Aiursoft.Nupkg.Extensions;
@@ -10,7 +10,7 @@ using NuGet.Versioning;
 namespace Aiursoft.Nupkg.Controllers.Protocol
 {
     public class PackagePublishController(
-        IAuthenticationService authentication,
+        PackagePublisherAuthenticationService authentication,
         IPackageIndexingService indexer,
         PackageDatabase packages,
         IPackageDeletionService deletionService,
@@ -18,7 +18,7 @@ namespace Aiursoft.Nupkg.Controllers.Protocol
         ILogger<PackagePublishController> logger)
         : Controller
     {
-        private readonly IAuthenticationService _authentication = authentication ?? throw new ArgumentNullException(nameof(authentication));
+        private readonly PackagePublisherAuthenticationService _authentication = authentication ?? throw new ArgumentNullException(nameof(authentication));
         private readonly IPackageIndexingService _indexer = indexer ?? throw new ArgumentNullException(nameof(indexer));
         private readonly PackageDatabase _packages = packages ?? throw new ArgumentNullException(nameof(packages));
         private readonly IPackageDeletionService _deleteService = deletionService ?? throw new ArgumentNullException(nameof(deletionService));
@@ -30,11 +30,10 @@ namespace Aiursoft.Nupkg.Controllers.Protocol
         [HttpPut]
         public async Task<IActionResult> Upload(CancellationToken cancellationToken)
         {
-            if (_options.Value.IsReadOnlyMode ||
-                !await _authentication.AuthenticateAsync(Request.GetApiKey(), cancellationToken))
-            {
-                return Unauthorized();
-            }
+            if (_options.Value.IsReadOnlyMode) return Unauthorized();
+            var publisher = await _authentication.AuthenticateAsync(Request.GetApiKey(), cancellationToken);
+            if (publisher == null) return Unauthorized();
+            if (!publisher.CanPublish && !publisher.CanManagePackages) return StatusCode(403);
 
             try
             {
@@ -45,13 +44,14 @@ namespace Aiursoft.Nupkg.Controllers.Protocol
                         return BadRequest();
                     }
 
-                    var result = await _indexer.IndexAsync(uploadStream, cancellationToken);
+                    var result = await _indexer.IndexAsync(uploadStream, publisher, cancellationToken);
 
                     return result switch
                     {
                         PackageIndexingResult.InvalidPackage => BadRequest(),
                         PackageIndexingResult.PackageAlreadyExists => Conflict(),
                         PackageIndexingResult.Success => StatusCode(201),
+                        PackageIndexingResult.Forbidden => StatusCode(403),
                         _ => StatusCode(500)
                     };
                 }
@@ -78,10 +78,9 @@ namespace Aiursoft.Nupkg.Controllers.Protocol
                 return NotFound();
             }
 
-            if (!await _authentication.AuthenticateAsync(Request.GetApiKey(), cancellationToken))
-            {
-                return Unauthorized();
-            }
+            var publisher = await _authentication.AuthenticateAsync(Request.GetApiKey(), cancellationToken);
+            if (publisher == null) return Unauthorized();
+            if (!await _packages.CanManagePackageAsync(id, publisher, cancellationToken)) return StatusCode(403);
 
             if (await _deleteService.TryDeletePackageAsync(id, nugetVersion, cancellationToken))
             {
@@ -107,10 +106,9 @@ namespace Aiursoft.Nupkg.Controllers.Protocol
                 return NotFound();
             }
 
-            if (!await _authentication.AuthenticateAsync(Request.GetApiKey(), cancellationToken))
-            {
-                return Unauthorized();
-            }
+            var publisher = await _authentication.AuthenticateAsync(Request.GetApiKey(), cancellationToken);
+            if (publisher == null) return Unauthorized();
+            if (!await _packages.CanManagePackageAsync(id, publisher, cancellationToken)) return StatusCode(403);
 
             if (await _packages.RelistPackageAsync(id, nugetVersion, cancellationToken))
             {

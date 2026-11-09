@@ -93,6 +93,9 @@ namespace Aiursoft.Nupkg.MySql.Migrations
                         .HasColumnType("varchar(64)")
                         .HasColumnName("OriginalVersion");
 
+                    b.Property<int>("PackageFamilyId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ProjectUrl")
                         .HasColumnType("TEXT");
 
@@ -133,9 +136,16 @@ namespace Aiursoft.Nupkg.MySql.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
+                    b.Property<string>("UploadedByUserId")
+                        .HasColumnType("varchar(255)");
+
                     b.HasKey("Key");
 
                     b.HasIndex("Id");
+
+                    b.HasIndex("PackageFamilyId");
+
+                    b.HasIndex("UploadedByUserId");
 
                     b.HasIndex("Id", "NormalizedVersionString")
                         .IsUnique();
@@ -173,6 +183,40 @@ namespace Aiursoft.Nupkg.MySql.Migrations
                     b.HasIndex("PackageKey");
 
                     b.ToTable("PackageDependencies");
+                });
+
+            modelBuilder.Entity("Aiursoft.Nupkg.Entities.PackageFamily", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("NormalizedId")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
+
+                    b.Property<string>("OwnerUserId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("PackageId")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedId")
+                        .IsUnique();
+
+                    b.HasIndex("OwnerUserId");
+
+                    b.ToTable("PackageFamilies");
                 });
 
             modelBuilder.Entity("Aiursoft.Nupkg.Entities.PackageType", b =>
@@ -302,6 +346,52 @@ namespace Aiursoft.Nupkg.MySql.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Aiursoft.Nupkg.Entities.UserApiKey", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("ExpiresAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("KeyHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("varchar(64)");
+
+                    b.Property<string>("KeyPrefix")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("varchar(8)");
+
+                    b.Property<DateTime?>("LastUsedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KeyHash")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserApiKeys");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -436,6 +526,24 @@ namespace Aiursoft.Nupkg.MySql.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Aiursoft.Nupkg.Entities.Package", b =>
+                {
+                    b.HasOne("Aiursoft.Nupkg.Entities.PackageFamily", "PackageFamily")
+                        .WithMany("Versions")
+                        .HasForeignKey("PackageFamilyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Aiursoft.Nupkg.Entities.User", "UploadedByUser")
+                        .WithMany()
+                        .HasForeignKey("UploadedByUserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("PackageFamily");
+
+                    b.Navigation("UploadedByUser");
+                });
+
             modelBuilder.Entity("Aiursoft.Nupkg.Entities.PackageDependency", b =>
                 {
                     b.HasOne("Aiursoft.Nupkg.Entities.Package", "Package")
@@ -443,6 +551,16 @@ namespace Aiursoft.Nupkg.MySql.Migrations
                         .HasForeignKey("PackageKey");
 
                     b.Navigation("Package");
+                });
+
+            modelBuilder.Entity("Aiursoft.Nupkg.Entities.PackageFamily", b =>
+                {
+                    b.HasOne("Aiursoft.Nupkg.Entities.User", "OwnerUser")
+                        .WithMany()
+                        .HasForeignKey("OwnerUserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("OwnerUser");
                 });
 
             modelBuilder.Entity("Aiursoft.Nupkg.Entities.PackageType", b =>
@@ -465,6 +583,17 @@ namespace Aiursoft.Nupkg.MySql.Migrations
                         .IsRequired();
 
                     b.Navigation("Package");
+                });
+
+            modelBuilder.Entity("Aiursoft.Nupkg.Entities.UserApiKey", b =>
+                {
+                    b.HasOne("Aiursoft.Nupkg.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -525,6 +654,11 @@ namespace Aiursoft.Nupkg.MySql.Migrations
                     b.Navigation("PackageTypes");
 
                     b.Navigation("TargetFrameworks");
+                });
+
+            modelBuilder.Entity("Aiursoft.Nupkg.Entities.PackageFamily", b =>
+                {
+                    b.Navigation("Versions");
                 });
 #pragma warning restore 612, 618
         }

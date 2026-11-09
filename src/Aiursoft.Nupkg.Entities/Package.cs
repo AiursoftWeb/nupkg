@@ -9,6 +9,12 @@ namespace Aiursoft.Nupkg.Entities
     {
         public int Key { get; set; }
 
+        public int PackageFamilyId { get; set; }
+        public PackageFamily PackageFamily { get; set; }
+
+        public string UploadedByUserId { get; set; }
+        public User UploadedByUser { get; set; }
+
         public string Id { get; set; }
 
         public NuGetVersion Version

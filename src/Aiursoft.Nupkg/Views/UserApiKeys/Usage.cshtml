@@ -1,0 +1,15 @@
+@model Aiursoft.Nupkg.Models.UserApiKeysViewModels.UsageViewModel
+@* ReSharper disable once Razor.SectionNotResolved *@
+@section styles { <link rel="stylesheet" href="~/styles/packages.css" asp-append-version="true" /> }
+<div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3"><h1 class="h3 mb-0 text-break">@Model.Key.Name @if (Model.Key.IsExpired) { <span class="badge bg-danger">@Localizer["Expired"]</span> }</h1><a asp-action="Index" class="btn btn-outline-secondary">@Localizer["API Keys"]</a></div>
+@if (!Model.CanPublish)
+{
+    <div class="alert alert-info"><div class="alert-message">@Localizer["Publishing permission is required. Ask an administrator to grant it to your account."]</div></div>
+}
+@if (Model.RawKey != null)
+{
+    <div class="card"><div class="card-body"><h2 class="h5">@Localizer["Your new key"]</h2><p class="text-muted">@Localizer["Save this key now. It is shown only once."]</p><div class="package-command"><div class="d-flex justify-content-end"><button type="button" class="btn btn-sm btn-outline-secondary copy-command">@Localizer["Copy"]</button></div><pre class="bg-body-tertiary text-body border rounded p-3 mt-2 mb-0"><code id="new-api-key" tabindex="-1">@Model.RawKey</code></pre><p class="copy-status small mb-0 mt-1" role="status"></p></div></div></div>
+}
+<div class="card"><div class="card-body"><h2 class="h5">@Localizer["Publish with NuGet"]</h2><p class="text-muted">@Localizer["Replace YOUR_API_KEY with your saved key."]</p><div class="package-command"><div class="d-flex justify-content-end"><button type="button" class="btn btn-sm btn-outline-secondary copy-command">@Localizer["Copy"]</button></div><pre class="bg-body-tertiary text-body border rounded p-3 mt-2 mb-0"><code tabindex="-1">dotnet nuget push package.nupkg --source @Model.ServiceIndexUrl --api-key YOUR_API_KEY</code></pre><p class="copy-status small mb-0 mt-1" role="status"></p></div></div></div>
+@* ReSharper disable once Razor.SectionNotResolved *@
+@section scripts { <partial name="_PackageCopy" /> }
