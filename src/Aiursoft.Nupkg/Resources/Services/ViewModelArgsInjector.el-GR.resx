@@ -33,11 +33,20 @@
   <data name="Anonymous" xml:space="preserve">
     <value>Ανώνυμος</value>
   </data>
+  <data name="API Keys" xml:space="preserve">
+    <value>Πληκτροί API</value>
+  </data>
+  <data name="Assign package owner" xml:space="preserve">
+    <value>Ορισμός ιδιοκτήτη πακέτου</value>
+  </data>
   <data name="Background Jobs" xml:space="preserve">
     <value>Ημικυκλικές Εργασίες</value>
   </data>
   <data name="Bad Request" xml:space="preserve">
     <value>Λάθος Αίτημα</value>
+  </data>
+  <data name="Browse packages" xml:space="preserve">
+    <value>Περιήγηση πακέτων</value>
   </data>
   <data name="Change Avatar" xml:space="preserve">
     <value>Αλλαγή Avatar</value>
@@ -111,8 +120,20 @@
   <data name="Manage" xml:space="preserve">
     <value>Διαχείριση</value>
   </data>
+  <data name="New API key" xml:space="preserve">
+    <value>Νέο κλειδί API</value>
+  </data>
   <data name="Not Found" xml:space="preserve">
     <value>Δεν βρέθηκε</value>
+  </data>
+  <data name="Nupkg" xml:space="preserve">
+    <value>Πρότυπο</value>
+  </data>
+  <data name="Package ownership" xml:space="preserve">
+    <value>Ιδιοκτησία πακέτου</value>
+  </data>
+  <data name="Packages" xml:space="preserve">
+    <value>Πακέτα</value>
   </data>
   <data name="Permission Details" xml:space="preserve">
     <value>Λεπτομέρειες Εξουσιοδότησης</value>
@@ -132,6 +153,9 @@
   <data name="Register" xml:space="preserve">
     <value>Εγγραφή</value>
   </data>
+  <data name="Revoke API key" xml:space="preserve">
+    <value>Ακύρωση κλειδιού API</value>
+  </data>
   <data name="Role Details" xml:space="preserve">
     <value>Λεπτομέρειες Ρόλου</value>
   </data>
@@ -150,11 +174,14 @@
   <data name="System Info" xml:space="preserve">
     <value>Πληροφορίες Συστήματος</value>
   </data>
-  <data name="Nupkg" xml:space="preserve">
-    <value>Πρότυπο</value>
-  </data>
   <data name="Unauthorized" xml:space="preserve">
     <value>Μη Εξουσιοδοτημένος</value>
+  </data>
+  <data name="Upload packages" xml:space="preserve">
+    <value>Ανέβασμα πακέτων</value>
+  </data>
+  <data name="Use API key" xml:space="preserve">
+    <value>Χρήση κλειδιού API</value>
   </data>
   <data name="User Details" xml:space="preserve">
     <value>Στοιχεία Χρήστη</value>

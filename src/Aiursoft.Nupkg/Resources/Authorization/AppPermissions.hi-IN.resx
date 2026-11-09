@@ -27,11 +27,17 @@
   <data name="Allows assigning or removing roles for any user." xml:space="preserve">
     <value>किसी भी उपयोगकर्ता को भूमिकाएँ सौंपने या हटाने की अनुमति देता है।</value>
   </data>
+  <data name="Allows creating package names and publishing, unlisting and relisting your own packages." xml:space="preserve">
+    <value>यह अपने पैकेजों के नाम बनाने, प्रकाशित करने, अलोकप्रिय बनाने और पुनः सूचीबद्ध करने की अनुमति देता है।</value>
+  </data>
   <data name="Allows modification of role names and their assigned permissions." xml:space="preserve">
     <value>रोल नामों और उनके सौंपे गए अनुमतियों में संशोधन की अनुमति देता है।</value>
   </data>
   <data name="Allows modification of user details like email and roles, and can also reset user passwords." xml:space="preserve">
     <value>उपयोगकर्ता के विवरण जैसे ईमेल और भूमिकाओं में संशोधन की अनुमति देता है, और उपयोगकर्ता के पासवर्ड को रीसेट भी कर सकता है।</value>
+  </data>
+  <data name="Allows publishing and managing all packages, including assigning package ownership." xml:space="preserve">
+    <value>सभी पैकेजों को प्रकाशित करने और प्रबंधित करने की अनुमति देता है, जिसमें पैकेज स्वामित्व का असाइनमेंट भी शामिल है।</value>
   </data>
   <data name="Allows the permanent deletion of roles." xml:space="preserve">
     <value>भूमिकाओं को स्थायी रूप से हटाने की अनुमति देता है।</value>
@@ -83,6 +89,12 @@
   </data>
   <data name="Manage Global Settings" xml:space="preserve">
     <value>ग्लोबल सेटिंग्स प्रबंधित करें</value>
+  </data>
+  <data name="Manage Packages" xml:space="preserve">
+    <value>पैकेज प्रबंधित करें</value>
+  </data>
+  <data name="Publish Packages" xml:space="preserve">
+    <value>पैकेज प्रकाशित करें</value>
   </data>
   <data name="Read Permissions" xml:space="preserve">
     <value>अनुमतियाँ पढ़ें</value>

@@ -14,7 +14,7 @@
     <PackageReference Include="Aiursoft.ClickhouseLoggerProvider" Version="10.0.29" />
     <PackageReference Include="Aiursoft.DbTools.Switchable" Version="10.0.30" />
     <PackageReference Include="Aiursoft.Scanner" Version="10.0.15" />
-    <PackageReference Include="Aiursoft.UiStack" Version="10.0.34" />
+    <PackageReference Include="Aiursoft.UiStack" Version="10.0.35" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="10.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.14">
@@ -33,5 +33,9 @@
     <ProjectReference Include="..\Aiursoft.Nupkg.Sqlite\Aiursoft.Nupkg.Sqlite.csproj" />
     <ProjectReference Include="..\Aiursoft.Nupkg.Core\Aiursoft.Nupkg.Core.csproj" />
   </ItemGroup>
-  <ItemGroup><None Include="../../LICENSE" Link="LICENSE" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" /><None Include="../../BAGET-LICENSE" Link="BAGET-LICENSE" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" /><None Include="../../THIRD-PARTY-NOTICES" Link="THIRD-PARTY-NOTICES" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" /></ItemGroup>
+  <ItemGroup>
+    <None Include="../../LICENSE" Link="LICENSE" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="../../BAGET-LICENSE" Link="BAGET-LICENSE" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="../../THIRD-PARTY-NOTICES" Link="THIRD-PARTY-NOTICES" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>

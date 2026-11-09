@@ -27,11 +27,17 @@
   <data name="Allows assigning or removing roles for any user." xml:space="preserve">
     <value>모든 사용자에게 역할을 할당하거나 제거할 수 있습니다.</value>
   </data>
+  <data name="Allows creating package names and publishing, unlisting and relisting your own packages." xml:space="preserve">
+    <value>패키지 이름 생성 및 자체 패키지 공개, 비공개, 재공개 권한을 부여합니다.</value>
+  </data>
   <data name="Allows modification of role names and their assigned permissions." xml:space="preserve">
     <value>역할 이름과 할당된 권한을 수정할 수 있습니다.</value>
   </data>
   <data name="Allows modification of user details like email and roles, and can also reset user passwords." xml:space="preserve">
     <value>사용자의 이메일 및 역할과 같은 세부 정보 수정을 허용하며, 사용자 비밀번호 재설정도 가능합니다.</value>
+  </data>
+  <data name="Allows publishing and managing all packages, including assigning package ownership." xml:space="preserve">
+    <value>패키지 소유권 할당을 포함하여 모든 패키지의 게시 및 관리를 허용합니다.</value>
   </data>
   <data name="Allows the permanent deletion of roles." xml:space="preserve">
     <value>역할을 영구적으로 삭제할 수 있습니다.</value>
@@ -83,6 +89,12 @@
   </data>
   <data name="Manage Global Settings" xml:space="preserve">
     <value>전역 설정 관리</value>
+  </data>
+  <data name="Manage Packages" xml:space="preserve">
+    <value>패키지 관리</value>
+  </data>
+  <data name="Publish Packages" xml:space="preserve">
+    <value>패키지 게시</value>
   </data>
   <data name="Read Permissions" xml:space="preserve">
     <value>권한 읽기</value>

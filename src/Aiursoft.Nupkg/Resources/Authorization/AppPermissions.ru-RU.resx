@@ -27,11 +27,17 @@
   <data name="Allows assigning or removing roles for any user." xml:space="preserve">
     <value>Разрешает назначение или снятие ролей для любого пользователя.</value>
   </data>
+  <data name="Allows creating package names and publishing, unlisting and relisting your own packages." xml:space="preserve">
+    <value>Позволяет создавать имена пакетов, а также публиковать, снимать с публикации и повторно публиковать собственные пакеты.</value>
+  </data>
   <data name="Allows modification of role names and their assigned permissions." xml:space="preserve">
     <value>Разрешает изменение названий ролей и их назначенных разрешений.</value>
   </data>
   <data name="Allows modification of user details like email and roles, and can also reset user passwords." xml:space="preserve">
     <value>Разрешает изменение данных пользователя, таких как email и роли, а также позволяет сбрасывать пароли пользователей.</value>
+  </data>
+  <data name="Allows publishing and managing all packages, including assigning package ownership." xml:space="preserve">
+    <value>Позволяет публиковать и управлять всеми пакетами, включая назначение владельца пакета.</value>
   </data>
   <data name="Allows the permanent deletion of roles." xml:space="preserve">
     <value>Разрешает окончательное удаление ролей.</value>
@@ -83,6 +89,12 @@
   </data>
   <data name="Manage Global Settings" xml:space="preserve">
     <value>Управление глобальными настройками</value>
+  </data>
+  <data name="Manage Packages" xml:space="preserve">
+    <value>Управление пакетами</value>
+  </data>
+  <data name="Publish Packages" xml:space="preserve">
+    <value>Опубликовать пакеты</value>
   </data>
   <data name="Read Permissions" xml:space="preserve">
     <value>Чтение разрешений</value>

@@ -36,11 +36,20 @@
   <data name="Anonymous" xml:space="preserve">
     <value>Ẩn danh</value>
   </data>
+  <data name="API Keys" xml:space="preserve">
+    <value>Khóa API</value>
+  </data>
+  <data name="Assign package owner" xml:space="preserve">
+    <value>Gán chủ sở hữu gói</value>
+  </data>
   <data name="Background Jobs" xml:space="preserve">
     <value>Các nhiệm vụ nền</value>
   </data>
   <data name="Bad Request" xml:space="preserve">
     <value>Yêu cầu sai</value>
+  </data>
+  <data name="Browse packages" xml:space="preserve">
+    <value>Duyệt các gói</value>
   </data>
   <data name="Change Avatar" xml:space="preserve">
     <value>Thay đổi Ảnh đại diện</value>
@@ -114,8 +123,20 @@
   <data name="Manage" xml:space="preserve">
     <value>Quản lý</value>
   </data>
+  <data name="New API key" xml:space="preserve">
+    <value>Khóa API mới</value>
+  </data>
   <data name="Not Found" xml:space="preserve">
     <value>Không tìm thấy</value>
+  </data>
+  <data name="Nupkg" xml:space="preserve">
+    <value>Mẫu</value>
+  </data>
+  <data name="Package ownership" xml:space="preserve">
+    <value>Sở hữu gói</value>
+  </data>
+  <data name="Packages" xml:space="preserve">
+    <value>Gói</value>
   </data>
   <data name="Permission Details" xml:space="preserve">
     <value>Chi tiết quyền hạn</value>
@@ -135,6 +156,9 @@
   <data name="Register" xml:space="preserve">
     <value>Đăng ký</value>
   </data>
+  <data name="Revoke API key" xml:space="preserve">
+    <value>Thu hồi khóa API</value>
+  </data>
   <data name="Role Details" xml:space="preserve">
     <value>Chi tiết Vai trò</value>
   </data>
@@ -153,11 +177,14 @@
   <data name="System Info" xml:space="preserve">
     <value>Thông tin Hệ thống</value>
   </data>
-  <data name="Nupkg" xml:space="preserve">
-    <value>Mẫu</value>
-  </data>
   <data name="Unauthorized" xml:space="preserve">
     <value>Không được ủy quyền</value>
+  </data>
+  <data name="Upload packages" xml:space="preserve">
+    <value>Tải lên các gói</value>
+  </data>
+  <data name="Use API key" xml:space="preserve">
+    <value>Sử dụng API key</value>
   </data>
   <data name="User Details" xml:space="preserve">
     <value>Thông tin người dùng</value>

@@ -33,11 +33,20 @@
   <data name="Anonymous" xml:space="preserve">
     <value>Anonim</value>
   </data>
+  <data name="API Keys" xml:space="preserve">
+    <value>Kunci API</value>
+  </data>
+  <data name="Assign package owner" xml:space="preserve">
+    <value>Tugaskan pemilik paket</value>
+  </data>
   <data name="Background Jobs" xml:space="preserve">
     <value>Pekerjaan Latar Belakang</value>
   </data>
   <data name="Bad Request" xml:space="preserve">
     <value>Permintaan Salah</value>
+  </data>
+  <data name="Browse packages" xml:space="preserve">
+    <value>Jelajahi paket</value>
   </data>
   <data name="Change Avatar" xml:space="preserve">
     <value>Ubah Avatar</value>
@@ -111,8 +120,20 @@
   <data name="Manage" xml:space="preserve">
     <value>Kelola</value>
   </data>
+  <data name="New API key" xml:space="preserve">
+    <value>Kunci API Baru</value>
+  </data>
   <data name="Not Found" xml:space="preserve">
     <value>Tidak Ditemukan</value>
+  </data>
+  <data name="Nupkg" xml:space="preserve">
+    <value>Nupkg</value>
+  </data>
+  <data name="Package ownership" xml:space="preserve">
+    <value>Kepemilikan paket</value>
+  </data>
+  <data name="Packages" xml:space="preserve">
+    <value>Paket</value>
   </data>
   <data name="Permission Details" xml:space="preserve">
     <value>Detail Izin</value>
@@ -132,6 +153,9 @@
   <data name="Register" xml:space="preserve">
     <value>Daftar</value>
   </data>
+  <data name="Revoke API key" xml:space="preserve">
+    <value>Cabut kunci API</value>
+  </data>
   <data name="Role Details" xml:space="preserve">
     <value>Detail Peran</value>
   </data>
@@ -150,11 +174,14 @@
   <data name="System Info" xml:space="preserve">
     <value>Informasi Sistem</value>
   </data>
-  <data name="Nupkg" xml:space="preserve">
-    <value>Nupkg</value>
-  </data>
   <data name="Unauthorized" xml:space="preserve">
     <value>Tidak Diizinkan</value>
+  </data>
+  <data name="Upload packages" xml:space="preserve">
+    <value>Unggah paket</value>
+  </data>
+  <data name="Use API key" xml:space="preserve">
+    <value>Gunakan kunci API</value>
   </data>
   <data name="User Details" xml:space="preserve">
     <value>Detail Pengguna</value>

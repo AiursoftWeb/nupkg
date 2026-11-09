@@ -36,11 +36,20 @@
   <data name="Anonymous" xml:space="preserve">
     <value>익명</value>
   </data>
+  <data name="API Keys" xml:space="preserve">
+    <value>API 키</value>
+  </data>
+  <data name="Assign package owner" xml:space="preserve">
+    <value>패키지 소유자 지정</value>
+  </data>
   <data name="Background Jobs" xml:space="preserve">
     <value>백그라운드 작업</value>
   </data>
   <data name="Bad Request" xml:space="preserve">
     <value>잘못된 요청</value>
+  </data>
+  <data name="Browse packages" xml:space="preserve">
+    <value>패키지 둘러보기</value>
   </data>
   <data name="Change Avatar" xml:space="preserve">
     <value>아바타 변경</value>
@@ -114,8 +123,20 @@
   <data name="Manage" xml:space="preserve">
     <value>관리</value>
   </data>
+  <data name="New API key" xml:space="preserve">
+    <value>새로운 API 키</value>
+  </data>
   <data name="Not Found" xml:space="preserve">
     <value>찾을 수 없음</value>
+  </data>
+  <data name="Nupkg" xml:space="preserve">
+    <value>템플릿</value>
+  </data>
+  <data name="Package ownership" xml:space="preserve">
+    <value>패키지 소유권</value>
+  </data>
+  <data name="Packages" xml:space="preserve">
+    <value>패키지</value>
   </data>
   <data name="Permission Details" xml:space="preserve">
     <value>권한 세부 정보</value>
@@ -135,6 +156,9 @@
   <data name="Register" xml:space="preserve">
     <value>회원가입</value>
   </data>
+  <data name="Revoke API key" xml:space="preserve">
+    <value>API 키 폐기</value>
+  </data>
   <data name="Role Details" xml:space="preserve">
     <value>역할 상세 정보</value>
   </data>
@@ -153,11 +177,14 @@
   <data name="System Info" xml:space="preserve">
     <value>시스템 정보</value>
   </data>
-  <data name="Nupkg" xml:space="preserve">
-    <value>템플릿</value>
-  </data>
   <data name="Unauthorized" xml:space="preserve">
     <value>권한 없음</value>
+  </data>
+  <data name="Upload packages" xml:space="preserve">
+    <value>패키지 업로드</value>
+  </data>
+  <data name="Use API key" xml:space="preserve">
+    <value>API 키 사용</value>
   </data>
   <data name="User Details" xml:space="preserve">
     <value>사용자 세부 정보</value>

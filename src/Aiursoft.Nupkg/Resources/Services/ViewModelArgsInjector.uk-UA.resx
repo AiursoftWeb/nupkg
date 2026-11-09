@@ -33,11 +33,20 @@
   <data name="Anonymous" xml:space="preserve">
     <value>Анонімний</value>
   </data>
+  <data name="API Keys" xml:space="preserve">
+    <value>Ключі API</value>
+  </data>
+  <data name="Assign package owner" xml:space="preserve">
+    <value>Призначити власника пакету</value>
+  </data>
   <data name="Background Jobs" xml:space="preserve">
     <value>Фонові завдання</value>
   </data>
   <data name="Bad Request" xml:space="preserve">
     <value>Помилковий запит</value>
+  </data>
+  <data name="Browse packages" xml:space="preserve">
+    <value>Переглянути пакети</value>
   </data>
   <data name="Change Avatar" xml:space="preserve">
     <value>Змінити аватар</value>
@@ -111,8 +120,20 @@
   <data name="Manage" xml:space="preserve">
     <value>Керування</value>
   </data>
+  <data name="New API key" xml:space="preserve">
+    <value>Новий API-ключ</value>
+  </data>
   <data name="Not Found" xml:space="preserve">
     <value>Не знайдено</value>
+  </data>
+  <data name="Nupkg" xml:space="preserve">
+    <value>Шаблон</value>
+  </data>
+  <data name="Package ownership" xml:space="preserve">
+    <value>Власність пакету</value>
+  </data>
+  <data name="Packages" xml:space="preserve">
+    <value>Пакетів</value>
   </data>
   <data name="Permission Details" xml:space="preserve">
     <value>Деталі дозволів</value>
@@ -132,6 +153,9 @@
   <data name="Register" xml:space="preserve">
     <value>Реєстрація</value>
   </data>
+  <data name="Revoke API key" xml:space="preserve">
+    <value>Відкликати API-ключ</value>
+  </data>
   <data name="Role Details" xml:space="preserve">
     <value>Деталі ролі</value>
   </data>
@@ -150,11 +174,14 @@
   <data name="System Info" xml:space="preserve">
     <value>Інформація про систему</value>
   </data>
-  <data name="Nupkg" xml:space="preserve">
-    <value>Шаблон</value>
-  </data>
   <data name="Unauthorized" xml:space="preserve">
     <value>Неавторизовано</value>
+  </data>
+  <data name="Upload packages" xml:space="preserve">
+    <value>Завантажити пакети</value>
+  </data>
+  <data name="Use API key" xml:space="preserve">
+    <value>Використати API-ключ</value>
   </data>
   <data name="User Details" xml:space="preserve">
     <value>Деталі користувача</value>

@@ -36,11 +36,20 @@
   <data name="Anonymous" xml:space="preserve">
     <value>Anonym</value>
   </data>
+  <data name="API Keys" xml:space="preserve">
+    <value>API-Schlüssel</value>
+  </data>
+  <data name="Assign package owner" xml:space="preserve">
+    <value>Paketbesitzer zuweisen</value>
+  </data>
   <data name="Background Jobs" xml:space="preserve">
     <value>Hintergrundaufgaben</value>
   </data>
   <data name="Bad Request" xml:space="preserve">
     <value>Ungültige Anforderung</value>
+  </data>
+  <data name="Browse packages" xml:space="preserve">
+    <value>Pakete durchsuchen</value>
   </data>
   <data name="Change Avatar" xml:space="preserve">
     <value>Avatar ändern</value>
@@ -114,8 +123,20 @@
   <data name="Manage" xml:space="preserve">
     <value>Verwalten</value>
   </data>
+  <data name="New API key" xml:space="preserve">
+    <value>Neuer API-Schlüssel</value>
+  </data>
   <data name="Not Found" xml:space="preserve">
     <value>Nicht gefunden</value>
+  </data>
+  <data name="Nupkg" xml:space="preserve">
+    <value>Vorlage</value>
+  </data>
+  <data name="Package ownership" xml:space="preserve">
+    <value>Paketbesitz</value>
+  </data>
+  <data name="Packages" xml:space="preserve">
+    <value>Pakete</value>
   </data>
   <data name="Permission Details" xml:space="preserve">
     <value>Berechtigungsdetails</value>
@@ -135,6 +156,9 @@
   <data name="Register" xml:space="preserve">
     <value>Registrieren</value>
   </data>
+  <data name="Revoke API key" xml:space="preserve">
+    <value>API-Schlüssel widerrufen</value>
+  </data>
   <data name="Role Details" xml:space="preserve">
     <value>Rollendetails</value>
   </data>
@@ -153,11 +177,14 @@
   <data name="System Info" xml:space="preserve">
     <value>Systeminformationen</value>
   </data>
-  <data name="Nupkg" xml:space="preserve">
-    <value>Vorlage</value>
-  </data>
   <data name="Unauthorized" xml:space="preserve">
     <value>Nicht autorisiert</value>
+  </data>
+  <data name="Upload packages" xml:space="preserve">
+    <value>Pakete hochladen</value>
+  </data>
+  <data name="Use API key" xml:space="preserve">
+    <value>API-Schlüssel verwenden</value>
   </data>
   <data name="User Details" xml:space="preserve">
     <value>Benutzerdetails</value>

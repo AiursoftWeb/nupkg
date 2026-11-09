@@ -84,6 +84,13 @@ public class ViewModelArgsInjector(
         _ = localizer["Register"];
     
         _ = localizer["Delete Account"];
+    
+        _ = localizer["API Keys"];
+        _ = localizer["Assign package owner"];
+        _ = localizer["New API key"];
+        _ = localizer["Package ownership"];
+        _ = localizer["Revoke API key"];
+        _ = localizer["Use API key"];
     }
 
     public void InjectSimple(

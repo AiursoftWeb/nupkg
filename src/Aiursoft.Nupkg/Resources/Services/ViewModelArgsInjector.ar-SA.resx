@@ -33,11 +33,20 @@
   <data name="Anonymous" xml:space="preserve">
     <value>مجهول</value>
   </data>
+  <data name="API Keys" xml:space="preserve">
+    <value>مفاتيح API</value>
+  </data>
+  <data name="Assign package owner" xml:space="preserve">
+    <value>تعيين مالك الحزمة</value>
+  </data>
   <data name="Background Jobs" xml:space="preserve">
     <value>المهام الخلفية</value>
   </data>
   <data name="Bad Request" xml:space="preserve">
     <value>طلب خاطئ</value>
+  </data>
+  <data name="Browse packages" xml:space="preserve">
+    <value>تصفح الحزم</value>
   </data>
   <data name="Change Avatar" xml:space="preserve">
     <value>تغيير الصورة الشخصية</value>
@@ -111,8 +120,20 @@
   <data name="Manage" xml:space="preserve">
     <value>إدارة</value>
   </data>
+  <data name="New API key" xml:space="preserve">
+    <value>مفتاح API جديد</value>
+  </data>
   <data name="Not Found" xml:space="preserve">
     <value>غير موجود</value>
+  </data>
+  <data name="Nupkg" xml:space="preserve">
+    <value>قالب</value>
+  </data>
+  <data name="Package ownership" xml:space="preserve">
+    <value>ملكية الحزمة</value>
+  </data>
+  <data name="Packages" xml:space="preserve">
+    <value>الحزم</value>
   </data>
   <data name="Permission Details" xml:space="preserve">
     <value>تفاصيل الصلاحيات</value>
@@ -132,6 +153,9 @@
   <data name="Register" xml:space="preserve">
     <value>تسجيل</value>
   </data>
+  <data name="Revoke API key" xml:space="preserve">
+    <value>إلغاء مفتاح API</value>
+  </data>
   <data name="Role Details" xml:space="preserve">
     <value>تفاصيل الدور</value>
   </data>
@@ -150,11 +174,14 @@
   <data name="System Info" xml:space="preserve">
     <value>معلومات النظام</value>
   </data>
-  <data name="Nupkg" xml:space="preserve">
-    <value>قالب</value>
-  </data>
   <data name="Unauthorized" xml:space="preserve">
     <value>غير مصرح</value>
+  </data>
+  <data name="Upload packages" xml:space="preserve">
+    <value>رفع الحزم</value>
+  </data>
+  <data name="Use API key" xml:space="preserve">
+    <value>استخدام مفتاح API</value>
   </data>
   <data name="User Details" xml:space="preserve">
     <value>تفاصيل المستخدم</value>

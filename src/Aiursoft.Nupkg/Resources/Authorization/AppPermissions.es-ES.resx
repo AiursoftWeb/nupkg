@@ -27,11 +27,17 @@
   <data name="Allows assigning or removing roles for any user." xml:space="preserve">
     <value>Permite asignar o eliminar roles para cualquier usuario.</value>
   </data>
+  <data name="Allows creating package names and publishing, unlisting and relisting your own packages." xml:space="preserve">
+    <value>Permite crear nombres de paquetes y publicar, despublicar y volver a publicar sus propios paquetes.</value>
+  </data>
   <data name="Allows modification of role names and their assigned permissions." xml:space="preserve">
     <value>Permite modificar los nombres de los roles y sus permisos asignados.</value>
   </data>
   <data name="Allows modification of user details like email and roles, and can also reset user passwords." xml:space="preserve">
     <value>Permite modificar los detalles del usuario, como el correo electrónico y los roles, y también puede restablecer las contraseñas de los usuarios.</value>
+  </data>
+  <data name="Allows publishing and managing all packages, including assigning package ownership." xml:space="preserve">
+    <value>Permite publicar y gestionar todos los paquetes, incluida la asignación de la propiedad de los paquetes.</value>
   </data>
   <data name="Allows the permanent deletion of roles." xml:space="preserve">
     <value>Permite la eliminación permanente de roles.</value>
@@ -83,6 +89,12 @@
   </data>
   <data name="Manage Global Settings" xml:space="preserve">
     <value>Administrar la configuración global</value>
+  </data>
+  <data name="Manage Packages" xml:space="preserve">
+    <value>Gestionar paquetes</value>
+  </data>
+  <data name="Publish Packages" xml:space="preserve">
+    <value>Publicar paquetes</value>
   </data>
   <data name="Read Permissions" xml:space="preserve">
     <value>Leer Permisos</value>

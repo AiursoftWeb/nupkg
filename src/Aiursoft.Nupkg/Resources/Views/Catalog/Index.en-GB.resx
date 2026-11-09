@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="All types" xml:space="preserve">
+    <value>All types</value>
+  </data>
+  <data name="Browse all packages" xml:space="preserve">
+    <value>Browse all packages</value>
+  </data>
+  <data name="Find and install NuGet packages from this server." xml:space="preserve">
+    <value>Find and install NuGet packages from this server.</value>
+  </data>
+  <data name="Framework" xml:space="preserve">
+    <value>Framework</value>
+  </data>
+  <data name="Library" xml:space="preserve">
+    <value>Library</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="No packages found" xml:space="preserve">
+    <value>No packages found</value>
+  </data>
+  <data name="Package pages" xml:space="preserve">
+    <value>Package pages</value>
+  </data>
+  <data name="Package type" xml:space="preserve">
+    <value>Package type</value>
+  </data>
+  <data name="Packages" xml:space="preserve">
+    <value>Packages</value>
+  </data>
+  <data name="Prerelease" xml:space="preserve">
+    <value>Prerelease</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Search packages" xml:space="preserve">
+    <value>Search packages</value>
+  </data>
+  <data name="Template" xml:space="preserve">
+    <value>Template</value>
+  </data>
+  <data name="Tool" xml:space="preserve">
+    <value>Tool</value>
+  </data>
+  <data name="Try another search or upload a package to this server." xml:space="preserve">
+    <value>Try another search or upload a package to this server.</value>
+  </data>
+  <data name="Upload packages" xml:space="preserve">
+    <value>Upload packages</value>
+  </data>
+
+</root>

@@ -27,11 +27,17 @@
   <data name="Allows assigning or removing roles for any user." xml:space="preserve">
     <value>Tillåter att tilldela eller ta bort roller för alla användare.</value>
   </data>
+  <data name="Allows creating package names and publishing, unlisting and relisting your own packages." xml:space="preserve">
+    <value>Tillåter att skapa paketnamn samt publicera, ta bort och återpublicera egna paket.</value>
+  </data>
   <data name="Allows modification of role names and their assigned permissions." xml:space="preserve">
     <value>Tillåter modifiering av rollnamn och deras tilldelade behörigheter.</value>
   </data>
   <data name="Allows modification of user details like email and roles, and can also reset user passwords." xml:space="preserve">
     <value>Tillåter ändring av användardetaljer som e-post och roller, och kan också återställa användarlösenord.</value>
+  </data>
+  <data name="Allows publishing and managing all packages, including assigning package ownership." xml:space="preserve">
+    <value>Tillåter publicering och hantering av alla paket, inklusive att tilldela paketägarrollen.</value>
   </data>
   <data name="Allows the permanent deletion of roles." xml:space="preserve">
     <value>Tillåter permanent borttagning av roller.</value>
@@ -83,6 +89,12 @@
   </data>
   <data name="Manage Global Settings" xml:space="preserve">
     <value>Hantera globala inställningar</value>
+  </data>
+  <data name="Manage Packages" xml:space="preserve">
+    <value>Hantera paket</value>
+  </data>
+  <data name="Publish Packages" xml:space="preserve">
+    <value>Publicera paket</value>
   </data>
   <data name="Read Permissions" xml:space="preserve">
     <value>Läs behörigheter</value>
