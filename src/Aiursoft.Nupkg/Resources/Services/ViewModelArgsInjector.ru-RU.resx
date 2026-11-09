@@ -33,11 +33,20 @@
   <data name="Anonymous" xml:space="preserve">
     <value>Аноним</value>
   </data>
+  <data name="API Keys" xml:space="preserve">
+    <value>Ключи API</value>
+  </data>
+  <data name="Assign package owner" xml:space="preserve">
+    <value>Назначить владельца пакета</value>
+  </data>
   <data name="Background Jobs" xml:space="preserve">
     <value>Фоновые задания</value>
   </data>
   <data name="Bad Request" xml:space="preserve">
     <value>Неверный запрос</value>
+  </data>
+  <data name="Browse packages" xml:space="preserve">
+    <value>Просмотр пакетов</value>
   </data>
   <data name="Change Avatar" xml:space="preserve">
     <value>Сменить аватар</value>
@@ -111,8 +120,20 @@
   <data name="Manage" xml:space="preserve">
     <value>Управление</value>
   </data>
+  <data name="New API key" xml:space="preserve">
+    <value>Новый ключ API</value>
+  </data>
   <data name="Not Found" xml:space="preserve">
     <value>Не найдено</value>
+  </data>
+  <data name="Nupkg" xml:space="preserve">
+    <value>Шаблон</value>
+  </data>
+  <data name="Package ownership" xml:space="preserve">
+    <value>Владение пакетом</value>
+  </data>
+  <data name="Packages" xml:space="preserve">
+    <value>Пакеты</value>
   </data>
   <data name="Permission Details" xml:space="preserve">
     <value>Сведения о разрешениях</value>
@@ -132,6 +153,9 @@
   <data name="Register" xml:space="preserve">
     <value>Зарегистрироваться</value>
   </data>
+  <data name="Revoke API key" xml:space="preserve">
+    <value>Отозвать API-ключ</value>
+  </data>
   <data name="Role Details" xml:space="preserve">
     <value>Детали роли</value>
   </data>
@@ -150,11 +174,14 @@
   <data name="System Info" xml:space="preserve">
     <value>Системная информация</value>
   </data>
-  <data name="Nupkg" xml:space="preserve">
-    <value>Шаблон</value>
-  </data>
   <data name="Unauthorized" xml:space="preserve">
     <value>Неавторизованный</value>
+  </data>
+  <data name="Upload packages" xml:space="preserve">
+    <value>Загрузка пакетов</value>
+  </data>
+  <data name="Use API key" xml:space="preserve">
+    <value>Использовать ключ API</value>
   </data>
   <data name="User Details" xml:space="preserve">
     <value>Данные пользователя</value>

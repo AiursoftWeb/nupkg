@@ -36,11 +36,20 @@
   <data name="Anonymous" xml:space="preserve">
     <value>匿名</value>
   </data>
+  <data name="API Keys" xml:space="preserve">
+    <value>API 密钥</value>
+  </data>
+  <data name="Assign package owner" xml:space="preserve">
+    <value>分配包所有者</value>
+  </data>
   <data name="Background Jobs" xml:space="preserve">
     <value>后台任务</value>
   </data>
   <data name="Bad Request" xml:space="preserve">
     <value>错误的请求</value>
+  </data>
+  <data name="Browse packages" xml:space="preserve">
+    <value>浏览软件包</value>
   </data>
   <data name="Change Avatar" xml:space="preserve">
     <value>更换头像</value>
@@ -114,8 +123,20 @@
   <data name="Manage" xml:space="preserve">
     <value>管理</value>
   </data>
+  <data name="New API key" xml:space="preserve">
+    <value>新建 API 密钥</value>
+  </data>
   <data name="Not Found" xml:space="preserve">
     <value>未找到</value>
+  </data>
+  <data name="Nupkg" xml:space="preserve">
+    <value>模板</value>
+  </data>
+  <data name="Package ownership" xml:space="preserve">
+    <value>软件包所有权</value>
+  </data>
+  <data name="Packages" xml:space="preserve">
+    <value>软件包</value>
   </data>
   <data name="Permission Details" xml:space="preserve">
     <value>权限详情</value>
@@ -135,6 +156,9 @@
   <data name="Register" xml:space="preserve">
     <value>注册</value>
   </data>
+  <data name="Revoke API key" xml:space="preserve">
+    <value>撤销 API 密钥</value>
+  </data>
   <data name="Role Details" xml:space="preserve">
     <value>角色详情</value>
   </data>
@@ -153,11 +177,14 @@
   <data name="System Info" xml:space="preserve">
     <value>系统信息</value>
   </data>
-  <data name="Nupkg" xml:space="preserve">
-    <value>模板</value>
-  </data>
   <data name="Unauthorized" xml:space="preserve">
     <value>未授权</value>
+  </data>
+  <data name="Upload packages" xml:space="preserve">
+    <value>上传软件包</value>
+  </data>
+  <data name="Use API key" xml:space="preserve">
+    <value>使用 API 密钥</value>
   </data>
   <data name="User Details" xml:space="preserve">
     <value>用户详情</value>

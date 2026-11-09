@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="About API keys" xml:space="preserve">
+    <value>关于 API 密钥</value>
+  </data>
+  <data name="An enabled legacy server key has access to every package. Keep it only for trusted existing automation." xml:space="preserve">
+    <value>已启用的旧版服务器密钥可以访问所有软件包。请仅将其用于受信任的现有自动化流程。</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="Create a personal key under Personal &gt; API Keys. Publishing requires account permission and ownership of the package name." xml:space="preserve">
+    <value>在“个人 &gt; API 密钥”下创建个人密钥。发布需要账户权限以及对包名称的所有权。</value>
+  </data>
+  <data name="Create API key" xml:space="preserve">
+    <value>创建 API 密钥</value>
+  </data>
+  <data name="Package source" xml:space="preserve">
+    <value>软件包源</value>
+  </data>
+  <data name="Publish a package" xml:space="preserve">
+    <value>发布软件包</value>
+  </data>
+  <data name="Replace the package filename and API key with your own values." xml:space="preserve">
+    <value>请将包文件名和 API 密钥替换为您自己的值。</value>
+  </data>
+  <data name="Sign in to publish" xml:space="preserve">
+    <value>登录以发布</value>
+  </data>
+  <data name="This server is read-only. Publishing is disabled." xml:space="preserve">
+    <value>此服务器为只读。发布功能已禁用。</value>
+  </data>
+  <data name="Upload packages" xml:space="preserve">
+    <value>上传软件包</value>
+  </data>
+  <data name="Use the NuGet CLI to publish packages to this server." xml:space="preserve">
+    <value>使用 NuGet CLI 将包发布到此服务器。</value>
+  </data>
+
+</root>

@@ -27,11 +27,17 @@
   <data name="Allows assigning or removing roles for any user." xml:space="preserve">
     <value>Επιτρέπει την ανάθεση ή την κατάργηση ρόλων για οποιονδήποτε χρήστη.</value>
   </data>
+  <data name="Allows creating package names and publishing, unlisting and relisting your own packages." xml:space="preserve">
+    <value>Επιτρέπει τη δημιουργία ονομάτων πακέτων και τη δημοσίευση, αφαίρεση και επαναδημοσίευση των δικών σας πακέτων.</value>
+  </data>
   <data name="Allows modification of role names and their assigned permissions." xml:space="preserve">
     <value>Επιτρέπει την τροποποίηση των ονομάτων ρόλων και των αντιστοιχισμένων δικαιωμάτων πρόσβασης.</value>
   </data>
   <data name="Allows modification of user details like email and roles, and can also reset user passwords." xml:space="preserve">
     <value>Επιτρέπει την τροποποίηση λεπτομερειών χρήστη, όπως ηλεκτρονικό ταχυδρομείο και ρόλους, και μπορεί επίσης να επαναφέρει κωδικούς πρόσβασης χρηστών.</value>
+  </data>
+  <data name="Allows publishing and managing all packages, including assigning package ownership." xml:space="preserve">
+    <value>Επιτρέπει τη δημοσίευση και τη διαχείριση όλων των πακέτων, συμπεριλαμβανομένης της ανάθεσης ιδιοκτησίας πακέτων.</value>
   </data>
   <data name="Allows the permanent deletion of roles." xml:space="preserve">
     <value>Επιτρέπει την μόνιμη διαγραφή ρόλων.</value>
@@ -83,6 +89,12 @@
   </data>
   <data name="Manage Global Settings" xml:space="preserve">
     <value>Διαχείριση Γενικών Ρυθμίσεων</value>
+  </data>
+  <data name="Manage Packages" xml:space="preserve">
+    <value>Διαχείριση Πακέτων</value>
+  </data>
+  <data name="Publish Packages" xml:space="preserve">
+    <value>Δημοσίευση Πακέτων</value>
   </data>
   <data name="Read Permissions" xml:space="preserve">
     <value>Διαβάστε Δικαιώματα</value>

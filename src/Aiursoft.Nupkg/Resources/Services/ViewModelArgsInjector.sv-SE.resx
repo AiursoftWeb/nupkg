@@ -33,11 +33,20 @@
   <data name="Anonymous" xml:space="preserve">
     <value>Anonym</value>
   </data>
+  <data name="API Keys" xml:space="preserve">
+    <value>API-nycklar</value>
+  </data>
+  <data name="Assign package owner" xml:space="preserve">
+    <value>Tilldela paketägare</value>
+  </data>
   <data name="Background Jobs" xml:space="preserve">
     <value>Bakgrundsjobb</value>
   </data>
   <data name="Bad Request" xml:space="preserve">
     <value>Felaktig begäran</value>
+  </data>
+  <data name="Browse packages" xml:space="preserve">
+    <value>Bläddra i paket</value>
   </data>
   <data name="Change Avatar" xml:space="preserve">
     <value>Byt avatar</value>
@@ -111,8 +120,20 @@
   <data name="Manage" xml:space="preserve">
     <value>Hantera</value>
   </data>
+  <data name="New API key" xml:space="preserve">
+    <value>Ny API-nyckel</value>
+  </data>
   <data name="Not Found" xml:space="preserve">
     <value>Inte hittat</value>
+  </data>
+  <data name="Nupkg" xml:space="preserve">
+    <value>Mall</value>
+  </data>
+  <data name="Package ownership" xml:space="preserve">
+    <value>Paketäganderätt</value>
+  </data>
+  <data name="Packages" xml:space="preserve">
+    <value>Paket</value>
   </data>
   <data name="Permission Details" xml:space="preserve">
     <value>Behörighetsdetaljer</value>
@@ -132,6 +153,9 @@
   <data name="Register" xml:space="preserve">
     <value>Registrera</value>
   </data>
+  <data name="Revoke API key" xml:space="preserve">
+    <value>Återkalla API-nyckel</value>
+  </data>
   <data name="Role Details" xml:space="preserve">
     <value>Rollinformation</value>
   </data>
@@ -150,11 +174,14 @@
   <data name="System Info" xml:space="preserve">
     <value>Systeminformation</value>
   </data>
-  <data name="Nupkg" xml:space="preserve">
-    <value>Mall</value>
-  </data>
   <data name="Unauthorized" xml:space="preserve">
     <value>Obehörig</value>
+  </data>
+  <data name="Upload packages" xml:space="preserve">
+    <value>Ladda upp paket</value>
+  </data>
+  <data name="Use API key" xml:space="preserve">
+    <value>Använd API-nyckel</value>
   </data>
   <data name="User Details" xml:space="preserve">
     <value>Användardetaljer</value>

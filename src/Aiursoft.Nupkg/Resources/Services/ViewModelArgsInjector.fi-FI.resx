@@ -33,11 +33,20 @@
   <data name="Anonymous" xml:space="preserve">
     <value>Anonyymi</value>
   </data>
+  <data name="API Keys" xml:space="preserve">
+    <value>API-avaimet</value>
+  </data>
+  <data name="Assign package owner" xml:space="preserve">
+    <value>Määritä paketin omistaja</value>
+  </data>
   <data name="Background Jobs" xml:space="preserve">
     <value>Taustatehtävät</value>
   </data>
   <data name="Bad Request" xml:space="preserve">
     <value>Väärä pyyntö</value>
+  </data>
+  <data name="Browse packages" xml:space="preserve">
+    <value>Selaa paketteja</value>
   </data>
   <data name="Change Avatar" xml:space="preserve">
     <value>Vaihda avataria</value>
@@ -111,8 +120,20 @@
   <data name="Manage" xml:space="preserve">
     <value>Hallinnoi</value>
   </data>
+  <data name="New API key" xml:space="preserve">
+    <value>Uusi API-avain</value>
+  </data>
   <data name="Not Found" xml:space="preserve">
     <value>Ei löytynyt</value>
+  </data>
+  <data name="Nupkg" xml:space="preserve">
+    <value>Malli</value>
+  </data>
+  <data name="Package ownership" xml:space="preserve">
+    <value>Paketin omistajuus</value>
+  </data>
+  <data name="Packages" xml:space="preserve">
+    <value>Paketit</value>
   </data>
   <data name="Permission Details" xml:space="preserve">
     <value>Oikeuksien tiedot</value>
@@ -132,6 +153,9 @@
   <data name="Register" xml:space="preserve">
     <value>Rekisteröidy</value>
   </data>
+  <data name="Revoke API key" xml:space="preserve">
+    <value>Kumoa API-avain</value>
+  </data>
   <data name="Role Details" xml:space="preserve">
     <value>Roolin tiedot</value>
   </data>
@@ -150,11 +174,14 @@
   <data name="System Info" xml:space="preserve">
     <value>Järjestelmän tiedot</value>
   </data>
-  <data name="Nupkg" xml:space="preserve">
-    <value>Malli</value>
-  </data>
   <data name="Unauthorized" xml:space="preserve">
     <value>Luvaton</value>
+  </data>
+  <data name="Upload packages" xml:space="preserve">
+    <value>Lataa paketteja</value>
+  </data>
+  <data name="Use API key" xml:space="preserve">
+    <value>Käytä API-avainta</value>
   </data>
   <data name="User Details" xml:space="preserve">
     <value>Käyttäjän tiedot</value>

@@ -27,11 +27,17 @@
   <data name="Allows assigning or removing roles for any user." xml:space="preserve">
     <value>Дозволяє призначати або знімати ролі для будь-кого користувача.</value>
   </data>
+  <data name="Allows creating package names and publishing, unlisting and relisting your own packages." xml:space="preserve">
+    <value>Дозволяє створювати імена пакетів, а також публікувати, прибирати з переліку та повторно публікувати власні пакети.</value>
+  </data>
   <data name="Allows modification of role names and their assigned permissions." xml:space="preserve">
     <value>Дозволяє змінювати назви ролей та призначені для них дозволи.</value>
   </data>
   <data name="Allows modification of user details like email and roles, and can also reset user passwords." xml:space="preserve">
     <value>Дозволяє змінювати дані користувача, такі як електронна пошта та ролі, а також скидати паролі користувачів.</value>
+  </data>
+  <data name="Allows publishing and managing all packages, including assigning package ownership." xml:space="preserve">
+    <value>Дозволяє публікувати та керувати всіма пакетами, включаючи призначення власника пакета.</value>
   </data>
   <data name="Allows the permanent deletion of roles." xml:space="preserve">
     <value>Дозволяє остаточне видалення ролей.</value>
@@ -83,6 +89,12 @@
   </data>
   <data name="Manage Global Settings" xml:space="preserve">
     <value>Керування загальними параметрами</value>
+  </data>
+  <data name="Manage Packages" xml:space="preserve">
+    <value>Керування пакетами</value>
+  </data>
+  <data name="Publish Packages" xml:space="preserve">
+    <value>Публікація пакетів</value>
   </data>
   <data name="Read Permissions" xml:space="preserve">
     <value>Читати дозволи</value>
