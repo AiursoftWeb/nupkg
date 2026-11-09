@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="Authors" xml:space="preserve">
+    <value>Autori</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copia</value>
+  </data>
+  <data name="Dependencies" xml:space="preserve">
+    <value>Dipendenze</value>
+  </data>
+  <data name="Dependent package pages" xml:space="preserve">
+    <value>Pagine dei pacchetti dipendenti</value>
+  </data>
+  <data name="Download package" xml:space="preserve">
+    <value>Scarica pacchetto</value>
+  </data>
+  <data name="Earlier SDKs" xml:space="preserve">
+    <value>SDK precedenti</value>
+  </data>
+  <data name="Frameworks" xml:space="preserve">
+    <value>Framework</value>
+  </data>
+  <data name="Install" xml:space="preserve">
+    <value>Installa</value>
+  </data>
+  <data name="Installation format" xml:space="preserve">
+    <value>Formato di installazione</value>
+  </data>
+  <data name="Last updated" xml:space="preserve">
+    <value>Ultimo aggiornamento</value>
+  </data>
+  <data name="License" xml:space="preserve">
+    <value>Licenza</value>
+  </data>
+  <data name="Links" xml:space="preserve">
+    <value>Collegamenti</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Successivo</value>
+  </data>
+  <data name="No dependencies" xml:space="preserve">
+    <value>Nessuna dipendenza</value>
+  </data>
+  <data name="No dependent packages on this server" xml:space="preserve">
+    <value>Nessun pacchetto dipendente su questo server</value>
+  </data>
+  <data name="No packages on this page." xml:space="preserve">
+    <value>Nessun pacchetto in questa pagina.</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
+    <value>Panoramica</value>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>Proprietario</value>
+  </data>
+  <data name="Package Manager" xml:space="preserve">
+    <value>Package Manager</value>
+  </data>
+  <data name="Packages" xml:space="preserve">
+    <value>Pacchetti</value>
+  </data>
+  <data name="Prerelease" xml:space="preserve">
+    <value>Pre-rilascio</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Precedente</value>
+  </data>
+  <data name="Project website" xml:space="preserve">
+    <value>Sito web del progetto</value>
+  </data>
+  <data name="Published" xml:space="preserve">
+    <value>Pubblicato</value>
+  </data>
+  <data name="Release notes" xml:space="preserve">
+    <value>Note di rilascio</value>
+  </data>
+  <data name="Source code" xml:space="preserve">
+    <value>Codice sorgente</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="Used by" xml:space="preserve">
+    <value>Utilizzato da</value>
+  </data>
+  <data name="Versions" xml:space="preserve">
+    <value>Versioni</value>
+  </data>
+
+</root>

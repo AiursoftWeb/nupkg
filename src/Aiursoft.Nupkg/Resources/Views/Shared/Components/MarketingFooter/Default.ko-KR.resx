@@ -48,6 +48,9 @@
   <data name="Project" xml:space="preserve">
     <value>프로젝트</value>
   </data>
+  <data name="Publish, discover and install NuGet packages." xml:space="preserve">
+    <value>NuGet 패키지를 게시하고 발견하여 설치하세요.</value>
+  </data>
   <data name="Report an Issue" xml:space="preserve">
     <value>문제 신고</value>
   </data>
