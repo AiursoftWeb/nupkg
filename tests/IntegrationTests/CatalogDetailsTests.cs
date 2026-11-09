@@ -59,8 +59,13 @@ public class CatalogDetailsTests : TestBase
             package.PackageTypes = [new PackageType { Name = type, Version = "0.0" }];
             await SeedFamilyAsync(package);
             var html = await Http.GetStringAsync($"/packages/{id}");
-            Assert.Contains(type == "DotnetTool" ? $"dotnet tool install --global {id} --version 1.0.0" : $"dotnet new install {id}::1.0.0", html);
-            Assert.DoesNotContain("id=\"install-format\"", html);
+            Assert.Contains(type == "DotnetTool" ? $"dotnet tool install --global {id} --version 1.0.0" : $"dotnet new install {id}@1.0.0", html);
+            if (type == "DotnetTool") Assert.DoesNotContain("id=\"install-format\"", html);
+            else
+            {
+                Assert.Contains("Earlier SDKs", html);
+                Assert.Contains($"dotnet new install {id}::1.0.0", html);
+            }
         }
     }
 

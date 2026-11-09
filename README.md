@@ -27,3 +27,7 @@ The NuGet v3 service index is `/v3/index.json`. Publishing uses `/api/v2/package
 ## Credits
 
 The application foundation comes from Aiursoft Template. The NuGet protocol, indexing, storage and package metadata implementation derives from BaGet. See `LICENSE`, `BAGET-LICENSE` and `THIRD-PARTY-NOTICES`.
+
+## Upgrading BaGet
+
+Follow the [migration guide](docs/migrate-from-baget.md) to retain your database, package files and feed address, then migrate automation to personal publishing keys.

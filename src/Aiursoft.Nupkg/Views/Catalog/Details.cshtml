@@ -17,13 +17,21 @@
     <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
         <h2 class="h5 mb-0">@Localizer["Install"]</h2>
         <div class="d-flex align-items-center gap-2 ms-auto">
-        @if (Model.IsLibrary)
+        @if (Model.IsLibrary || Model.IsTemplate)
         {
             <div><label for="install-format" class="visually-hidden">@Localizer["Installation format"]</label><select id="install-format" class="form-select form-select-sm">
-                <option value="dotnet" data-command="@Model.InstallCommand">.NET CLI</option>
-                <option value="reference" data-command="@Model.PackageReferenceCommand">PackageReference</option>
-                <option value="manager" data-command="@Model.PackageManagerCommand">@Localizer["Package Manager"]</option>
-                <option value="paket" data-command="@Model.PaketCommand">Paket</option>
+                @if (Model.IsLibrary)
+                {
+                    <option value="dotnet" data-command="@Model.InstallCommand">.NET CLI</option>
+                    <option value="reference" data-command="@Model.PackageReferenceCommand">PackageReference</option>
+                    <option value="manager" data-command="@Model.PackageManagerCommand">@Localizer["Package Manager"]</option>
+                    <option value="paket" data-command="@Model.PaketCommand">Paket</option>
+                }
+                else
+                {
+                    <option value="dotnet" data-command="@Model.InstallCommand">.NET 9.0.200+</option>
+                    <option value="legacy-template" data-command="@Model.LegacyTemplateCommand">@Localizer["Earlier SDKs"]</option>
+                }
             </select></div>
         }
         <button type="button" class="btn btn-outline-secondary btn-sm copy-command">@Localizer["Copy"]</button>

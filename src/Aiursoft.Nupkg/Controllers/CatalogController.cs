@@ -68,7 +68,7 @@ public class CatalogController(ISearchService search, IPackageService packages,
         var install = types.Contains("DotnetTool", StringComparer.OrdinalIgnoreCase)
             ? $"dotnet tool install --global {selected.Id} --version {selected.NormalizedVersionString}"
             : types.Contains("Template", StringComparer.OrdinalIgnoreCase)
-                ? $"dotnet new install {selected.Id}::{selected.NormalizedVersionString}"
+                ? $"dotnet new install {selected.Id}@{selected.NormalizedVersionString}"
                 : $"dotnet add package {selected.Id} --version {selected.NormalizedVersionString}";
         var dependents = await search.FindDependentsAsync(id, (dependentsPage - 1) * 20, 20, HttpContext.RequestAborted);
         return this.StackView(new DetailsViewModel
@@ -76,6 +76,7 @@ public class CatalogController(ISearchService search, IPackageService packages,
             PageTitle = selected.Id, Package = selected,
             IconUrl = selected.HasEmbeddedIcon ? urls.GetPackageIconDownloadUrl(selected.Id, selected.Version) : HttpUrl(selected.IconUrl),
             ProjectUrl = HttpUrl(selected.ProjectUrl), SourceUrl = HttpUrl(selected.RepositoryUrl), LicenseUrl = HttpUrl(selected.LicenseUrl),
+            IsTemplate = !types.Contains("DotnetTool", StringComparer.OrdinalIgnoreCase) && types.Contains("Template", StringComparer.OrdinalIgnoreCase),
             LastUpdated = versions.Max(p => p.Published), IsLibrary = !types.Any(t =>
                 t.Equals("DotnetTool", StringComparison.OrdinalIgnoreCase) || t.Equals("Template", StringComparison.OrdinalIgnoreCase)),
             TotalDependents = dependents.TotalHits, DependentsPage = dependentsPage,

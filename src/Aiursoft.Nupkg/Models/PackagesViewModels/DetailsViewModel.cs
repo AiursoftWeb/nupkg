@@ -23,6 +23,8 @@ public class DetailsViewModel : UiStackLayoutViewModel
     public string? SourceUrl { get; set; }
     public string? LicenseUrl { get; set; }
     public DateTime LastUpdated { get; set; }
+    public bool IsTemplate { get; set; }
+    public string LegacyTemplateCommand => $"dotnet new install {Package.Id}::{Package.NormalizedVersionString}";
     public bool IsLibrary { get; set; }
     public string PackageReferenceCommand => $"<PackageReference Include=\"{Package.Id}\" Version=\"{Package.NormalizedVersionString}\" />";
     public string PackageManagerCommand => $"Install-Package {Package.Id} -Version {Package.NormalizedVersionString}";
