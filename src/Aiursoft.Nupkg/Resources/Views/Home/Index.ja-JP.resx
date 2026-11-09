@@ -735,11 +735,11 @@
   <data name="The navigation bar automatically adjusts based on user roles and permissions." xml:space="preserve">
     <value>ナビゲーションバーは、ユーザーの役割と権限に基づいて自動的に調整されます。</value>
   </data>
-  <data name="The Philosophy" xml:space="preserve">
-    <value>哲学</value>
-  </data>
   <data name="The nupkg is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>このテンプレートは簡単なデプロイを実現するために構築されています。完全なDockerサポートを含んでいるため、アプリをコンテナ化してどこでも実行できます。また、IIS、Azure App Service、またはASP.NET Coreをサポートする任意のサーバーに直接デプロイすることも可能です。</value>
+  </data>
+  <data name="The Philosophy" xml:space="preserve">
+    <value>哲学</value>
   </data>
   <data name="This is a nupkg project" xml:space="preserve">
     <value>これはテンプレートプロジェクトです</value>

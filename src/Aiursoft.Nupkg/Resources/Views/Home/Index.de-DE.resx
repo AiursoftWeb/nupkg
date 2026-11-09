@@ -735,11 +735,11 @@
   <data name="The navigation bar automatically adjusts based on user roles and permissions." xml:space="preserve">
     <value>Die Navigationsleiste passt sich automatisch basierend auf Benutzerrollen und Berechtigungen an.</value>
   </data>
-  <data name="The Philosophy" xml:space="preserve">
-    <value>Die Philosophie</value>
-  </data>
   <data name="The nupkg is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>Die Vorlage ist für eine einfache Bereitstellung konzipiert. Sie bietet vollständige Docker-Unterstützung, sodass Sie Ihre App containerisieren und überall ausführen können. Sie können sie auch direkt auf IIS, Azure App Service oder jedem Server bereitstellen, der ASP.NET Core unterstützt.</value>
+  </data>
+  <data name="The Philosophy" xml:space="preserve">
+    <value>Die Philosophie</value>
   </data>
   <data name="This is a nupkg project" xml:space="preserve">
     <value>Dies ist ein Vorlagenprojekt</value>

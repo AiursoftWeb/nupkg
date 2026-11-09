@@ -33,6 +33,9 @@
   <data name="Download package" xml:space="preserve">
     <value>下載套件</value>
   </data>
+  <data name="Earlier SDKs" xml:space="preserve">
+    <value>較舊的 SDK</value>
+  </data>
   <data name="Frameworks" xml:space="preserve">
     <value>框架</value>
   </data>
