@@ -79,6 +79,8 @@ namespace Aiursoft.Nupkg.Controllers.Protocol
         [Route("v3/dependents", Name = Routes.DependentsRouteName)]
         public async Task<ActionResult<DependentsResponse>> DependentsAsync(
             [FromQuery] string? packageId = null,
+            [FromQuery] int skip = 0,
+            [FromQuery] int take = 20,
             CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(packageId))
@@ -86,7 +88,7 @@ namespace Aiursoft.Nupkg.Controllers.Protocol
                 return BadRequest();
             }
 
-            return await _searchService.FindDependentsAsync(packageId, cancellationToken);
+            return await _searchService.FindDependentsAsync(packageId, skip, take, cancellationToken);
         }
     }
 }

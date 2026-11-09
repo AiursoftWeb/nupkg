@@ -15,5 +15,17 @@ public class DetailsViewModel : UiStackLayoutViewModel
     public string Framework { get; set; } = "any";
     public bool Prerelease { get; set; } = true;
     public int Page { get; set; } = 1;
+    public long TotalDependents { get; set; }
+    public int DependentsPage { get; set; } = 1;
+    public string ActiveTab { get; set; } = "overview";
+    public string? IconUrl { get; set; }
+    public string? ProjectUrl { get; set; }
+    public string? SourceUrl { get; set; }
+    public string? LicenseUrl { get; set; }
+    public DateTime LastUpdated { get; set; }
+    public bool IsLibrary { get; set; }
+    public string PackageReferenceCommand => $"<PackageReference Include=\"{Package.Id}\" Version=\"{Package.NormalizedVersionString}\" />";
+    public string PackageManagerCommand => $"Install-Package {Package.Id} -Version {Package.NormalizedVersionString}";
+    public string PaketCommand => $"paket add {Package.Id} --version {Package.NormalizedVersionString}";
     public string InstallCommand { get; set; } = string.Empty;
 }

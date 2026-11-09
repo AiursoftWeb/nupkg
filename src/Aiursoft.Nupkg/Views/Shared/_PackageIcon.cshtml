@@ -1,0 +1,9 @@
+@model string
+@{
+    var source = Uri.TryCreate(Model, UriKind.Absolute, out var uri)
+        && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps) ? Model : null;
+}
+<span class="package-icon flex-shrink-0" aria-hidden="true">
+    @if (!string.IsNullOrWhiteSpace(source)) { <img src="@source" alt="" class="package-icon-image" width="48" height="48" loading="lazy" decoding="async" /> }
+    <span class="package-icon-fallback" hidden="@(!string.IsNullOrWhiteSpace(source))"><i data-lucide="package"></i></span>
+</span>

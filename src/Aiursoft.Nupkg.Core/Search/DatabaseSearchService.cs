@@ -107,24 +107,28 @@ namespace Aiursoft.Nupkg.Core.Search
             return _searchBuilder.BuildAutocomplete(packageVersions.Count, packageVersions);
         }
 
-        public async Task<DependentsResponse> FindDependentsAsync(string packageId, CancellationToken cancellationToken)
-        {
-            var dependents = await _context
-                .Packages
-                .AsNoTracking()
-                .Where(p => p.Listed)
-                .OrderBy(p => p.Id)
-                .Where(p => p.Dependencies.Any(d => d.Id == packageId))
-                .Take(20)
-                .Select(r => new PackageDependent
-                {
-                    Id = r.Id,
-                    Description = r.Description
-                })
-                .Distinct()
-                .ToListAsync(cancellationToken);
+        public Task<DependentsResponse> FindDependentsAsync(string packageId, CancellationToken cancellationToken)
+            => FindDependentsAsync(packageId, 0, 20, cancellationToken);
 
-            return _searchBuilder.BuildDependents(dependents);
+        public async Task<DependentsResponse> FindDependentsAsync(string packageId, int skip, int take, CancellationToken cancellationToken)
+        {
+            skip = Math.Max(0, skip);
+            take = Math.Clamp(take, 1, 100);
+            var normalizedId = packageId.ToLowerInvariant();
+            // A name appears once, even when several listed versions depend on the target.
+            var query = _context.PackageFamilies.AsNoTracking().Where(f => f.Versions.Any(p =>
+                p.Listed && p.Dependencies.Any(d => d.Id != null && d.Id.ToLower() == normalizedId)));
+            var total = await query.LongCountAsync(cancellationToken);
+            var dependents = await query.OrderBy(f => f.NormalizedId).Skip(skip).Take(take)
+                .Select(f => new PackageDependent
+                {
+                    Id = f.PackageId,
+                    Description = f.Versions.Where(p => p.Listed)
+                        .OrderByDescending(p => p.Published).Select(p => p.Description).FirstOrDefault()
+                }).ToListAsync(cancellationToken);
+            var response = _searchBuilder.BuildDependents(dependents);
+            response.TotalHits = total;
+            return response;
         }
 
         private IQueryable<Package> ApplySearchQuery(IQueryable<Package> query, string search)

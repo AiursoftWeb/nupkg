@@ -46,8 +46,9 @@ public class CatalogController(ISearchService search, IPackageService packages,
 
     [HttpGet("/packages/{id}/{version?}", Name = "PackageDetails")]
     public async Task<IActionResult> Details(string id, string? version = null, string q = "", int page = 1,
-        string packageType = "any", string framework = "any", bool prerelease = true)
+        string packageType = "any", string framework = "any", bool prerelease = true, int dependentsPage = 1, string tab = "overview")
     {
+        dependentsPage = Math.Clamp(dependentsPage, 1, int.MaxValue / 20);
         var versions = await packages.FindPackagesAsync(id, HttpContext.RequestAborted);
         var selected = NuGetVersion.TryParse(version, out var parsed)
             ? versions.SingleOrDefault(p => p.Version == parsed)
@@ -69,10 +70,16 @@ public class CatalogController(ISearchService search, IPackageService packages,
             : types.Contains("Template", StringComparer.OrdinalIgnoreCase)
                 ? $"dotnet new install {selected.Id}::{selected.NormalizedVersionString}"
                 : $"dotnet add package {selected.Id} --version {selected.NormalizedVersionString}";
-        var dependents = await search.FindDependentsAsync(id, HttpContext.RequestAborted);
+        var dependents = await search.FindDependentsAsync(id, (dependentsPage - 1) * 20, 20, HttpContext.RequestAborted);
         return this.StackView(new DetailsViewModel
         {
             PageTitle = selected.Id, Package = selected,
+            IconUrl = selected.HasEmbeddedIcon ? urls.GetPackageIconDownloadUrl(selected.Id, selected.Version) : HttpUrl(selected.IconUrl),
+            ProjectUrl = HttpUrl(selected.ProjectUrl), SourceUrl = HttpUrl(selected.RepositoryUrl), LicenseUrl = HttpUrl(selected.LicenseUrl),
+            LastUpdated = versions.Max(p => p.Published), IsLibrary = !types.Any(t =>
+                t.Equals("DotnetTool", StringComparison.OrdinalIgnoreCase) || t.Equals("Template", StringComparison.OrdinalIgnoreCase)),
+            TotalDependents = dependents.TotalHits, DependentsPage = dependentsPage,
+            ActiveTab = tab is "versions" or "dependencies" or "usedby" ? tab : "overview",
             Versions = versions.Where(p => p.Listed).OrderByDescending(p => p.Version).ToList(), Dependents = dependents.Data,
             OwnerDisplayName = await db.PackageFamilies.AsNoTracking()
                 .Where(r => r.NormalizedId == id.ToLowerInvariant())
@@ -82,6 +89,9 @@ public class CatalogController(ISearchService search, IPackageService packages,
             Query = q, Page = Math.Max(1, page), PackageType = packageType, Framework = framework, Prerelease = prerelease
         });
     }
+
+    private static string? HttpUrl(Uri? value) => value is { IsAbsoluteUri: true }
+        && (value.Scheme == Uri.UriSchemeHttp || value.Scheme == Uri.UriSchemeHttps) ? value.AbsoluteUri : null;
 
     [HttpGet("/upload")]
     [HttpGet("/Catalog/Upload")]
