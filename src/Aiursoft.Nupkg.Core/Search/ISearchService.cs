@@ -45,5 +45,8 @@ namespace Aiursoft.Nupkg.Core.Search
         Task<DependentsResponse> FindDependentsAsync(
             string packageId,
             CancellationToken cancellationToken);
+        /// <summary>Find a page of distinct dependent package names and the full match count.</summary>
+        Task<DependentsResponse> FindDependentsAsync(
+            string packageId, int skip, int take, CancellationToken cancellationToken);
     }
 }

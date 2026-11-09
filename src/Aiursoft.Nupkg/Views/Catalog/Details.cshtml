@@ -4,33 +4,93 @@
 @section styles { <link rel="stylesheet" href="~/styles/packages.css" asp-append-version="true" /> }
 <div class="mb-3"><a asp-route="PackageCatalog" asp-route-q="@Model.Query" asp-route-page="@Model.Page" asp-route-packageType="@Model.PackageType" asp-route-framework="@Model.Framework" asp-route-prerelease="@Model.Prerelease" class="text-decoration-none"><i data-lucide="arrow-left" aria-hidden="true"></i> @Localizer["Packages"]</a></div>
 <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3">
-    <div><h1 class="h3 d-flex flex-wrap align-items-baseline gap-2 mb-2"><span class="text-break">@Model.Package.Id</span><span class="text-muted">@Model.Package.NormalizedVersionString</span></h1><div class="d-flex flex-wrap gap-2"><span class="badge @(Model.Package.Listed ? "bg-success" : "bg-secondary")">@(Model.Package.Listed ? Localizer["Listed"] : Localizer["Unlisted"])</span>@if (Model.Package.IsPrerelease) { <span class="badge bg-info">@Localizer["Prerelease"]</span> }</div></div>
+    <div class="d-flex gap-3 min-width-0">
+        <partial name="_PackageIcon" model="@(Model.IconUrl ?? string.Empty)" />
+        <div class="min-width-0">
+            <h1 class="h3 d-flex flex-wrap align-items-baseline gap-2 mb-2"><span class="text-break">@Model.Package.Id</span><span class="text-muted">@Model.Package.NormalizedVersionString</span></h1>
+            <div class="d-flex flex-wrap gap-2"><span class="badge @(Model.Package.Listed ? "bg-success" : "bg-secondary")">@(Model.Package.Listed ? Localizer["Listed"] : Localizer["Unlisted"])</span>@if (Model.Package.IsPrerelease) { <span class="badge bg-info">@Localizer["Prerelease"]</span> }@foreach (var type in Model.Package.PackageTypes) { <span class="badge bg-secondary">@type.Name</span> }</div>
+        </div>
+    </div>
     <a href="@Model.DownloadUrl" class="btn btn-primary"><i data-lucide="download" aria-hidden="true" class="me-1"></i>@Localizer["Download package"]</a>
 </div>
-<div class="card"><div class="card-body"><h2 class="h5">@Localizer["Install"]</h2><div class="package-command"><div class="d-flex justify-content-end"><button type="button" class="btn btn-outline-secondary btn-sm copy-command">@Localizer["Copy"]</button></div><pre class="bg-body-tertiary text-body border rounded p-3 mt-2 mb-0"><code tabindex="-1">@Model.InstallCommand</code></pre><p class="copy-status small mb-0 mt-1" role="status"></p></div></div></div>
-<ul class="nav nav-tabs mb-3" role="tablist">
-    <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#package-overview" type="button" role="tab" aria-controls="package-overview" aria-selected="true">@Localizer["Overview"]</button></li>
-    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#package-versions" type="button" role="tab" aria-controls="package-versions" aria-selected="false">@Localizer["Versions"] <span class="badge bg-secondary">@Model.Versions.Count</span></button></li>
-    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#package-dependencies" type="button" role="tab" aria-controls="package-dependencies" aria-selected="false">@Localizer["Dependencies"]</button></li>
-    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#package-dependents" type="button" role="tab" aria-controls="package-dependents" aria-selected="false">@Localizer["Used by"] <span class="badge bg-secondary">@Model.Dependents.Count</span></button></li>
+<div class="card"><div class="card-body package-command" id="install-command">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+        <h2 class="h5 mb-0">@Localizer["Install"]</h2>
+        <div class="d-flex align-items-center gap-2 ms-auto">
+        @if (Model.IsLibrary)
+        {
+            <div><label for="install-format" class="visually-hidden">@Localizer["Installation format"]</label><select id="install-format" class="form-select form-select-sm">
+                <option value="dotnet" data-command="@Model.InstallCommand">.NET CLI</option>
+                <option value="reference" data-command="@Model.PackageReferenceCommand">PackageReference</option>
+                <option value="manager" data-command="@Model.PackageManagerCommand">@Localizer["Package Manager"]</option>
+                <option value="paket" data-command="@Model.PaketCommand">Paket</option>
+            </select></div>
+        }
+        <button type="button" class="btn btn-outline-secondary btn-sm copy-command">@Localizer["Copy"]</button>
+        </div>
+    </div>
+    <pre class="bg-body-tertiary text-body border rounded p-3 mt-2 mb-0"><code tabindex="-1">@Model.InstallCommand</code></pre><p class="copy-status small mb-0 mt-1" role="status"></p>
+</div></div>
+<ul class="nav nav-tabs package-tabs mb-3" role="tablist">
+    <li class="nav-item"><button class="nav-link @(Model.ActiveTab == "overview" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#package-overview" type="button" role="tab" aria-controls="package-overview" aria-selected="@(Model.ActiveTab == "overview" ? "true" : "false")">@Localizer["Overview"]</button></li>
+    <li class="nav-item"><button class="nav-link @(Model.ActiveTab == "versions" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#package-versions" type="button" role="tab" aria-controls="package-versions" aria-selected="@(Model.ActiveTab == "versions" ? "true" : "false")">@Localizer["Versions"] <span class="badge bg-secondary">@Model.Versions.Count</span></button></li>
+    <li class="nav-item"><button class="nav-link @(Model.ActiveTab == "dependencies" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#package-dependencies" type="button" role="tab" aria-controls="package-dependencies" aria-selected="@(Model.ActiveTab == "dependencies" ? "true" : "false")">@Localizer["Dependencies"]</button></li>
+    <li class="nav-item"><button class="nav-link @(Model.ActiveTab == "usedby" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#package-dependents" type="button" role="tab" aria-controls="package-dependents" aria-selected="@(Model.ActiveTab == "usedby" ? "true" : "false")">@Localizer["Used by"] <span class="badge bg-secondary">@Model.TotalDependents</span></button></li>
 </ul>
 <div class="tab-content">
-    <section class="tab-pane fade show active" id="package-overview" role="tabpanel"><div class="card"><div class="card-body package-readme">
-        @if (!string.IsNullOrEmpty(Model.ReadmeHtml)) { @Html.Raw(Model.ReadmeHtml) } else { <p class="text-break">@Model.Package.Description</p> }
-        <dl class="row mt-4 mb-0"><dt class="col-sm-3">@Localizer["Owner"]</dt><dd class="col-sm-9 text-break">@(Model.OwnerDisplayName ?? Localizer["Unassigned"].Value)</dd><dt class="col-sm-3">@Localizer["Authors"]</dt><dd class="col-sm-9 text-break">@string.Join(", ", Model.Package.Authors ?? [])</dd><dt class="col-sm-3">@Localizer["Published"]</dt><dd class="col-sm-9"><label data-utc-time="@Model.Package.Published.ToHtmlDateTime()"></label></dd><dt class="col-sm-3">@Localizer["Tags"]</dt><dd class="col-sm-9 text-break">@string.Join(", ", Model.Package.Tags ?? [])</dd></dl>
+    <section class="tab-pane fade @(Model.ActiveTab == "overview" ? "show active" : "")" id="package-overview" role="tabpanel"><div class="card"><div class="card-body">
+        <div class="package-readme">@if (!string.IsNullOrEmpty(Model.ReadmeHtml)) { @Html.Raw(Model.ReadmeHtml) } else { <p class="text-break">@Model.Package.Description</p> }</div>
+        <hr />
+        <dl class="row mb-0">
+            <dt class="col-sm-3">@Localizer["Owner"]</dt><dd class="col-sm-9 text-break">@(Model.OwnerDisplayName ?? Localizer["Unassigned"].Value)</dd>
+            <dt class="col-sm-3">@Localizer["Authors"]</dt><dd class="col-sm-9 text-break">@string.Join(", ", Model.Package.Authors ?? [])</dd>
+            <dt class="col-sm-3">@Localizer["Published"]</dt><dd class="col-sm-9"><label data-utc-time="@Model.Package.Published.ToHtmlDateTime()"></label></dd>
+            <dt class="col-sm-3">@Localizer["Last updated"]</dt><dd class="col-sm-9"><label data-utc-time="@Model.LastUpdated.ToHtmlDateTime()"></label></dd>
+            @if (Model.Package.TargetFrameworks.Count > 0)
+            {
+                <dt class="col-sm-3">@Localizer["Frameworks"]</dt><dd class="col-sm-9 d-flex flex-wrap gap-1">@foreach (var framework in Model.Package.TargetFrameworks) { <span class="badge bg-secondary">@(framework.Moniker == "any" ? Localizer["All frameworks"].Value : framework.Moniker)</span> }</dd>
+            }
+            @if (Model.Package.Tags is { Length: > 0 }) { <dt class="col-sm-3">@Localizer["Tags"]</dt><dd class="col-sm-9 text-break">@string.Join(", ", Model.Package.Tags)</dd> }
+            @if (Model.ProjectUrl != null || Model.SourceUrl != null || Model.LicenseUrl != null)
+            {
+                <dt class="col-sm-3">@Localizer["Links"]</dt><dd class="col-sm-9 d-flex flex-wrap gap-3">
+                    @if (Model.ProjectUrl != null) { <a href="@Model.ProjectUrl" target="_blank" rel="noopener noreferrer">@Localizer["Project website"]</a> }
+                    @if (Model.SourceUrl != null) { <a href="@Model.SourceUrl" target="_blank" rel="noopener noreferrer">@Localizer["Source code"]</a> }
+                    @if (Model.LicenseUrl != null) { <a href="@Model.LicenseUrl" target="_blank" rel="noopener noreferrer">@Localizer["License"]</a> }
+                </dd>
+            }
+        </dl>
         @if (!string.IsNullOrWhiteSpace(Model.Package.ReleaseNotes)) { <h3 class="h5 mt-3">@Localizer["Release notes"]</h3><p class="text-break" style="white-space:pre-wrap">@Model.Package.ReleaseNotes</p> }
     </div></div></section>
-    <section class="tab-pane fade" id="package-versions" role="tabpanel"><div class="card"><div class="list-group list-group-flush">
-    @foreach (var version in Model.Versions) { <a class="list-group-item list-group-item-action d-flex flex-wrap gap-2 align-items-center justify-content-between" asp-route="PackageDetails" asp-route-id="@version.Id" asp-route-version="@version.NormalizedVersionString" asp-route-q="@Model.Query" asp-route-page="@Model.Page" asp-route-packageType="@Model.PackageType" asp-route-framework="@Model.Framework" asp-route-prerelease="@Model.Prerelease"><span>@version.NormalizedVersionString</span><span class="badge @(version.Listed ? "bg-success" : "bg-secondary")">@(version.Listed ? Localizer["Listed"] : Localizer["Unlisted"])</span></a> }
+    <section class="tab-pane fade @(Model.ActiveTab == "versions" ? "show active" : "")" id="package-versions" role="tabpanel"><div class="card"><div class="list-group list-group-flush">
+    @foreach (var version in Model.Versions)
+    {
+        <a class="list-group-item list-group-item-action d-flex flex-wrap gap-2 align-items-center justify-content-between" asp-route="PackageDetails" asp-route-id="@version.Id" asp-route-version="@version.NormalizedVersionString" asp-route-q="@Model.Query" asp-route-page="@Model.Page" asp-route-packageType="@Model.PackageType" asp-route-framework="@Model.Framework" asp-route-prerelease="@Model.Prerelease" asp-route-tab="versions"><span>@version.NormalizedVersionString</span><label class="small text-muted mb-0" data-utc-time="@version.Published.ToHtmlDateTime()"></label></a>
+    }
     </div></div></section>
-    <section class="tab-pane fade" id="package-dependencies" role="tabpanel"><div class="card"><div class="card-body">
+    <section class="tab-pane fade @(Model.ActiveTab == "dependencies" ? "show active" : "")" id="package-dependencies" role="tabpanel"><div class="card"><div class="card-body">
     @if (Model.Package.Dependencies.Count == 0) { <p class="text-muted mb-0">@Localizer["No dependencies"]</p> }
-    @foreach (var group in Model.Package.Dependencies.GroupBy(d => d.TargetFramework)) { <h3 class="h5 mt-3">@(string.IsNullOrWhiteSpace(group.Key) ? Localizer["All frameworks"].Value : group.Key)</h3><ul>@foreach (var dependency in group.Where(d => d.Id != null)) { <li><a asp-route="PackageDetails" asp-route-id="@dependency.Id">@dependency.Id</a> <span class="text-muted">@dependency.VersionRange</span></li> }</ul> }
+    @foreach (var group in Model.Package.Dependencies.GroupBy(d => d.TargetFramework))
+    {
+        <h3 class="h5 mt-3">@(string.IsNullOrWhiteSpace(group.Key) ? Localizer["All frameworks"].Value : group.Key)</h3>
+        @if (!group.Any(d => d.Id != null)) { <p class="text-muted">@Localizer["No dependencies"]</p> }
+        else { <ul>@foreach (var dependency in group.Where(d => d.Id != null)) { <li><a asp-route="PackageDetails" asp-route-id="@dependency.Id" asp-route-q="@Model.Query" asp-route-page="@Model.Page" asp-route-packageType="@Model.PackageType" asp-route-framework="@Model.Framework" asp-route-prerelease="@Model.Prerelease">@dependency.Id</a> <span class="text-muted">@dependency.VersionRange</span></li> }</ul> }
+    }
     </div></div></section>
-    <section class="tab-pane fade" id="package-dependents" role="tabpanel"><div class="card"><div class="card-body">
-    @if (Model.Dependents.Count == 0) { <p class="text-muted mb-0">@Localizer["No dependent packages on this server"]</p> }
-    @foreach (var dependent in Model.Dependents) { <a class="d-block py-2 text-break" asp-route="PackageDetails" asp-route-id="@dependent.Id">@dependent.Id</a> }
-    </div></div></section>
+    <section class="tab-pane fade @(Model.ActiveTab == "usedby" ? "show active" : "")" id="package-dependents" role="tabpanel"><div class="card"><div class="list-group list-group-flush">
+    @if (Model.TotalDependents == 0) { <p class="text-muted p-3 mb-0">@Localizer["No dependent packages on this server"]</p> }
+    else if (Model.Dependents.Count == 0) { <p class="text-muted p-3 mb-0">@Localizer["No packages on this page."]</p> }
+    @foreach (var dependent in Model.Dependents) { <a class="list-group-item list-group-item-action text-break" asp-route="PackageDetails" asp-route-id="@dependent.Id" asp-route-q="@Model.Query" asp-route-page="@Model.Page" asp-route-packageType="@Model.PackageType" asp-route-framework="@Model.Framework" asp-route-prerelease="@Model.Prerelease">@dependent.Id</a> }
+    </div></div>
+    @if (Model.TotalDependents > 20 || Model.DependentsPage > 1)
+    {
+        <nav aria-label="@Localizer["Dependent package pages"]" class="d-flex flex-wrap justify-content-center align-items-center gap-2">
+            @if (Model.DependentsPage > 1) { <a class="btn btn-outline-secondary" asp-route="PackageDetails" asp-route-id="@Model.Package.Id" asp-route-version="@Model.Package.NormalizedVersionString" asp-route-q="@Model.Query" asp-route-page="@Model.Page" asp-route-packageType="@Model.PackageType" asp-route-framework="@Model.Framework" asp-route-prerelease="@Model.Prerelease" asp-route-dependentsPage="@(Model.DependentsPage - 1)" asp-route-tab="usedby" asp-fragment="package-dependents">@Localizer["Previous"]</a> }
+            <span aria-current="page">@Localizer["Page {0} of {1}", Model.DependentsPage, Math.Max(1, (Model.TotalDependents + 19) / 20)]</span>
+            @if (Model.DependentsPage * 20 < Model.TotalDependents) { <a class="btn btn-outline-secondary" asp-route="PackageDetails" asp-route-id="@Model.Package.Id" asp-route-version="@Model.Package.NormalizedVersionString" asp-route-q="@Model.Query" asp-route-page="@Model.Page" asp-route-packageType="@Model.PackageType" asp-route-framework="@Model.Framework" asp-route-prerelease="@Model.Prerelease" asp-route-dependentsPage="@(Model.DependentsPage + 1)" asp-route-tab="usedby" asp-fragment="package-dependents">@Localizer["Next"]</a> }
+        </nav>
+    }
+    </section>
 </div>
 @* ReSharper disable once Razor.SectionNotResolved *@
-@section scripts { <partial name="_PackageCopy" /> }
+@section scripts { <partial name="_PackageCopy" /><script src="~/scripts/package-catalog.js" asp-append-version="true"></script> }

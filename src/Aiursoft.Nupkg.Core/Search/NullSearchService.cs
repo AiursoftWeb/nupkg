@@ -50,6 +50,9 @@ namespace Aiursoft.Nupkg.Core.Search
             return EmptyDependentsResponseTask;
         }
 
+        public Task<DependentsResponse> FindDependentsAsync(string packageId, int skip, int take, CancellationToken cancellationToken)
+            => EmptyDependentsResponseTask;
+
         public Task<SearchResponse> SearchAsync(
             SearchRequest request,
             CancellationToken cancellationToken)
