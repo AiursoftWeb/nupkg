@@ -14,7 +14,11 @@ dotnet run
 ```
 
 The default local administrator is `admin@default.com` with password `Admin@123456!`.
-Configure `ApiKey` before publishing packages. Browser accounts and the NuGet publishing API key serve separate purposes.
+Grant publishing permission to an account and create a personal key under **Personal > API Keys**. The first authorized publisher owns a new package name and its versions. Administrators can assign ownership of imported packages under **Packages > Package ownership**.
+
+An existing nonempty `ApiKey` remains a server-wide legacy credential; set `EnableLegacyApiKey` to `false` after migrating automation to personal keys. Empty keys deny publishing by default. `AllowAnonymousPublishing=true` explicitly restores BaGet's anonymous-publishing behavior when the legacy key is empty. Package downloads remain public.
+
+For an existing Nupkg database, grant the new **Publish Packages** and **Manage Packages** permissions through Roles. Imported package names remain reserved until an administrator assigns ownership.
 
 ## Package source
 

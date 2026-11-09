@@ -6,6 +6,7 @@ using Aiursoft.Nupkg.Core.Storage;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NuGet.Packaging;
+using Aiursoft.Nupkg.Core.Authentication;
 
 namespace Aiursoft.Nupkg.Core.Indexing
 {
@@ -25,8 +26,12 @@ namespace Aiursoft.Nupkg.Core.Indexing
         private readonly IOptionsSnapshot<NupkgOptions> _options = options ?? throw new ArgumentNullException(nameof(options));
         private readonly ILogger<PackageIndexingService> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-        public async Task<PackageIndexingResult> IndexAsync(Stream packageStream, CancellationToken cancellationToken)
+        public Task<PackageIndexingResult> IndexAsync(Stream packageStream, CancellationToken cancellationToken)
+            => IndexAsync(packageStream, PackagePublisher.System, cancellationToken);
+
+        public async Task<PackageIndexingResult> IndexAsync(Stream packageStream, PackagePublisher publisher, CancellationToken cancellationToken)
         {
+            if (!publisher.CanPublish && !publisher.CanManagePackages) return PackageIndexingResult.Forbidden;
             // Try to extract all the necessary information from the package.
             Package package;
             Stream nuspecStream;
@@ -72,6 +77,16 @@ namespace Aiursoft.Nupkg.Core.Indexing
 
                 return PackageIndexingResult.InvalidPackage;
             }
+
+            using var nuspecLifetime = nuspecStream;
+            using var readmeLifetime = readmeStream;
+            using var iconLifetime = iconStream;
+
+            // Ownership is checked after validation and before overwrites or file writes.
+            var registration = await _packages.GetOrCreateFamilyAsync(package, publisher, cancellationToken);
+            if (registration == null) return PackageIndexingResult.Forbidden;
+            package.PackageFamilyId = registration.Id;
+            package.UploadedByUserId = publisher.UserId;
 
             // The package is well-formed. Ensure this is a new package.
             if (await _packages.ExistsAsync(package.Id, package.Version, cancellationToken))

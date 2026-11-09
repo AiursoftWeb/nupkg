@@ -4,6 +4,7 @@ using Aiursoft.UiStack.Layout;
 namespace Aiursoft.Nupkg.Models.PackagesViewModels;
 public class DetailsViewModel : UiStackLayoutViewModel
 {
+    public string? OwnerDisplayName { get; set; }
     public Package Package { get; set; } = null!;
     public IReadOnlyList<Package> Versions { get; set; } = [];
     public IReadOnlyList<PackageDependent> Dependents { get; set; } = [];

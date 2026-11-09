@@ -1,3 +1,5 @@
+using Aiursoft.Nupkg.Core.Authentication;
+
 namespace Aiursoft.Nupkg.Core.Indexing
 {
     /// <summary>
@@ -20,6 +22,7 @@ namespace Aiursoft.Nupkg.Core.Indexing
         /// The package has been indexed successfully.
         /// </summary>
         Success,
+        Forbidden,
     }
 
     /// <summary>
@@ -34,5 +37,6 @@ namespace Aiursoft.Nupkg.Core.Indexing
         /// <param name="cancellationToken"></param>
         /// <returns>The result of the attempted indexing operation.</returns>
         Task<PackageIndexingResult> IndexAsync(Stream stream, CancellationToken cancellationToken);
+        Task<PackageIndexingResult> IndexAsync(Stream stream, PackagePublisher publisher, CancellationToken cancellationToken);
     }
 }

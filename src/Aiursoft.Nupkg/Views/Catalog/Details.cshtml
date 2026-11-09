@@ -1,3 +1,4 @@
+@using Aiursoft.WebTools
 @model Aiursoft.Nupkg.Models.PackagesViewModels.DetailsViewModel
 @* ReSharper disable once Razor.SectionNotResolved *@
 @section styles { <link rel="stylesheet" href="~/styles/packages.css" asp-append-version="true" /> }
@@ -16,7 +17,7 @@
 <div class="tab-content">
     <section class="tab-pane fade show active" id="package-overview" role="tabpanel"><div class="card"><div class="card-body package-readme">
         @if (!string.IsNullOrEmpty(Model.ReadmeHtml)) { @Html.Raw(Model.ReadmeHtml) } else { <p class="text-break">@Model.Package.Description</p> }
-        <dl class="row mt-4 mb-0"><dt class="col-sm-3">@Localizer["Authors"]</dt><dd class="col-sm-9 text-break">@string.Join(", ", Model.Package.Authors ?? [])</dd><dt class="col-sm-3">@Localizer["Published"]</dt><dd class="col-sm-9"><label class="utc-time">@Model.Package.Published.ToString("O")</label></dd><dt class="col-sm-3">@Localizer["Tags"]</dt><dd class="col-sm-9 text-break">@string.Join(", ", Model.Package.Tags ?? [])</dd></dl>
+        <dl class="row mt-4 mb-0"><dt class="col-sm-3">@Localizer["Owner"]</dt><dd class="col-sm-9 text-break">@(Model.OwnerDisplayName ?? Localizer["Unassigned"].Value)</dd><dt class="col-sm-3">@Localizer["Authors"]</dt><dd class="col-sm-9 text-break">@string.Join(", ", Model.Package.Authors ?? [])</dd><dt class="col-sm-3">@Localizer["Published"]</dt><dd class="col-sm-9"><label data-utc-time="@Model.Package.Published.ToHtmlDateTime()"></label></dd><dt class="col-sm-3">@Localizer["Tags"]</dt><dd class="col-sm-9 text-break">@string.Join(", ", Model.Package.Tags ?? [])</dd></dl>
         @if (!string.IsNullOrWhiteSpace(Model.Package.ReleaseNotes)) { <h3 class="h5 mt-3">@Localizer["Release notes"]</h3><p class="text-break" style="white-space:pre-wrap">@Model.Package.ReleaseNotes</p> }
     </div></div></section>
     <section class="tab-pane fade" id="package-versions" role="tabpanel"><div class="card"><div class="list-group list-group-flush">

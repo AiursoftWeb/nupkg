@@ -8,11 +8,13 @@ using Aiursoft.WebTools.Attributes;
 using Markdig;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Versioning;
+using Aiursoft.Nupkg.Entities;
+using Microsoft.EntityFrameworkCore;
 namespace Aiursoft.Nupkg.Controllers;
 
 [LimitPerMin]
 public class CatalogController(ISearchService search, IPackageService packages,
-    IPackageContentService content, IUrlGenerator urls, IConfiguration configuration) : Controller
+    IPackageContentService content, IUrlGenerator urls, IConfiguration configuration, NupkgDbContext db) : Controller
 {
     private static readonly MarkdownPipeline ReadmePipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().DisableHtml().Build();
 
@@ -72,6 +74,10 @@ public class CatalogController(ISearchService search, IPackageService packages,
         {
             PageTitle = selected.Id, Package = selected,
             Versions = versions.Where(p => p.Listed).OrderByDescending(p => p.Version).ToList(), Dependents = dependents.Data,
+            OwnerDisplayName = await db.PackageFamilies.AsNoTracking()
+                .Where(r => r.NormalizedId == id.ToLowerInvariant())
+                .Select(r => r.OwnerUser == null ? null : r.OwnerUser.DisplayName)
+                .FirstOrDefaultAsync(HttpContext.RequestAborted),
             ReadmeHtml = readme, DownloadUrl = urls.GetPackageDownloadUrl(id, selected.Version), InstallCommand = install,
             Query = q, Page = Math.Max(1, page), PackageType = packageType, Framework = framework, Prerelease = prerelease
         });

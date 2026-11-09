@@ -86,6 +86,9 @@ namespace Aiursoft.Nupkg.Sqlite.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("OriginalVersion");
 
+                    b.Property<int>("PackageFamilyId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("ProjectUrl")
                         .HasColumnType("TEXT");
 
@@ -126,9 +129,16 @@ namespace Aiursoft.Nupkg.Sqlite.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("UploadedByUserId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Key");
 
                     b.HasIndex("Id");
+
+                    b.HasIndex("PackageFamilyId");
+
+                    b.HasIndex("UploadedByUserId");
 
                     b.HasIndex("Id", "NormalizedVersionString")
                         .IsUnique();
@@ -164,6 +174,38 @@ namespace Aiursoft.Nupkg.Sqlite.Migrations
                     b.HasIndex("PackageKey");
 
                     b.ToTable("PackageDependencies");
+                });
+
+            modelBuilder.Entity("Aiursoft.Nupkg.Entities.PackageFamily", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedId")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("OwnerUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PackageId")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedId")
+                        .IsUnique();
+
+                    b.HasIndex("OwnerUserId");
+
+                    b.ToTable("PackageFamilies");
                 });
 
             modelBuilder.Entity("Aiursoft.Nupkg.Entities.PackageType", b =>
@@ -289,6 +331,50 @@ namespace Aiursoft.Nupkg.Sqlite.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Aiursoft.Nupkg.Entities.UserApiKey", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ExpiresAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("KeyHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("KeyPrefix")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("LastUsedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KeyHash")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserApiKeys");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -419,6 +505,24 @@ namespace Aiursoft.Nupkg.Sqlite.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Aiursoft.Nupkg.Entities.Package", b =>
+                {
+                    b.HasOne("Aiursoft.Nupkg.Entities.PackageFamily", "PackageFamily")
+                        .WithMany("Versions")
+                        .HasForeignKey("PackageFamilyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Aiursoft.Nupkg.Entities.User", "UploadedByUser")
+                        .WithMany()
+                        .HasForeignKey("UploadedByUserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("PackageFamily");
+
+                    b.Navigation("UploadedByUser");
+                });
+
             modelBuilder.Entity("Aiursoft.Nupkg.Entities.PackageDependency", b =>
                 {
                     b.HasOne("Aiursoft.Nupkg.Entities.Package", "Package")
@@ -426,6 +530,16 @@ namespace Aiursoft.Nupkg.Sqlite.Migrations
                         .HasForeignKey("PackageKey");
 
                     b.Navigation("Package");
+                });
+
+            modelBuilder.Entity("Aiursoft.Nupkg.Entities.PackageFamily", b =>
+                {
+                    b.HasOne("Aiursoft.Nupkg.Entities.User", "OwnerUser")
+                        .WithMany()
+                        .HasForeignKey("OwnerUserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("OwnerUser");
                 });
 
             modelBuilder.Entity("Aiursoft.Nupkg.Entities.PackageType", b =>
@@ -448,6 +562,17 @@ namespace Aiursoft.Nupkg.Sqlite.Migrations
                         .IsRequired();
 
                     b.Navigation("Package");
+                });
+
+            modelBuilder.Entity("Aiursoft.Nupkg.Entities.UserApiKey", b =>
+                {
+                    b.HasOne("Aiursoft.Nupkg.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -508,6 +633,11 @@ namespace Aiursoft.Nupkg.Sqlite.Migrations
                     b.Navigation("PackageTypes");
 
                     b.Navigation("TargetFrameworks");
+                });
+
+            modelBuilder.Entity("Aiursoft.Nupkg.Entities.PackageFamily", b =>
+                {
+                    b.Navigation("Versions");
                 });
 #pragma warning restore 612, 618
         }

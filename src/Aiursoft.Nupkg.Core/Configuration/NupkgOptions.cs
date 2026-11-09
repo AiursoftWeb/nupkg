@@ -4,9 +4,17 @@ namespace Aiursoft.Nupkg.Core.Configuration
     {
         /// <summary>
         /// The API Key required to authenticate package
-        /// operations. If empty, package operations do not require authentication.
+        /// operations through the legacy server-wide publishing credential.
         /// </summary>
         public string ApiKey { get; set; }
+
+        public bool EnableLegacyApiKey { get; set; } = true;
+
+        /// <summary>
+        /// Explicit compatibility with BaGet installations that allowed anonymous
+        /// publishing when ApiKey was empty. Disabled by default.
+        /// </summary>
+        public bool AllowAnonymousPublishing { get; set; }
 
         /// <summary>
         /// The application root URL for usage in reverse proxy scenarios.
