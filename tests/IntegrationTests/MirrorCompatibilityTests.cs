@@ -10,7 +10,7 @@ namespace Aiursoft.Nupkg.Tests.IntegrationTests;
 [TestClass]
 public class MirrorCompatibilityTests
 {
-    [DataTestMethod]
+    [TestMethod]
     [DataRow("gzip")]
     [DataRow("deflate")]
     public async Task MirrorReadsCompressedUpstreamMetadataAlongsideTemplateHttpClients(string encoding)
