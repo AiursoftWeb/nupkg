@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="About API keys" xml:space="preserve">
+    <value>API キーについて</value>
+  </data>
+  <data name="An enabled legacy server key has access to every package. Keep it only for trusted existing automation." xml:space="preserve">
+    <value>有効化されたレガシーサーバーキーは、すべてのパッケージにアクセスできます。信頼できる既存の自動化用途でのみ使用してください。</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>コピー</value>
+  </data>
+  <data name="Create a personal key under Personal &gt; API Keys. Publishing requires account permission and ownership of the package name." xml:space="preserve">
+    <value>Personal &gt; API Keys の下で個人用キーを作成してください。公開には、アカウントの権限とパッケージ名の所有権が必要です。</value>
+  </data>
+  <data name="Create API key" xml:space="preserve">
+    <value>APIキーを作成</value>
+  </data>
+  <data name="Package source" xml:space="preserve">
+    <value>パッケージソース</value>
+  </data>
+  <data name="Publish a package" xml:space="preserve">
+    <value>パッケージの公開</value>
+  </data>
+  <data name="Replace the package filename and API key with your own values." xml:space="preserve">
+    <value>パッケージのファイル名とAPIキーを自分の値に置き換えてください。</value>
+  </data>
+  <data name="Sign in to publish" xml:space="preserve">
+    <value>公開するにはログインしてください</value>
+  </data>
+  <data name="This server is read-only. Publishing is disabled." xml:space="preserve">
+    <value>このサーバーは読み取り専用です。公開は無効化されています。</value>
+  </data>
+  <data name="Upload packages" xml:space="preserve">
+    <value>パッケージのアップロード</value>
+  </data>
+  <data name="Use the NuGet CLI to publish packages to this server." xml:space="preserve">
+    <value>NuGet CLI を使用して、このサーバーにパッケージを公開します。</value>
+  </data>
+
+</root>

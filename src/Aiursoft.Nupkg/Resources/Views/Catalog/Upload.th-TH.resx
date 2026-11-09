@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="About API keys" xml:space="preserve">
+    <value>เกี่ยวกับคีย์ API</value>
+  </data>
+  <data name="An enabled legacy server key has access to every package. Keep it only for trusted existing automation." xml:space="preserve">
+    <value>คีย์เซิร์ฟเวอร์รุ่นเก่าที่เปิดใช้งานอยู่สามารถเข้าถึงแพ็กเกจได้ทุกตัว ควรใช้เฉพาะกับระบบอัตโนมัติที่มีอยู่และเชื่อถือได้เท่านั้น</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>คัดลอก</value>
+  </data>
+  <data name="Create a personal key under Personal &gt; API Keys. Publishing requires account permission and ownership of the package name." xml:space="preserve">
+    <value>สร้างคีย์ส่วนตัวภายใต้ ส่วนบุคคล &gt; คีย์ API การเผยแพร่ต้องการสิทธิ์ของบัญชีและการเป็นเจ้าของชื่อแพ็กเกจ</value>
+  </data>
+  <data name="Create API key" xml:space="preserve">
+    <value>สร้าง API key</value>
+  </data>
+  <data name="Package source" xml:space="preserve">
+    <value>แหล่งแพ็กเกจ</value>
+  </data>
+  <data name="Publish a package" xml:space="preserve">
+    <value>เผยแพร่แพ็กเกจ</value>
+  </data>
+  <data name="Replace the package filename and API key with your own values." xml:space="preserve">
+    <value>แทนที่ชื่อไฟล์แพ็กเกจและคีย์ API ด้วยค่าของคุณเอง</value>
+  </data>
+  <data name="Sign in to publish" xml:space="preserve">
+    <value>เข้าสู่ระบบเพื่อเผยแพร่</value>
+  </data>
+  <data name="This server is read-only. Publishing is disabled." xml:space="preserve">
+    <value>เซิร์ฟเวอร์นี้เป็นแบบอ่านอย่างเดียว การเผยแพร่ถูกปิดใช้งาน</value>
+  </data>
+  <data name="Upload packages" xml:space="preserve">
+    <value>อัปโหลดแพ็กเกจ</value>
+  </data>
+  <data name="Use the NuGet CLI to publish packages to this server." xml:space="preserve">
+    <value>ใช้ NuGet CLI เพื่อเผยแพร่แพ็กเกจไปยังเซิร์ฟเวอร์นี้</value>
+  </data>
+
+</root>
