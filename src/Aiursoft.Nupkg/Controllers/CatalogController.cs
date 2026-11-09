@@ -1,0 +1,89 @@
+using Aiursoft.Nupkg.Core;
+using Aiursoft.Nupkg.Core.Content;
+using Aiursoft.Nupkg.Core.Search;
+using Aiursoft.Nupkg.Models.PackagesViewModels;
+using Aiursoft.Nupkg.Services;
+using Aiursoft.UiStack.Navigation;
+using Aiursoft.WebTools.Attributes;
+using Markdig;
+using Microsoft.AspNetCore.Mvc;
+using NuGet.Versioning;
+namespace Aiursoft.Nupkg.Controllers;
+
+[LimitPerMin]
+public class CatalogController(ISearchService search, IPackageService packages,
+    IPackageContentService content, IUrlGenerator urls, IConfiguration configuration) : Controller
+{
+    private static readonly MarkdownPipeline ReadmePipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().DisableHtml().Build();
+
+    [HttpGet("/packages", Name = "PackageCatalog")]
+    [HttpGet("/Catalog/Index")]
+    [HttpGet("/")]
+    [HttpGet("/Home")]
+    [HttpGet("/Home/Index")]
+    [HttpGet("/Dashboard/Index")]
+    [HttpGet("/Dashboard")]
+    [RenderInNavBar(NavGroupName = "Features", NavGroupOrder = 1,
+        CascadedLinksGroupName = "Packages", CascadedLinksIcon = "package", CascadedLinksOrder = 1,
+        LinkText = "Browse packages", LinkOrder = 1)]
+    public async Task<IActionResult> Index(string q = "", int page = 1, string packageType = "any", string framework = "any", bool prerelease = true)
+    {
+        page = Math.Clamp(page, 1, int.MaxValue / 20);
+        var result = await search.SearchAsync(new SearchRequest
+        {
+            Query = q, Skip = (page - 1) * 20, Take = 20, IncludePrerelease = prerelease,
+            IncludeSemVer2 = true, PackageType = packageType == "any" ? null : packageType,
+            Framework = string.IsNullOrWhiteSpace(framework) || framework == "any" ? null : framework
+        }, HttpContext.RequestAborted);
+        return this.StackView(new CatalogViewModel
+        {
+            Query = q, Page = page, PackageType = packageType, Framework = framework,
+            Prerelease = prerelease, TotalHits = result.TotalHits, Packages = result.Data
+        });
+    }
+
+    [HttpGet("/packages/{id}/{version?}", Name = "PackageDetails")]
+    public async Task<IActionResult> Details(string id, string? version = null, string q = "", int page = 1,
+        string packageType = "any", string framework = "any", bool prerelease = true)
+    {
+        var versions = await packages.FindPackagesAsync(id, HttpContext.RequestAborted);
+        var selected = NuGetVersion.TryParse(version, out var parsed)
+            ? versions.SingleOrDefault(p => p.Version == parsed)
+            : versions.Where(p => p.Listed).OrderByDescending(p => p.Version).FirstOrDefault();
+        if (selected == null) return NotFound();
+        var readme = string.Empty;
+        if (selected.HasReadme)
+        {
+            await using var stream = await content.GetPackageReadmeStreamOrNullAsync(id, selected.Version, HttpContext.RequestAborted);
+            if (stream != null)
+            {
+                using var reader = new StreamReader(stream);
+                readme = Markdown.ToHtml(await reader.ReadToEndAsync(HttpContext.RequestAborted), ReadmePipeline);
+            }
+        }
+        var types = selected.PackageTypes.Select(t => t.Name).ToList();
+        var install = types.Contains("DotnetTool", StringComparer.OrdinalIgnoreCase)
+            ? $"dotnet tool install --global {selected.Id} --version {selected.NormalizedVersionString}"
+            : types.Contains("Template", StringComparer.OrdinalIgnoreCase)
+                ? $"dotnet new install {selected.Id}::{selected.NormalizedVersionString}"
+                : $"dotnet add package {selected.Id} --version {selected.NormalizedVersionString}";
+        var dependents = await search.FindDependentsAsync(id, HttpContext.RequestAborted);
+        return this.StackView(new DetailsViewModel
+        {
+            PageTitle = selected.Id, Package = selected,
+            Versions = versions.Where(p => p.Listed).OrderByDescending(p => p.Version).ToList(), Dependents = dependents.Data,
+            ReadmeHtml = readme, DownloadUrl = urls.GetPackageDownloadUrl(id, selected.Version), InstallCommand = install,
+            Query = q, Page = Math.Max(1, page), PackageType = packageType, Framework = framework, Prerelease = prerelease
+        });
+    }
+
+    [HttpGet("/upload")]
+    [HttpGet("/Catalog/Upload")]
+    [RenderInNavBar(NavGroupName = "Features", NavGroupOrder = 1,
+        CascadedLinksGroupName = "Packages", CascadedLinksIcon = "package", CascadedLinksOrder = 1,
+        LinkText = "Upload packages", LinkOrder = 2)]
+    public IActionResult Upload() => this.StackView(new UploadViewModel
+    {
+        ServiceIndexUrl = urls.GetServiceIndexUrl(), ReadOnly = configuration.GetValue<bool>("IsReadOnlyMode")
+    });
+}
