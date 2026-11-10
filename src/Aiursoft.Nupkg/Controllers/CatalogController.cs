@@ -65,11 +65,12 @@ public class CatalogController(ISearchService search, IPackageService packages,
             }
         }
         var types = selected.PackageTypes.Select(t => t.Name).ToList();
+        var source = urls.GetServiceIndexUrl();
         var install = types.Contains("DotnetTool", StringComparer.OrdinalIgnoreCase)
-            ? $"dotnet tool install --global {selected.Id} --version {selected.NormalizedVersionString}"
+            ? $"dotnet tool install --global {selected.Id} --version {selected.NormalizedVersionString} --add-source {source}"
             : types.Contains("Template", StringComparer.OrdinalIgnoreCase)
-                ? $"dotnet new install {selected.Id}@{selected.NormalizedVersionString}"
-                : $"dotnet add package {selected.Id} --version {selected.NormalizedVersionString}";
+                ? $"dotnet new install {selected.Id}@{selected.NormalizedVersionString} --add-source {source}"
+                : $"dotnet add package {selected.Id} --version {selected.NormalizedVersionString} --source {source}";
         var dependents = await search.FindDependentsAsync(id, (dependentsPage - 1) * 20, 20, HttpContext.RequestAborted);
         return this.StackView(new DetailsViewModel
         {
@@ -87,6 +88,7 @@ public class CatalogController(ISearchService search, IPackageService packages,
                 .Select(r => r.OwnerUser == null ? null : r.OwnerUser.DisplayName)
                 .FirstOrDefaultAsync(HttpContext.RequestAborted),
             ReadmeHtml = readme, DownloadUrl = urls.GetPackageDownloadUrl(id, selected.Version), InstallCommand = install,
+            ServiceIndexUrl = source,
             Query = q, Page = Math.Max(1, page), PackageType = packageType, Framework = framework, Prerelease = prerelease
         });
     }

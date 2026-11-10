@@ -24,10 +24,11 @@ public class DetailsViewModel : UiStackLayoutViewModel
     public string? LicenseUrl { get; set; }
     public DateTime LastUpdated { get; set; }
     public bool IsTemplate { get; set; }
-    public string LegacyTemplateCommand => $"dotnet new install {Package.Id}::{Package.NormalizedVersionString}";
+    public string ServiceIndexUrl { get; set; } = string.Empty;
+    public string LegacyTemplateCommand => $"dotnet new install {Package.Id}::{Package.NormalizedVersionString} --nuget-source {ServiceIndexUrl}";
     public bool IsLibrary { get; set; }
     public string PackageReferenceCommand => $"<PackageReference Include=\"{Package.Id}\" Version=\"{Package.NormalizedVersionString}\" />";
-    public string PackageManagerCommand => $"Install-Package {Package.Id} -Version {Package.NormalizedVersionString}";
+    public string PackageManagerCommand => $"Install-Package {Package.Id} -Version {Package.NormalizedVersionString} -Source {ServiceIndexUrl}";
     public string PaketCommand => $"paket add {Package.Id} --version {Package.NormalizedVersionString}";
     public string InstallCommand { get; set; } = string.Empty;
 }
