@@ -6,5 +6,9 @@ namespace Aiursoft.Nupkg.Core.Authentication;
 /// </summary>
 public sealed record PackagePublisher(string UserId, bool CanPublish, bool CanManagePackages)
 {
+    public string MirrorSource { get; init; }
+    public string MirrorVersion { get; init; }
+    public string MirrorSha256 { get; init; }
+
     public static PackagePublisher System { get; } = new(null, true, true);
 }

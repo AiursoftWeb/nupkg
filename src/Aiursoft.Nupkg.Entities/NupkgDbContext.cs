@@ -15,6 +15,11 @@ namespace Aiursoft.Nupkg.Entities
         public DbSet<UserApiKey> UserApiKeys => Set<UserApiKey>();
         public DbSet<PackageFamily> PackageFamilies => Set<PackageFamily>();
 
+        // Initialized once per HTTP read, from current S360 decisions. Background maintenance
+        // scopes remain unrestricted; they do not serve package content.
+        public bool RestrictMirrorReads { get; set; }
+        public int[] ApprovedMirrorKeys { get; set; } = [];
+
         public const int DefaultMaxStringLength = 4000;
         public const int MaxPackageIdLength = 128;
         public const int MaxPackageVersionLength = 64;
@@ -58,6 +63,8 @@ namespace Aiursoft.Nupkg.Entities
         private void BuildPackageEntity(EntityTypeBuilder<Package> package)
         {
             package.HasKey(p => p.Key);
+            package.HasQueryFilter(p => !RestrictMirrorReads || p.IsLocallyPublished ||
+                p.UploadedByUserId != null || ApprovedMirrorKeys.Contains(p.Key));
             package.HasIndex(p => p.Id);
             package.HasIndex(p => new { p.Id, p.NormalizedVersionString })
                 .IsUnique();

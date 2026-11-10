@@ -1,4 +1,8 @@
 using Aiursoft.Nupkg.Entities;
+using Aiursoft.Nupkg.Core.Authentication;
+using Aiursoft.Nupkg.Core.Configuration;
+using Microsoft.Extensions.Options;
+using System.Security.Cryptography;
 using Aiursoft.Nupkg.Core.Indexing;
 using Aiursoft.Nupkg.Core.Upstream;
 using Microsoft.Extensions.Logging;
@@ -8,6 +12,7 @@ namespace Aiursoft.Nupkg.Core
 {
     public class PackageService : IPackageService
     {
+        private readonly IOptions<MirrorOptions> _mirrorOptions;
         private readonly PackageDatabase _db;
         private readonly IUpstreamClient _upstream;
         private readonly IPackageIndexingService _indexer;
@@ -17,8 +22,9 @@ namespace Aiursoft.Nupkg.Core
             PackageDatabase db,
             IUpstreamClient upstream,
             IPackageIndexingService indexer,
-            ILogger<PackageService> logger)
+            ILogger<PackageService> logger, IOptions<MirrorOptions> mirrorOptions = null)
         {
+            _mirrorOptions = mirrorOptions;
             _db = db ?? throw new ArgumentNullException(nameof(db));
             _upstream = upstream ?? throw new ArgumentNullException(nameof(upstream));
             _indexer = indexer ?? throw new ArgumentNullException(nameof(indexer));
@@ -116,7 +122,15 @@ namespace Aiursoft.Nupkg.Core
                         id,
                         version);
 
-                    var result = await _indexer.IndexAsync(packageStream, cancellationToken);
+                    packageStream.Position = 0;
+                    var hash = Convert.ToHexStringLower(await SHA256.HashDataAsync(packageStream, cancellationToken));
+                    packageStream.Position = 0;
+                    var publisher = PackagePublisher.System with
+                    {
+                        MirrorSource = _mirrorOptions?.Value.PackageSource?.AbsoluteUri ?? "unknown",
+                        MirrorVersion = version.ToNormalizedString(), MirrorSha256 = hash
+                    };
+                    var result = await _indexer.IndexAsync(packageStream, publisher, cancellationToken);
 
                     _logger.LogInformation(
                         "Finished indexing package {PackageId} {PackageVersion} from upstream feed with result {Result}",

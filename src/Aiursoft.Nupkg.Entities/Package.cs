@@ -9,6 +9,14 @@ namespace Aiursoft.Nupkg.Entities
     {
         public int Key { get; set; }
 
+        public bool IsLocallyPublished { get; set; }
+        [System.ComponentModel.DataAnnotations.MaxLength(500)]
+        public string MirrorSource { get; set; }
+        [System.ComponentModel.DataAnnotations.MaxLength(128)]
+        public string MirrorVersion { get; set; }
+        [System.ComponentModel.DataAnnotations.MaxLength(64)]
+        public string MirrorSha256 { get; set; }
+
         public int PackageFamilyId { get; set; }
         public PackageFamily PackageFamily { get; set; }
 

@@ -65,6 +65,9 @@ namespace Aiursoft.Nupkg.MySql.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("varchar(128)");
 
+                    b.Property<bool>("IsLocallyPublished")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<bool>("IsPrerelease")
                         .HasColumnType("tinyint(1)");
 
@@ -81,6 +84,18 @@ namespace Aiursoft.Nupkg.MySql.Migrations
                     b.Property<string>("MinClientVersion")
                         .HasMaxLength(44)
                         .HasColumnType("varchar(44)");
+
+                    b.Property<string>("MirrorSha256")
+                        .HasMaxLength(64)
+                        .HasColumnType("varchar(64)");
+
+                    b.Property<string>("MirrorSource")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<string>("MirrorVersion")
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
 
                     b.Property<string>("NormalizedVersionString")
                         .IsRequired()

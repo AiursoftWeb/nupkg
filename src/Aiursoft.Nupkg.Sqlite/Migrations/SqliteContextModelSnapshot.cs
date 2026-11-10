@@ -58,6 +58,9 @@ namespace Aiursoft.Nupkg.Sqlite.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("TEXT COLLATE NOCASE");
 
+                    b.Property<bool>("IsLocallyPublished")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("IsPrerelease")
                         .HasColumnType("INTEGER");
 
@@ -73,6 +76,18 @@ namespace Aiursoft.Nupkg.Sqlite.Migrations
 
                     b.Property<string>("MinClientVersion")
                         .HasMaxLength(44)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MirrorSha256")
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MirrorSource")
+                        .HasMaxLength(500)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MirrorVersion")
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedVersionString")

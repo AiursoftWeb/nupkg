@@ -87,11 +87,15 @@ namespace Aiursoft.Nupkg.Core.Indexing
             if (registration == null) return PackageIndexingResult.Forbidden;
             package.PackageFamilyId = registration.Id;
             package.UploadedByUserId = publisher.UserId;
+            package.IsLocallyPublished = publisher.MirrorSource == null;
+            package.MirrorSource = publisher.MirrorSource;
+            package.MirrorVersion = publisher.MirrorVersion;
+            package.MirrorSha256 = publisher.MirrorSha256;
 
             // The package is well-formed. Ensure this is a new package.
             if (await _packages.ExistsAsync(package.Id, package.Version, cancellationToken))
             {
-                if (!_options.Value.AllowPackageOverwrites)
+                if (publisher.MirrorSource != null || !_options.Value.AllowPackageOverwrites)
                 {
                     return PackageIndexingResult.PackageAlreadyExists;
                 }
