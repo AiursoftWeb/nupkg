@@ -25,8 +25,8 @@ public class CatalogDetailsTests : TestBase
         Assert.Contains("https://example.test/license", html);
         Assert.Contains("net10.0", html);
         Assert.Contains("Last updated", html);
-        Assert.Contains($"dotnet add package {id} --version 1.0.0", html);
-        Assert.Contains($"Install-Package {id} -Version 1.0.0", html);
+        Assert.Contains($"dotnet add package {id} --version 1.0.0 --source {Http.BaseAddress}v3/index.json", html);
+        Assert.Contains($"Install-Package {id} -Version 1.0.0 -Source {Http.BaseAddress}v3/index.json", html);
         Assert.Contains($"paket add {id} --version 1.0.0", html);
         Assert.Contains($"&lt;PackageReference Include=&quot;{id}&quot; Version=&quot;1.0.0&quot; /&gt;", html);
     }
@@ -59,12 +59,14 @@ public class CatalogDetailsTests : TestBase
             package.PackageTypes = [new PackageType { Name = type, Version = "0.0" }];
             await SeedFamilyAsync(package);
             var html = await Http.GetStringAsync($"/packages/{id}");
-            Assert.Contains(type == "DotnetTool" ? $"dotnet tool install --global {id} --version 1.0.0" : $"dotnet new install {id}@1.0.0", html);
+            Assert.Contains(type == "DotnetTool"
+                ? $"dotnet tool install --global {id} --version 1.0.0 --add-source {Http.BaseAddress}v3/index.json"
+                : $"dotnet new install {id}@1.0.0 --add-source {Http.BaseAddress}v3/index.json", html);
             if (type == "DotnetTool") Assert.DoesNotContain("id=\"install-format\"", html);
             else
             {
                 Assert.Contains("Earlier SDKs", html);
-                Assert.Contains($"dotnet new install {id}::1.0.0", html);
+                Assert.Contains($"dotnet new install {id}::1.0.0 --nuget-source {Http.BaseAddress}v3/index.json", html);
             }
         }
     }
