@@ -21,6 +21,9 @@
       <data name="Aiursoft Nupkg" xml:space="preserve">
     <value>Mẫu Aiursoft</value>
   </data>
+  <data name="Browse packages" xml:space="preserve">
+    <value>Duyệt các gói</value>
+  </data>
   <data name="Community" xml:space="preserve">
     <value>Cộng đồng</value>
   </data>

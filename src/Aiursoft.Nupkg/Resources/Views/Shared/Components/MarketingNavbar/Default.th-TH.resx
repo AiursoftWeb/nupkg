@@ -21,6 +21,9 @@
       <data name="Aiursoft Nupkg" xml:space="preserve">
     <value>เทมเพลต Aiursoft</value>
   </data>
+  <data name="Browse packages" xml:space="preserve">
+    <value>ดูแพ็กเกจ</value>
+  </data>
   <data name="Community" xml:space="preserve">
     <value>ชุมชน</value>
   </data>

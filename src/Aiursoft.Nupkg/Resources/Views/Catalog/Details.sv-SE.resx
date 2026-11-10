@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="Authors" xml:space="preserve">
+    <value>Författare</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Kopiera</value>
+  </data>
+  <data name="Dependencies" xml:space="preserve">
+    <value>Beroenden</value>
+  </data>
+  <data name="Dependent package pages" xml:space="preserve">
+    <value>Sidor för beroende paket</value>
+  </data>
+  <data name="Download package" xml:space="preserve">
+    <value>Ladda ner paket</value>
+  </data>
+  <data name="Earlier SDKs" xml:space="preserve">
+    <value>Tidigare SDK:er</value>
+  </data>
+  <data name="Frameworks" xml:space="preserve">
+    <value>Ramverk</value>
+  </data>
+  <data name="Install" xml:space="preserve">
+    <value>Installera</value>
+  </data>
+  <data name="Installation format" xml:space="preserve">
+    <value>Installationsformat</value>
+  </data>
+  <data name="Last updated" xml:space="preserve">
+    <value>Senast uppdaterad</value>
+  </data>
+  <data name="License" xml:space="preserve">
+    <value>Licens</value>
+  </data>
+  <data name="Links" xml:space="preserve">
+    <value>Länkar</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Nästa</value>
+  </data>
+  <data name="No dependencies" xml:space="preserve">
+    <value>Inga beroenden</value>
+  </data>
+  <data name="No dependent packages on this server" xml:space="preserve">
+    <value>Inga beroende paket på denna server</value>
+  </data>
+  <data name="No packages on this page." xml:space="preserve">
+    <value>Inga paket på den här sidan.</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
+    <value>Översikt</value>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>Ägare</value>
+  </data>
+  <data name="Package Manager" xml:space="preserve">
+    <value>Paketbehandling</value>
+  </data>
+  <data name="Packages" xml:space="preserve">
+    <value>Paket</value>
+  </data>
+  <data name="Prerelease" xml:space="preserve">
+    <value>Förhandsversion</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Föregående</value>
+  </data>
+  <data name="Project website" xml:space="preserve">
+    <value>Projektwebbplats</value>
+  </data>
+  <data name="Published" xml:space="preserve">
+    <value>Publicerad</value>
+  </data>
+  <data name="Release notes" xml:space="preserve">
+    <value>Versionsnoteringar</value>
+  </data>
+  <data name="Source code" xml:space="preserve">
+    <value>Källkod</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Taggar</value>
+  </data>
+  <data name="Used by" xml:space="preserve">
+    <value>Används av</value>
+  </data>
+  <data name="Versions" xml:space="preserve">
+    <value>Versioner</value>
+  </data>
+
+</root>

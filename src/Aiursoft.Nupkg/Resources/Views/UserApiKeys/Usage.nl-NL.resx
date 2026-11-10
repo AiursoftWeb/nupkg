@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="API Keys" xml:space="preserve">
+    <value>API-sleutels</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Kopiëren</value>
+  </data>
+  <data name="Expired" xml:space="preserve">
+    <value>Verlopen</value>
+  </data>
+  <data name="Publish with NuGet" xml:space="preserve">
+    <value>Publiceren met NuGet</value>
+  </data>
+  <data name="Publishing permission is required. Ask an administrator to grant it to your account." xml:space="preserve">
+    <value>Publicatierechten zijn vereist. Vraag een beheerder om deze rechten aan je account toe te kennen.</value>
+  </data>
+  <data name="Replace YOUR_API_KEY with your saved key." xml:space="preserve">
+    <value>Vervang YOUR_API_KEY door uw opgeslagen sleutel.</value>
+  </data>
+  <data name="Save this key now. It is shown only once." xml:space="preserve">
+    <value>Sla deze sleutel nu op. Deze wordt slechts een keer weergegeven.</value>
+  </data>
+  <data name="Your new key" xml:space="preserve">
+    <value>Uw nieuwe sleutel</value>
+  </data>
+
+</root>

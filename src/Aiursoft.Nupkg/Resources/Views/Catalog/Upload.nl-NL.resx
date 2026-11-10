@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="About API keys" xml:space="preserve">
+    <value>Over API-sleutels</value>
+  </data>
+  <data name="An enabled legacy server key has access to every package. Keep it only for trusted existing automation." xml:space="preserve">
+    <value>Een ingeschakelde legacy-serverkey heeft toegang tot elk pakket. Gebruik deze alleen voor betrouwbare bestaande automatisering.</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Kopiëren</value>
+  </data>
+  <data name="Create a personal key under Personal &gt; API Keys. Publishing requires account permission and ownership of the package name." xml:space="preserve">
+    <value>Maak een persoonlijke sleutel aan onder Persoonlijk &gt; API-sleutels. Publiceren vereist accountrechten en eigendom van de pakketnaam.</value>
+  </data>
+  <data name="Create API key" xml:space="preserve">
+    <value>API-sleutel maken</value>
+  </data>
+  <data name="Package source" xml:space="preserve">
+    <value>Pakketbron</value>
+  </data>
+  <data name="Publish a package" xml:space="preserve">
+    <value>Een pakket publiceren</value>
+  </data>
+  <data name="Replace the package filename and API key with your own values." xml:space="preserve">
+    <value>Vervang de pakketbestandsnaam en API-sleutel door uw eigen waarden.</value>
+  </data>
+  <data name="Sign in to publish" xml:space="preserve">
+    <value>Log in om te publiceren</value>
+  </data>
+  <data name="This server is read-only. Publishing is disabled." xml:space="preserve">
+    <value>Deze server is alleen-lezen. Publicatie is uitgeschakeld.</value>
+  </data>
+  <data name="Upload packages" xml:space="preserve">
+    <value>Pakketten uploaden</value>
+  </data>
+  <data name="Use the NuGet CLI to publish packages to this server." xml:space="preserve">
+    <value>Gebruik de NuGet CLI om pakketten naar deze server te publiceren.</value>
+  </data>
+
+</root>

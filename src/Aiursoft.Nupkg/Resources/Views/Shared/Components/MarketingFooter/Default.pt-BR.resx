@@ -48,6 +48,9 @@
   <data name="Project" xml:space="preserve">
     <value>Projeto</value>
   </data>
+  <data name="Publish, discover and install NuGet packages." xml:space="preserve">
+    <value>Publique, descubra e instale pacotes NuGet.</value>
+  </data>
   <data name="Report an Issue" xml:space="preserve">
     <value>Reportar um Problema</value>
   </data>

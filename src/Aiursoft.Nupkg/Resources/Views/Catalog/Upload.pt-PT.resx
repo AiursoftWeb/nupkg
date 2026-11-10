@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="About API keys" xml:space="preserve">
+    <value>Sobre chaves de API</value>
+  </data>
+  <data name="An enabled legacy server key has access to every package. Keep it only for trusted existing automation." xml:space="preserve">
+    <value>Uma chave de servidor legada ativa tem acesso a todos os pacotes. Mantenha-a apenas para automação existente e de confiança.</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copiar</value>
+  </data>
+  <data name="Create a personal key under Personal &gt; API Keys. Publishing requires account permission and ownership of the package name." xml:space="preserve">
+    <value>Crie uma chave pessoal em Pessoal &gt; Chaves de API. A publicação requer permissão da conta e propriedade do nome do pacote.</value>
+  </data>
+  <data name="Create API key" xml:space="preserve">
+    <value>Criar chave de API</value>
+  </data>
+  <data name="Package source" xml:space="preserve">
+    <value>Origem do pacote</value>
+  </data>
+  <data name="Publish a package" xml:space="preserve">
+    <value>Publicar um pacote</value>
+  </data>
+  <data name="Replace the package filename and API key with your own values." xml:space="preserve">
+    <value>Substitua o nome do ficheiro do pacote e a chave da API pelos seus próprios valores.</value>
+  </data>
+  <data name="Sign in to publish" xml:space="preserve">
+    <value>Inicie sessão para publicar</value>
+  </data>
+  <data name="This server is read-only. Publishing is disabled." xml:space="preserve">
+    <value>Este servidor é somente de leitura. A publicação está desativada.</value>
+  </data>
+  <data name="Upload packages" xml:space="preserve">
+    <value>Carregar pacotes</value>
+  </data>
+  <data name="Use the NuGet CLI to publish packages to this server." xml:space="preserve">
+    <value>Utilize a CLI do NuGet para publicar pacotes neste servidor.</value>
+  </data>
+
+</root>
