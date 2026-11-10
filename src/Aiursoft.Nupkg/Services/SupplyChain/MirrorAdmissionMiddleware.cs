@@ -45,7 +45,7 @@ public class MirrorAdmissionMiddleware(RequestDelegate next, ILogger<MirrorAdmis
                 p.MirrorSource!, p.MirrorSha256!)).ToList();
             var decisions = await admission.AssessAsync(identities, context.RequestAborted);
             db.ApprovedMirrorKeys = mirrors.Where((_, i) => decisions[i].Trusted).Select(p => p.Key).ToArray();
-            if (action!.ControllerTypeInfo == typeof(PackageContentController) &&
+            if (action.ControllerTypeInfo == typeof(PackageContentController) &&
                 context.Request.RouteValues["id"] is string id &&
                 context.Request.RouteValues["version"] is string versionString &&
                 NuGetVersion.TryParse(versionString, out var version))
