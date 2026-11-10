@@ -2,6 +2,8 @@ using System.IO.Compression;
 using System.Net;
 using System.Text;
 using System.Text.Json;
+using Aiursoft.Nupkg.Core.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace Aiursoft.Nupkg.Tests.IntegrationTests;
 
@@ -12,6 +14,17 @@ public class NuGetCompatibilityTests : TestBase
     public void ConfigureLegacyFixture() => Server!.Services.GetRequiredService<IConfiguration>()["ApiKey"] = "nupkg-compatibility-fixture";
 
     private string ApiKey => Server!.Services.GetRequiredService<IConfiguration>()["ApiKey"]!;
+
+    [TestMethod]
+    public async Task DisabledMirroringDoesNotRequireAnUpstreamSource()
+    {
+        var options = Server!.Services.GetRequiredService<IOptions<MirrorOptions>>().Value;
+        Assert.IsFalse(options.Enabled);
+        options.PackageSource = null;
+        Assert.AreEqual(HttpStatusCode.OK, (await Http.GetAsync("/health")).StatusCode);
+        Assert.AreEqual(HttpStatusCode.OK, (await Http.GetAsync("/v3/index.json")).StatusCode);
+        Assert.AreEqual(HttpStatusCode.OK, (await Http.GetAsync("/packages")).StatusCode);
+    }
 
     [TestMethod]
     public async Task ServiceIndexRetainsNuGetJsonContract()

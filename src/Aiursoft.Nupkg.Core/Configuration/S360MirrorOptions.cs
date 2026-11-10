@@ -5,6 +5,7 @@ namespace Aiursoft.Nupkg.Core.Configuration;
 public class S360MirrorOptions : IValidatableObject
 {
     public bool Enabled { get; set; }
+    public bool PrefetchEnabled { get; set; }
     public Uri Server { get; set; }
     public string CheckKey { get; set; }
     [Range(1, 1440)] public int IntervalMinutes { get; set; } = 5;

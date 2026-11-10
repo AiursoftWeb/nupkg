@@ -38,6 +38,10 @@ namespace Aiursoft.Nupkg.Core.Upstream.Clients
             {
                 return null;
             }
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 _logger.LogError(
@@ -59,6 +63,10 @@ namespace Aiursoft.Nupkg.Core.Upstream.Clients
 
                 return packages.Select(ToPackage).ToList();
             }
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+            {
+                throw;
+            }
             catch (Exception e)
             {
                 _logger.LogError(e, "Failed to mirror {PackageId}'s upstream metadata", id);
@@ -73,6 +81,10 @@ namespace Aiursoft.Nupkg.Core.Upstream.Clients
             try
             {
                 return await _client.ListPackageVersionsAsync(id, includeUnlisted: true, cancellationToken);
+            }
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+            {
+                throw;
             }
             catch (Exception e)
             {

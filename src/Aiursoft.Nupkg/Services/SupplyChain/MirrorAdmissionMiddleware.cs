@@ -12,7 +12,8 @@ namespace Aiursoft.Nupkg.Services.SupplyChain;
 public class MirrorAdmissionMiddleware(RequestDelegate next, ILogger<MirrorAdmissionMiddleware> logger)
 {
     public async Task InvokeAsync(HttpContext context, NupkgDbContext db,
-        S360AdmissionClient admission, IOptions<S360MirrorOptions> options)
+        S360AdmissionClient admission, IOptions<S360MirrorOptions> options,
+        IOptions<MirrorOptions> mirrorOptions)
     {
         var action = context.GetEndpoint()?.Metadata.GetMetadata<ControllerActionDescriptor>();
         var packageRead = action != null && ((action.ControllerTypeInfo == typeof(CatalogController) && action.ActionName != nameof(CatalogController.Upload)) ||
@@ -30,6 +31,27 @@ public class MirrorAdmissionMiddleware(RequestDelegate next, ILogger<MirrorAdmis
         context.Response.Headers.CacheControl = "no-store";
         try
         {
+            if (mirrorOptions.Value.Enabled &&
+                action!.ControllerTypeInfo == typeof(PackageContentController) &&
+                context.Request.RouteValues["id"] is string requestedName &&
+                context.Request.RouteValues["version"] is string requestedVersion &&
+                NuGetVersion.TryParse(requestedVersion, out var parsedVersion))
+            {
+                var mirror = context.RequestServices.GetRequiredService<ApprovedPackageMirror>();
+                var result = await mirror.EnsureAsync(requestedName, parsedVersion, context.RequestAborted);
+                if (result is PackageMirrorResult.Denied or PackageMirrorResult.Unavailable)
+                {
+                    context.Response.StatusCode = result == PackageMirrorResult.Denied
+                        ? StatusCodes.Status403Forbidden : StatusCodes.Status502BadGateway;
+                    await context.Response.WriteAsJsonAsync(new
+                    {
+                        error = result == PackageMirrorResult.Denied
+                            ? "This package version is not permitted for upstream mirroring."
+                            : "The approved package could not be downloaded and verified. Please retry."
+                    });
+                    return;
+                }
+            }
             // Exact package endpoints need only this name; catalog and search assess the
             // mirrored catalog so related packages and aggregate counts stay consistent.
             var requestedId = action!.ControllerTypeInfo == typeof(PackageContentController) ||
@@ -64,16 +86,15 @@ public class MirrorAdmissionMiddleware(RequestDelegate next, ILogger<MirrorAdmis
                     return;
                 }
             }
+            await next(context);
         }
         catch (Exception ex) when (ex is HttpRequestException or InvalidDataException or System.Text.Json.JsonException or TaskCanceledException)
         {
-            if (context.RequestAborted.IsCancellationRequested) throw;
+            if (context.RequestAborted.IsCancellationRequested || context.Response.HasStarted) throw;
             logger.LogWarning("S360 admission is unavailable ({FailureType}); mirror reads were denied.", ex.GetType().Name);
             context.Response.StatusCode = StatusCodes.Status503ServiceUnavailable;
             context.Response.Headers.RetryAfter = "30";
             await context.Response.WriteAsJsonAsync(new { error = "Package admission is temporarily unavailable. Please retry." });
-            return;
         }
-        await next(context);
     }
 }

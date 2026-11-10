@@ -32,13 +32,14 @@ public class S360AdmissionClient(IHttpClientFactory clients, IOptions<S360Mirror
     }
 
     public async IAsyncEnumerable<ArtifactIdentity> ApprovedAsync(string source,
-        [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken)
+        [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken, string? name = null)
     {
         int after = 0;
         int? upper = null;
         do
         {
             var path = $"api/artifacts/approved?ecosystem=nuget&source={Uri.EscapeDataString(source)}&afterId={after}&take=100";
+            if (name != null) path += "&name=" + Uri.EscapeDataString(name);
             if (upper.HasValue) path += $"&upperId={upper.Value}";
             using var request = Create(HttpMethod.Get, path);
             using var response = await clients.CreateClient("S360Admission").SendAsync(request, cancellationToken);
