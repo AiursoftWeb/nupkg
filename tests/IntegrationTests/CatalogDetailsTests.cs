@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Aiursoft.Nupkg.Entities;
 using NuGet.Versioning;
 
@@ -8,6 +9,30 @@ namespace Aiursoft.Nupkg.Tests.IntegrationTests;
 [TestClass]
 public class CatalogDetailsTests : TestBase
 {
+    [TestMethod]
+    [DataRow(false, "1.1.0")]
+    [DataRow(true, "2.0.0-beta.1")]
+    public async Task CatalogOpensTheDisplayedVersionAndRetainsFilters(bool prerelease, string expectedVersion)
+    {
+        var id = NewId();
+        var preview = Version(id, "2.0.0-beta.1");
+        preview.IsPrerelease = true;
+        var unlisted = Version(id, "3.0.0");
+        unlisted.Listed = false;
+        await SeedFamilyAsync(Version(id), Version(id, "1.1.0"), preview, unlisted);
+
+        var catalog = WebUtility.HtmlDecode(await Http.GetStringAsync(
+            $"/packages?q={id}&prerelease={prerelease}&packageType=Dependency&framework=net10.0"));
+        var link = Regex.Match(catalog, $"href=\"(/packages/{Regex.Escape(id)}[^\"]*)\"").Groups[1].Value;
+        Assert.IsFalse(string.IsNullOrEmpty(link), "The matching package must appear in the catalog.");
+        var details = await Http.GetStringAsync(link);
+        Assert.Contains($"dotnet add package {id} --version {expectedVersion} --source", details);
+        Assert.Contains($"q={id}", link);
+        Assert.Contains($"prerelease={prerelease}", link);
+        Assert.Contains("packageType=Dependency", link);
+        Assert.Contains("framework=net10.0", link);
+    }
+
     [TestMethod]
     public async Task DetailsExposePackageMetadataAndAllLibraryInstallationFormats()
     {

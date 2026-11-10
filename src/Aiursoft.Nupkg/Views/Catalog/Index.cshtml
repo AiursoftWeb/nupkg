@@ -24,7 +24,7 @@ else
     <div class="card"><div class="list-group list-group-flush">
     @foreach (var package in Model.Packages)
     {
-        <a asp-route="PackageDetails" asp-route-id="@package.PackageId" asp-route-q="@Model.Query" asp-route-page="@Model.Page" asp-route-packageType="@Model.PackageType" asp-route-framework="@Model.Framework" asp-route-prerelease="@Model.Prerelease" class="list-group-item list-group-item-action py-3">
+        <a asp-route="PackageDetails" asp-route-id="@package.PackageId" asp-route-version="@package.Version" asp-route-q="@Model.Query" asp-route-page="@Model.Page" asp-route-packageType="@Model.PackageType" asp-route-framework="@Model.Framework" asp-route-prerelease="@Model.Prerelease" class="list-group-item list-group-item-action py-3">
             <div class="d-flex gap-3 align-items-start"><partial name="_PackageIcon" model="@(package.IconUrl ?? string.Empty)" /><div class="flex-grow-1 min-width-0"><div class="d-flex flex-wrap gap-2 align-items-baseline"><h2 class="h5 mb-0 text-break">@package.PackageId</h2><span class="text-muted">@package.Version</span></div>
             <p class="my-2 text-break">@package.Description</p><small class="text-muted">@string.Join(", ", package.Authors ?? [])</small></div></div>
         </a>
