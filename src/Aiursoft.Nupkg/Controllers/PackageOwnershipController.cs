@@ -35,7 +35,7 @@ public class PackageOwnershipController(NupkgDbContext db) : Controller
                 {
                     Id = r.Id, PackageId = r.PackageId,
                     OwnerName = r.OwnerUser == null ? null : r.OwnerUser.DisplayName,
-                    VersionCount = r.Versions.Count
+                    VersionCount = r.Versions.Count()
                 }).ToListAsync()
         });
     }
