@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="About API keys" xml:space="preserve">
+    <value>API कीज़ के बारे में</value>
+  </data>
+  <data name="An enabled legacy server key has access to every package. Keep it only for trusted existing automation." xml:space="preserve">
+    <value>एक सक्रिय लीगेंसी सर्वर की काई की हर पैकेज तक पहुंच होती है। इसे केवल विश्वसनीय मौजूदा स्वचालन के लिए ही रखें।</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>कॉपी</value>
+  </data>
+  <data name="Create a personal key under Personal &gt; API Keys. Publishing requires account permission and ownership of the package name." xml:space="preserve">
+    <value>व्यक्तिगत &gt; API कुंजियों के तहत एक व्यक्तिगत कुंजी बनाएं। प्रकाशित करने के लिए खाता अनुमति और पैकेज नाम की मालिकाना हक़ की आवश्यकता होती है।</value>
+  </data>
+  <data name="Create API key" xml:space="preserve">
+    <value>API कुंजी बनाएँ</value>
+  </data>
+  <data name="Package source" xml:space="preserve">
+    <value>पैकेज स्रोत</value>
+  </data>
+  <data name="Publish a package" xml:space="preserve">
+    <value>पैकेज प्रकाशित करें</value>
+  </data>
+  <data name="Replace the package filename and API key with your own values." xml:space="preserve">
+    <value>अपने मानों के साथ पैकेज फ़ाइल नाम और API कुंजी बदलें।</value>
+  </data>
+  <data name="Sign in to publish" xml:space="preserve">
+    <value>प्रकाशित करने के लिए साइन इन करें</value>
+  </data>
+  <data name="This server is read-only. Publishing is disabled." xml:space="preserve">
+    <value>यह सर्वर केवल-पठनीय है। प्रकाशन अक्षम है।</value>
+  </data>
+  <data name="Upload packages" xml:space="preserve">
+    <value>पैकेज अपलोड करें</value>
+  </data>
+  <data name="Use the NuGet CLI to publish packages to this server." xml:space="preserve">
+    <value>इस सर्वर पर पैकेज प्रकाशित करने के लिए NuGet CLI का उपयोग करें।</value>
+  </data>
+
+</root>

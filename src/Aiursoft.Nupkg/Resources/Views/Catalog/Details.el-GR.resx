@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="Authors" xml:space="preserve">
+    <value>Συγγραφείς</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Αντιγραφή</value>
+  </data>
+  <data name="Dependencies" xml:space="preserve">
+    <value>Εξαρτήσεις</value>
+  </data>
+  <data name="Dependent package pages" xml:space="preserve">
+    <value>Σελίδες εξαρτώμενων πακέτων</value>
+  </data>
+  <data name="Download package" xml:space="preserve">
+    <value>Λήψη πακέτου</value>
+  </data>
+  <data name="Earlier SDKs" xml:space="preserve">
+    <value>Παλαιότερα SDK</value>
+  </data>
+  <data name="Frameworks" xml:space="preserve">
+    <value>Πλαίσια</value>
+  </data>
+  <data name="Install" xml:space="preserve">
+    <value>Εγκατάσταση</value>
+  </data>
+  <data name="Installation format" xml:space="preserve">
+    <value>Μορφή εγκατάστασης</value>
+  </data>
+  <data name="Last updated" xml:space="preserve">
+    <value>Τελευταία ενημέρωση</value>
+  </data>
+  <data name="License" xml:space="preserve">
+    <value>Άδεια</value>
+  </data>
+  <data name="Links" xml:space="preserve">
+    <value>Σύνδεσμοι</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Επόμενο</value>
+  </data>
+  <data name="No dependencies" xml:space="preserve">
+    <value>Χωρίς εξαρτήσεις</value>
+  </data>
+  <data name="No dependent packages on this server" xml:space="preserve">
+    <value>Δεν υπάρχουν εξαρτώμενα πακέτα σε αυτόν τον διακομιστή</value>
+  </data>
+  <data name="No packages on this page." xml:space="preserve">
+    <value>Δεν υπάρχουν πακέτα σε αυτή τη σελίδα.</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
+    <value>Επισκόπηση</value>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>Ιδιοκτήτης</value>
+  </data>
+  <data name="Package Manager" xml:space="preserve">
+    <value>Διαχειριστής Συσκευασμάτων</value>
+  </data>
+  <data name="Packages" xml:space="preserve">
+    <value>Πακέτα</value>
+  </data>
+  <data name="Prerelease" xml:space="preserve">
+    <value>Προεγκατάσταση</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Προηγούμενο</value>
+  </data>
+  <data name="Project website" xml:space="preserve">
+    <value>Ιστότοπος έργου</value>
+  </data>
+  <data name="Published" xml:space="preserve">
+    <value>Δημοσιεύθηκε</value>
+  </data>
+  <data name="Release notes" xml:space="preserve">
+    <value>Σημειώσεις έκδοσης</value>
+  </data>
+  <data name="Source code" xml:space="preserve">
+    <value>Πηγαίος κώδικας</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Ετικέτες</value>
+  </data>
+  <data name="Used by" xml:space="preserve">
+    <value>Χρησιμοποιείται από</value>
+  </data>
+  <data name="Versions" xml:space="preserve">
+    <value>Εκδόσεις</value>
+  </data>
+
+</root>

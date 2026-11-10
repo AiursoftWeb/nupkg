@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+      <data name="Authors" xml:space="preserve">
+    <value>Yazarlar</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Kopyala</value>
+  </data>
+  <data name="Dependencies" xml:space="preserve">
+    <value>Bağımlılıklar</value>
+  </data>
+  <data name="Dependent package pages" xml:space="preserve">
+    <value>Bağımlı paket sayfaları</value>
+  </data>
+  <data name="Download package" xml:space="preserve">
+    <value>Paketi indir</value>
+  </data>
+  <data name="Earlier SDKs" xml:space="preserve">
+    <value>Daha Eski SDK&apos;lar</value>
+  </data>
+  <data name="Frameworks" xml:space="preserve">
+    <value>Çerçeveler</value>
+  </data>
+  <data name="Install" xml:space="preserve">
+    <value>Yükle</value>
+  </data>
+  <data name="Installation format" xml:space="preserve">
+    <value>Kurulum biçimi</value>
+  </data>
+  <data name="Last updated" xml:space="preserve">
+    <value>Son güncelleme</value>
+  </data>
+  <data name="License" xml:space="preserve">
+    <value>Lisans</value>
+  </data>
+  <data name="Links" xml:space="preserve">
+    <value>Bağlantılar</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Sonraki</value>
+  </data>
+  <data name="No dependencies" xml:space="preserve">
+    <value>Bağımlılık yok</value>
+  </data>
+  <data name="No dependent packages on this server" xml:space="preserve">
+    <value>Bu sunucuda bağımlı paket yok</value>
+  </data>
+  <data name="No packages on this page." xml:space="preserve">
+    <value>Bu sayfada paket yok.</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
+    <value>Genel Bakış</value>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>Sahip</value>
+  </data>
+  <data name="Package Manager" xml:space="preserve">
+    <value>Paket Yöneticisi</value>
+  </data>
+  <data name="Packages" xml:space="preserve">
+    <value>Paketler</value>
+  </data>
+  <data name="Prerelease" xml:space="preserve">
+    <value>Ön Sürüm</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Önceki</value>
+  </data>
+  <data name="Project website" xml:space="preserve">
+    <value>Proje web sitesi</value>
+  </data>
+  <data name="Published" xml:space="preserve">
+    <value>Yayınlanma tarihi</value>
+  </data>
+  <data name="Release notes" xml:space="preserve">
+    <value>Sürüm notları</value>
+  </data>
+  <data name="Source code" xml:space="preserve">
+    <value>Kaynak kod</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Etiketler</value>
+  </data>
+  <data name="Used by" xml:space="preserve">
+    <value>Kullanıcılar</value>
+  </data>
+  <data name="Versions" xml:space="preserve">
+    <value>Sürümler</value>
+  </data>
+
+</root>
