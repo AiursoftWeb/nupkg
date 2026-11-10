@@ -261,6 +261,21 @@ public class S360MirrorTests : TestBase
     }
 
     [TestMethod]
+    public async Task CachedMetadataAndContentRemainAvailableWhenTheOriginIsOffline()
+    {
+        var bytes = AddArchive("Lazy.CachedOffline");
+        var url = "/v3/package/lazy.cachedoffline/1.2.3/lazy.cachedoffline.1.2.3.nupkg";
+        CollectionAssert.AreEqual(bytes, await Http.GetByteArrayAsync(url));
+        await _upstream!.StopAsync();
+        Assert.Contains("1.2.3", await Http.GetStringAsync("/v3/package/lazy.cachedoffline/index.json"));
+        Assert.AreEqual(HttpStatusCode.OK, (await Http.GetAsync("/v3/registration/lazy.cachedoffline/index.json")).StatusCode);
+        Assert.AreEqual(HttpStatusCode.OK, (await Http.GetAsync("/v3/registration/lazy.cachedoffline/1.2.3.json")).StatusCode);
+        Assert.AreEqual(HttpStatusCode.OK, (await Http.GetAsync("/packages/lazy.cachedoffline/1.2.3")).StatusCode);
+        CollectionAssert.AreEqual(bytes, await Http.GetByteArrayAsync(url));
+        Assert.AreEqual(1, _downloads);
+    }
+
+    [TestMethod]
     public async Task ConcurrentColdDownloadsShareOneVerifiedArchive()
     {
         var bytes = AddArchive("Lazy.Concurrent");

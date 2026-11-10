@@ -29,9 +29,17 @@ public class S360UpstreamClient(ApprovedPackageMirror mirror, V3UpstreamClient u
         var approved = await ArtifactsAsync(id, cancellationToken);
         if (approved.Count == 0) return [];
         var versions = approved.Select(a => NuGetVersion.Parse(a.Version)).ToHashSet();
+        var normalizedId = id.ToLowerInvariant();
+        var cached = (await db.Packages.AsNoTracking().Where(p => p.Id.ToLower() == normalizedId)
+            .Select(p => p.NormalizedVersionString).ToListAsync(cancellationToken))
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        // PackageService merges the local metadata. A fully cached package must
+        // remain browsable when its external origin is offline.
+        if (versions.All(v => cached.Contains(v.ToNormalizedString()))) return [];
         var metadata = await upstream.ListPackagesAsync(id, cancellationToken);
         var result = metadata.Where(p => p.Id.Equals(id, StringComparison.OrdinalIgnoreCase) && versions.Contains(p.Version)).ToList();
-        if (result.Count == 0) throw new HttpRequestException("Approved package metadata is unavailable at its upstream.");
+        if (result.Count == 0 && cached.Count == 0)
+            throw new HttpRequestException("Approved package metadata is unavailable at its upstream.");
         return result;
     }
 
