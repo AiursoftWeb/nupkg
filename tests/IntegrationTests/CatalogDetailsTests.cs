@@ -111,10 +111,16 @@ public class CatalogDetailsTests : TestBase
     {
         using var scope = Server!.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<NupkgDbContext>();
-        db.PackageFamilies.Add(new PackageFamily
+        var family = new PackageFamily
         {
-            PackageId = packages[0].Id, NormalizedId = packages[0].Id.ToLowerInvariant(), Versions = packages
-        });
+            PackageId = packages[0].Id, NormalizedId = packages[0].Id.ToLowerInvariant(), OwnerUserId = null
+        };
+        db.PackageFamilies.Add(family);
+        foreach (var package in packages)
+        {
+            package.PackageFamily = family;
+        }
+        db.Packages.AddRange(packages);
         await db.SaveChangesAsync();
     }
 

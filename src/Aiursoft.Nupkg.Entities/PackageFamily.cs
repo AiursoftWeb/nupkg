@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Aiursoft.Nupkg.Entities;
 
@@ -10,16 +12,27 @@ namespace Aiursoft.Nupkg.Entities;
 [Index(nameof(NormalizedId), IsUnique = true)]
 public class PackageFamily
 {
-    public int Id { get; set; }
+    [Key]
+    public int Id { get; init; }
 
     [Required, MaxLength(NupkgDbContext.MaxPackageIdLength)]
-    public required string PackageId { get; set; }
+    public required string PackageId { get; init; }
 
     [Required, MaxLength(NupkgDbContext.MaxPackageIdLength)]
-    public required string NormalizedId { get; set; }
+    public required string NormalizedId { get; init; }
 
-    public string? OwnerUserId { get; set; }
+    /// <summary>
+    /// Null reserves a mirrored, imported or orphaned name until an administrator assigns it.
+    /// The column type follows the existing Identity user key.
+    /// </summary>
+    public required string? OwnerUserId { get; set; }
+
+    [JsonIgnore]
+    [ForeignKey(nameof(OwnerUserId))]
     public User? OwnerUser { get; set; }
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public ICollection<Package> Versions { get; set; } = [];
+
+    public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
+
+    [InverseProperty(nameof(Package.PackageFamily))]
+    public IEnumerable<Package> Versions { get; init; } = new List<Package>();
 }
