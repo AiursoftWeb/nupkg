@@ -73,6 +73,7 @@ namespace Aiursoft.Nupkg.Core
         }
 
         private static bool Owns(PackageFamily registration, PackagePublisher publisher) =>
+            publisher.MirrorSource != null ? registration.OwnerUserId == null :
             publisher.CanManagePackages || (publisher.UserId != null && registration.OwnerUserId == publisher.UserId);
 
         public async Task<bool> ExistsAsync(string id, CancellationToken cancellationToken)

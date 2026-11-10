@@ -37,6 +37,13 @@ public class Startup : IWebStartup
 {
     public void ConfigureServices(IConfiguration configuration, IWebHostEnvironment environment, IServiceCollection services)
     {
+        var controlledMirror = configuration.GetSection("S360Mirror").Get<Core.Configuration.S360MirrorOptions>() ?? new();
+        services.AddOptions<Core.Configuration.S360MirrorOptions>().ValidateOnStart();
+        services.AddScoped<Services.SupplyChain.S360AdmissionClient>();
+        services.AddScoped<Services.SupplyChain.ApprovedPackageMirror>();
+        services.AddHttpClient("S360Admission", client => client.Timeout = TimeSpan.FromSeconds(30))
+            .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
+
         // AppSettings.
         services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
 
@@ -52,7 +59,7 @@ public class Startup : IWebStartup
                 options.CacheAllQueries(CacheExpirationMode.Sliding, TimeSpan.FromMinutes(30));
                 options.UseDbCallsIfCachingProviderIsDown(TimeSpan.FromMinutes(1));
                 options.SkipCachingCommands(command =>
-                    command.Contains("AspNet", StringComparison.OrdinalIgnoreCase)
+                    controlledMirror.Enabled || command.Contains("AspNet", StringComparison.OrdinalIgnoreCase)
                     || command.Contains("UserApiKeys", StringComparison.OrdinalIgnoreCase)
                     || command.Contains("PackageFamilies", StringComparison.OrdinalIgnoreCase));
             });
@@ -95,6 +102,13 @@ public class Startup : IWebStartup
             registration: orphanAvatarCleanupJob,
             period:     TimeSpan.FromHours(6),
             startDelay: TimeSpan.FromMinutes(5));
+
+        if (controlledMirror.Enabled)
+        {
+            var mirror = services.RegisterBackgroundJob<S360MirrorJob>();
+            services.RegisterScheduledTask(mirror, TimeSpan.FromMinutes(Math.Clamp(controlledMirror.IntervalMinutes, 1, 1440)),
+                TimeSpan.FromSeconds(30));
+        }
 
         // NuGet services retain their protocol and package storage contracts.
         services.AddHttpContextAccessor();
@@ -146,6 +160,7 @@ public class Startup : IWebStartup
         app.UseOperationCancelledMiddleware();
         app.UseAuthentication();
         app.UseAuthorization();
+        app.UseMiddleware<Services.SupplyChain.MirrorAdmissionMiddleware>();
         app.MapDefaultControllerRoute();
         app.MapControllers();
     }

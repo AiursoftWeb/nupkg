@@ -68,7 +68,24 @@ curl -fsSL https://raw.githubusercontent.com/aiursoftweb/nupkg/master/install.sh
 
 Persist `/data` for the default SQLite database and package files. For other databases, persist the configured database and `Storage:Path`. The NuGet v3 service index is `/v3/index.json`; publishing uses `/api/v2/package`; health checks use `/health`.
 
-To cache an upstream feed, set `Mirror:Enabled=true` and `Mirror:PackageSource=https://api.nuget.org/v3/index.json`. Packages are cached when requested; this does not copy the entire upstream catalog.
+With S360 control disabled, to cache an upstream feed, set `Mirror:Enabled=true` and `Mirror:PackageSource=https://api.nuget.org/v3/index.json`. Packages are cached when requested; this does not copy the entire upstream catalog.
+
+For approved-only automatic mirroring, deploy S360 with its artifact admission API first, then configure Nupkg:
+
+```text
+Mirror__Enabled=true
+Mirror__PackageSource=https://nuget.aiursoft.com/v3/index.json
+S360Mirror__Enabled=true
+S360Mirror__Server=https://s360.aiursoft.com
+S360Mirror__CheckKey=<personal S360 check key>
+S360Mirror__IntervalMinutes=5
+```
+
+Use an origin already permitted and independently verified by S360. Keep the key outside Git; baseline permission is unnecessary. The existing Jobs page shows synchronization runs and allows an authorized operator to trigger one. The first run starts after 30 seconds. Only existing, verified, currently approved concrete versions are mirrored; a version range does not download an entire registry. SHA256 and archive identity must match, and approval is rechecked after download. The job retries failures on the next run without overwriting conflicting archives or personally owned names. NuGet v2 upstreams are not supported in this mode.
+
+Controlled mirroring disables unrestricted on-demand upstream fallback. Search, metadata and already cached archives use current S360 decisions on every read; revoked archives disappear from listings and their direct content requests return 403 with the policy reason. S360 failures return 503 with a retry hint. Package responses use `Cache-Control: no-store`; remove any old reverse-proxy/CDN caches when enabling this mode, and do not override this header. Previously downloaded client files cannot be revoked remotely.
+
+Database upgrades preserve existing rows. Old ownerless archives without provenance remain hidden in controlled mode until the job verifies their bytes against an approved origin. Existing uploads with recorded user ownership and new authorized local uploads retain their publishing behavior. This controls upstream mirroring, not the independent project CI approval of locally published packages. Global artifact approval does not authorize a project graph or automatically approve Nupkg as a replacement origin. Setting `Mirror__Enabled=false` pauses new downloads while keeping S360 read control active; disabling `S360Mirror__Enabled` also disables that control.
 
 A nonempty `ApiKey` can provide a server-wide legacy credential. Set `EnableLegacyApiKey=false` to use personal keys only. Empty keys deny publishing by default; `AllowAnonymousPublishing=true` explicitly enables anonymous publishing when the legacy key is empty. For existing installations, grant the **Publish Packages** and **Manage Packages** permissions through Roles.
 

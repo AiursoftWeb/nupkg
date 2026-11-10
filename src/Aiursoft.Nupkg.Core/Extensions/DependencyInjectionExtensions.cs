@@ -55,6 +55,7 @@ namespace Aiursoft.Nupkg.Core.Extensions
         public static void AddConfiguration(this IServiceCollection services)
         {
             services.AddNupkgOptions<NupkgOptions>();
+            services.AddNupkgOptions<S360MirrorOptions>("S360Mirror");
             services.AddNupkgOptions<FileSystemStorageOptions>(nameof(NupkgOptions.Storage));
             services.AddNupkgOptions<MirrorOptions>(nameof(NupkgOptions.Mirror));
             services.AddNupkgOptions<SearchOptions>(nameof(NupkgOptions.Search));
@@ -175,7 +176,7 @@ namespace Aiursoft.Nupkg.Core.Extensions
         {
             var options = provider.GetRequiredService<IOptionsSnapshot<MirrorOptions>>();
 
-            if (!options.Value.Enabled)
+            if (!options.Value.Enabled || provider.GetRequiredService<IOptions<S360MirrorOptions>>().Value.Enabled)
             {
                 return provider.GetRequiredService<DisabledUpstreamClient>();
             }
