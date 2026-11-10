@@ -21,6 +21,9 @@
       <data name="Aiursoft Nupkg" xml:space="preserve">
     <value>Πρότυπο Aiursoft</value>
   </data>
+  <data name="Browse packages" xml:space="preserve">
+    <value>Περιήγηση σε πακέτα</value>
+  </data>
   <data name="Community" xml:space="preserve">
     <value>Κοινότητα</value>
   </data>
