@@ -116,6 +116,7 @@ namespace Aiursoft.Nupkg.Core.Upstream.Clients
                 LicenseUrl = ParseUri(metadata.LicenseUrl),
                 ProjectUrl = ParseUri(metadata.ProjectUrl),
                 PackageTypes = new List<PackageType>(),
+                TargetFrameworks = new List<TargetFramework>(),
                 RepositoryUrl = null,
                 RepositoryType = null,
                 SemVerLevel = version.IsSemVer2 ? SemVerLevel.SemVer2 : SemVerLevel.Unknown,

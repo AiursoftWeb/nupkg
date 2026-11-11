@@ -261,6 +261,24 @@ public class S360MirrorTests : TestBase
     }
 
     [TestMethod]
+    public async Task UncachedApprovedPackageDetailsRenderWithoutDownloadingTheArchive()
+    {
+        AddArchive("Lazy.Details");
+        using var scope = Server!.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<NupkgDbContext>();
+        Assert.IsFalse(await db.Packages.AnyAsync(p => p.Id == "lazy.details"));
+
+        var html = await Http.GetStringAsync("/packages/lazy.details/1.2.3");
+        Assert.Contains("Upstream metadata", html);
+        Assert.Contains("dotnet add package lazy.details --version 1.2.3", html);
+        Assert.DoesNotContain("net10.0", html, "Missing framework metadata must not invent framework support.");
+        Assert.AreEqual(HttpStatusCode.OK, (await Http.GetAsync("/packages/lazy.details")).StatusCode);
+        Assert.AreEqual(HttpStatusCode.NotFound, (await Http.GetAsync("/packages/lazy.details/9.9.9")).StatusCode);
+        Assert.AreEqual(0, _downloads);
+        Assert.IsFalse(await db.Packages.AnyAsync(p => p.Id == "lazy.details"));
+    }
+
+    [TestMethod]
     public async Task CachedMetadataAndContentRemainAvailableWhenTheOriginIsOffline()
     {
         var bytes = AddArchive("Lazy.CachedOffline");

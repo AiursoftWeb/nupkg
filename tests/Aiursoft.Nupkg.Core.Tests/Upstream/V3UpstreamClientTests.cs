@@ -145,6 +145,7 @@ namespace Aiursoft.Nupkg.Core.Tests.Upstream
                 Assert.Equal("", package.ProjectUrlString);
                 Assert.Equal("", package.RepositoryUrlString);
                 Assert.Null(package.RepositoryType);
+                Assert.Empty(package.TargetFrameworks);
                 Assert.Equal(new[] { "Tag1", "Tag2" }, package.Tags);
                 Assert.Equal("1.2.3-prerelease", package.NormalizedVersionString);
                 Assert.Equal("1.2.3-prerelease+semver2", package.OriginalVersionString);

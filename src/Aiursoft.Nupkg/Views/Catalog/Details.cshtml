@@ -54,7 +54,7 @@
             <dt class="col-sm-3">@Localizer["Authors"]</dt><dd class="col-sm-9 text-break">@string.Join(", ", Model.Package.Authors ?? [])</dd>
             <dt class="col-sm-3">@Localizer["Published"]</dt><dd class="col-sm-9"><label data-utc-time="@Model.Package.Published.ToHtmlDateTime()"></label></dd>
             <dt class="col-sm-3">@Localizer["Last updated"]</dt><dd class="col-sm-9"><label data-utc-time="@Model.LastUpdated.ToHtmlDateTime()"></label></dd>
-            @if (Model.Package.TargetFrameworks.Count > 0)
+            @if (Model.Package.TargetFrameworks is { Count: > 0 })
             {
                 <dt class="col-sm-3">@Localizer["Frameworks"]</dt><dd class="col-sm-9 d-flex flex-wrap gap-1">@foreach (var framework in Model.Package.TargetFrameworks) { <span class="badge bg-secondary">@(framework.Moniker == "any" ? Localizer["All frameworks"].Value : framework.Moniker)</span> }</dd>
             }

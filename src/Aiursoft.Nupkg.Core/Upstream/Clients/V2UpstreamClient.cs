@@ -160,6 +160,7 @@ namespace Aiursoft.Nupkg.Core.Upstream.Clients
                 LicenseUrl = package.LicenseUrl,
                 ProjectUrl = package.ProjectUrl,
                 PackageTypes = new List<PackageType>(),
+                TargetFrameworks = new List<TargetFramework>(),
                 RepositoryUrl = null,
                 RepositoryType = null,
                 Tags = package.Tags?.Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries),
