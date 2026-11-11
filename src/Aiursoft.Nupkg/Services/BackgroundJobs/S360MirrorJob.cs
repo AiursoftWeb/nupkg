@@ -6,8 +6,8 @@ namespace Aiursoft.Nupkg.Services.BackgroundJobs;
 public class S360MirrorJob(ApprovedPackageMirror mirror, IHostApplicationLifetime lifetime,
     ILogger<S360MirrorJob> logger) : IBackgroundJob
 {
-    public string Name => "S360 approved package mirror";
-    public string Description => "Downloads independently verified, currently approved package versions from the configured upstream.";
+    public string Name => "Prefetch S360-approved packages";
+    public string Description => "Optionally preloads approved package files. Normal downloads fetch missing files on demand.";
 
     public async Task ExecuteAsync()
     {

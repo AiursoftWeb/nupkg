@@ -41,6 +41,7 @@ public class Startup : IWebStartup
         services.AddOptions<Core.Configuration.S360MirrorOptions>().ValidateOnStart();
         services.AddScoped<Services.SupplyChain.S360AdmissionClient>();
         services.AddScoped<Services.SupplyChain.ApprovedPackageMirror>();
+        services.AddSingleton<Services.SupplyChain.PackageMirrorLocks>();
         services.AddHttpClient("S360Admission", client => client.Timeout = TimeSpan.FromSeconds(30))
             .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
 
@@ -106,8 +107,9 @@ public class Startup : IWebStartup
         if (controlledMirror.Enabled)
         {
             var mirror = services.RegisterBackgroundJob<S360MirrorJob>();
-            services.RegisterScheduledTask(mirror, TimeSpan.FromMinutes(Math.Clamp(controlledMirror.IntervalMinutes, 1, 1440)),
-                TimeSpan.FromSeconds(30));
+            if (controlledMirror.PrefetchEnabled)
+                services.RegisterScheduledTask(mirror, TimeSpan.FromMinutes(Math.Clamp(controlledMirror.IntervalMinutes, 1, 1440)),
+                    TimeSpan.FromSeconds(30));
         }
 
         // NuGet services retain their protocol and package storage contracts.
@@ -118,6 +120,8 @@ public class Startup : IWebStartup
         services.AddTransient<IValidateOptions<Core.Configuration.NupkgOptions>, ConfigureNupkgOptions>();
         services.AddConfiguration();
         services.AddNupkgServices();
+        if (controlledMirror.Enabled)
+            services.AddScoped<Core.Upstream.IUpstreamClient, Services.SupplyChain.S360UpstreamClient>();
         services.AddDefaultProviders();
         new NupkgApplication(services).AddFileStorage();
         services.AddProvider<ISearchIndexer>((provider, config) =>

@@ -11,6 +11,7 @@ using Aiursoft.Nupkg.Services.SupplyChain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Http;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.WebUtilities;
 using static Aiursoft.WebTools.Extends;
 
 namespace Aiursoft.Nupkg.Tests.IntegrationTests;
@@ -28,6 +29,8 @@ public class S360MirrorTests : TestBase
     private bool _mismatchedResponse;
     private string _source = string.Empty;
     private int _downloads;
+    private TaskCompletionSource<bool>? _downloadStarted;
+    private TaskCompletionSource<bool>? _downloadRelease;
 
     [TestInitialize]
     public override async Task CreateServer()
@@ -47,11 +50,21 @@ public class S360MirrorTests : TestBase
                 new Dictionary<string, string> { ["@type"] = "RegistrationsBaseUrl/3.6.0", ["@id"] = $"http://localhost:{originPort}/registration/" },
                 new Dictionary<string, string> { ["@type"] = "SearchQueryService/3.4.0", ["@id"] = $"http://localhost:{originPort}/search" } }
         }));
-        _upstream.MapGet("/flat/{id}/{version}/{file}", (string id) =>
+        _upstream.MapGet("/flat/{id}/{version}/{file}", async (string id, HttpContext context) =>
         {
             Interlocked.Increment(ref _downloads);
+            _downloadStarted?.TrySetResult(true);
+            if (_downloadRelease != null) await _downloadRelease.Task.WaitAsync(context.RequestAborted);
             return _archives.TryGetValue(id, out var bytes) ? Results.Bytes(bytes) : Results.NotFound();
         });
+        _upstream.MapGet("/registration/{id}/index.json", (string id) => Results.Json(new
+        {
+            count = 1, items = new[] { new { count = 2, lower = "1.2.3", upper = "9.9.9",
+                items = new[] { "1.2.3", "9.9.9" }.Select(version => new
+                {
+                    catalogEntry = new { id, version, listed = true, authors = "Fixture", description = "Upstream metadata" }
+                }) } }
+        }));
         await _upstream.StartAsync();
         using var port = new TestPortReservation();
         Http.BaseAddress = new Uri($"http://localhost:{port.Port}");
@@ -75,9 +88,15 @@ public class S360MirrorTests : TestBase
         if (_unavailable) return new HttpResponseMessage(HttpStatusCode.ServiceUnavailable);
         object result;
         if (request.Method == HttpMethod.Get)
-            result = _emptyFirstPage && !request.RequestUri!.Query.Contains("afterId=1&", StringComparison.Ordinal)
+        {
+            var query = QueryHelpers.ParseQuery(request.RequestUri!.Query);
+            var name = query.TryGetValue("name", out var value) ? value.ToString() : null;
+            var approved = _approved.Where(a => !_revoked.Contains(a.Name) &&
+                (name == null || a.Name.Equals(name, StringComparison.OrdinalIgnoreCase))).ToList();
+            result = _emptyFirstPage && !request.RequestUri.Query.Contains("afterId=1&", StringComparison.Ordinal)
                 ? new ApprovedArtifactPage { NextAfterId = 1, UpperId = 100 }
-                : new ApprovedArtifactPage { Artifacts = _approved.ToList(), UpperId = 100 };
+                : new ApprovedArtifactPage { Artifacts = approved, UpperId = 100 };
+        }
         else
         {
             using var json = JsonDocument.Parse(await request.Content!.ReadAsStringAsync(cancellationToken));
@@ -155,7 +174,7 @@ public class S360MirrorTests : TestBase
         Assert.AreEqual(HttpStatusCode.NotFound, (await Http.GetAsync("/v3/registration/mirror.approved/index.json")).StatusCode);
         Assert.DoesNotContain("mirror.approved", await Http.GetStringAsync("/v3/search?q=Mirror.Approved"));
         Assert.DoesNotContain("mirror.approved", await Http.GetStringAsync("/packages?q=Mirror.Approved"));
-        Assert.AreEqual(HttpStatusCode.NotFound, (await Http.GetAsync("/v3/package/mirror.unapproved/1.2.3/mirror.unapproved.1.2.3.nupkg")).StatusCode);
+        Assert.AreEqual(HttpStatusCode.Forbidden, (await Http.GetAsync("/v3/package/mirror.unapproved/1.2.3/mirror.unapproved.1.2.3.nupkg")).StatusCode);
         Assert.AreEqual(1, _downloads);
     }
 
@@ -184,7 +203,10 @@ public class S360MirrorTests : TestBase
             (await db.Packages.SingleAsync(p => p.Id == "mirror.legacy")).IsLocallyPublished = false;
             await db.SaveChangesAsync();
         }
+        var artifact = _approved.Single();
+        _approved.Clear();
         Assert.AreEqual(HttpStatusCode.Forbidden, (await Http.GetAsync("/v3/package/mirror.legacy/1.2.3/mirror.legacy.1.2.3.nupkg")).StatusCode);
+        _approved.Add(artifact);
         Assert.AreEqual(1, await SynchronizeAsync());
         Assert.AreEqual(0, _downloads);
         CollectionAssert.AreEqual(bytes, await Http.GetByteArrayAsync("/v3/package/mirror.legacy/1.2.3/mirror.legacy.1.2.3.nupkg"));
@@ -219,6 +241,116 @@ public class S360MirrorTests : TestBase
         Assert.HasCount(1, versions);
         Assert.AreEqual("1.0.0", versions.Single().NormalizedVersionString);
         Assert.IsTrue(versions.Single().IsLocallyPublished);
+    }
+
+    [TestMethod]
+    public async Task UncachedApprovedVersionsAndRegistrationAreVisibleBeforeAnyArchiveDownload()
+    {
+        var bytes = AddArchive("Lazy.Metadata");
+        Assert.Contains("1.2.3", await Http.GetStringAsync("/v3/package/lazy.metadata/index.json"));
+        var registration = await Http.GetStringAsync("/v3/registration/lazy.metadata/index.json");
+        Assert.Contains("1.2.3", registration);
+        Assert.DoesNotContain("9.9.9", registration);
+        Assert.AreEqual(HttpStatusCode.OK, (await Http.GetAsync("/v3/registration/lazy.metadata/1.2.3.json")).StatusCode);
+        Assert.AreEqual(0, _downloads);
+        using (var scope = Server!.Services.CreateScope())
+            Assert.IsFalse(await scope.ServiceProvider.GetRequiredService<NupkgDbContext>().Packages.AnyAsync(p => p.Id == "lazy.metadata"));
+        CollectionAssert.AreEqual(bytes, await Http.GetByteArrayAsync("/v3/package/lazy.metadata/1.2.3/lazy.metadata.1.2.3.nupkg"));
+        CollectionAssert.AreEqual(bytes, await Http.GetByteArrayAsync("/v3/package/lazy.metadata/1.2.3/lazy.metadata.1.2.3.nupkg"));
+        Assert.AreEqual(1, _downloads);
+    }
+
+    [TestMethod]
+    public async Task CachedMetadataAndContentRemainAvailableWhenTheOriginIsOffline()
+    {
+        var bytes = AddArchive("Lazy.CachedOffline");
+        var url = "/v3/package/lazy.cachedoffline/1.2.3/lazy.cachedoffline.1.2.3.nupkg";
+        CollectionAssert.AreEqual(bytes, await Http.GetByteArrayAsync(url));
+        await _upstream!.StopAsync();
+        Assert.Contains("1.2.3", await Http.GetStringAsync("/v3/package/lazy.cachedoffline/index.json"));
+        Assert.AreEqual(HttpStatusCode.OK, (await Http.GetAsync("/v3/registration/lazy.cachedoffline/index.json")).StatusCode);
+        Assert.AreEqual(HttpStatusCode.OK, (await Http.GetAsync("/v3/registration/lazy.cachedoffline/1.2.3.json")).StatusCode);
+        Assert.AreEqual(HttpStatusCode.OK, (await Http.GetAsync("/packages/lazy.cachedoffline/1.2.3")).StatusCode);
+        CollectionAssert.AreEqual(bytes, await Http.GetByteArrayAsync(url));
+        Assert.AreEqual(1, _downloads);
+    }
+
+    [TestMethod]
+    public async Task ConcurrentColdDownloadsShareOneVerifiedArchive()
+    {
+        var bytes = AddArchive("Lazy.Concurrent");
+        _downloadStarted = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        _downloadRelease = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        var first = Http.GetByteArrayAsync("/v3/package/lazy.concurrent/1.2.3/lazy.concurrent.1.2.3.nupkg");
+        await _downloadStarted.Task.WaitAsync(TimeSpan.FromSeconds(15));
+        var others = Enumerable.Range(0, 7).Select(_ =>
+            Http.GetByteArrayAsync("/v3/package/lazy.concurrent/1.2.3/lazy.concurrent.1.2.3.nupkg")).ToArray();
+        Assert.IsFalse(first.IsCompleted, "Content must wait for the complete verified archive.");
+        _downloadRelease.SetResult(true);
+        foreach (var result in await Task.WhenAll(others.Prepend(first))) CollectionAssert.AreEqual(bytes, result);
+        Assert.AreEqual(1, _downloads);
+    }
+
+    [TestMethod]
+    public async Task RevocationDuringColdDownloadDoesNotCacheOrReturnTheArchive()
+    {
+        AddArchive("Lazy.Revoked");
+        _downloadStarted = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        _downloadRelease = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        var download = Http.GetAsync("/v3/package/lazy.revoked/1.2.3/lazy.revoked.1.2.3.nupkg");
+        await _downloadStarted.Task.WaitAsync(TimeSpan.FromSeconds(15));
+        _revoked.Add("lazy.revoked");
+        _downloadRelease.SetResult(true);
+        Assert.AreEqual(HttpStatusCode.Forbidden, (await download).StatusCode);
+        using var scope = Server!.Services.CreateScope();
+        Assert.IsFalse(await scope.ServiceProvider.GetRequiredService<NupkgDbContext>().Packages.AnyAsync(p => p.Id == "lazy.revoked"));
+    }
+
+    [TestMethod]
+    public async Task FailedColdVerificationLeavesNoPackageAndCanBeRetried()
+    {
+        var bytes = AddArchive("Lazy.Tampered");
+        _archives["lazy.tampered"] = Encoding.UTF8.GetBytes("not the approved archive");
+        var url = "/v3/package/lazy.tampered/1.2.3/lazy.tampered.1.2.3.nupkg";
+        Assert.AreEqual(HttpStatusCode.BadGateway, (await Http.GetAsync(url)).StatusCode);
+        using (var scope = Server!.Services.CreateScope())
+            Assert.IsFalse(await scope.ServiceProvider.GetRequiredService<NupkgDbContext>().Packages.AnyAsync(p => p.Id == "lazy.tampered"));
+        _archives["lazy.tampered"] = bytes;
+        CollectionAssert.AreEqual(bytes, await Http.GetByteArrayAsync(url));
+        Assert.AreEqual(2, _downloads);
+    }
+
+    [TestMethod]
+    public async Task InterruptedColdDownloadCanBeRetriedWithoutPublishingPartialContent()
+    {
+        var bytes = AddArchive("Lazy.Interrupted");
+        _downloadStarted = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        _downloadRelease = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        using var cancellation = new CancellationTokenSource();
+        var url = "/v3/package/lazy.interrupted/1.2.3/lazy.interrupted.1.2.3.nupkg";
+        var interrupted = Http.GetAsync(url, cancellation.Token);
+        await _downloadStarted.Task.WaitAsync(TimeSpan.FromSeconds(15));
+        await cancellation.CancelAsync();
+        var cancelled = false;
+        try { await interrupted; }
+        catch (OperationCanceledException) { cancelled = true; }
+        Assert.IsTrue(cancelled);
+        _downloadRelease.SetResult(true);
+        CollectionAssert.AreEqual(bytes, await Http.GetByteArrayAsync(url));
+        Assert.AreEqual(2, _downloads);
+        using var scope = Server!.Services.CreateScope();
+        Assert.AreEqual(1, await scope.ServiceProvider.GetRequiredService<NupkgDbContext>().Packages.CountAsync(p => p.Id == "lazy.interrupted"));
+    }
+
+    [TestMethod]
+    public async Task ColdMetadataAndContentFailClosedWhenAdmissionIsUnavailable()
+    {
+        AddArchive("Lazy.Unavailable");
+        _unavailable = true;
+        Assert.AreEqual(HttpStatusCode.ServiceUnavailable, (await Http.GetAsync("/v3/package/lazy.unavailable/index.json")).StatusCode);
+        Assert.AreEqual(HttpStatusCode.ServiceUnavailable, (await Http.GetAsync("/v3/registration/lazy.unavailable/index.json")).StatusCode);
+        Assert.AreEqual(HttpStatusCode.ServiceUnavailable, (await Http.GetAsync("/v3/package/lazy.unavailable/1.2.3/lazy.unavailable.1.2.3.nupkg")).StatusCode);
+        Assert.AreEqual(0, _downloads);
     }
 
     [TestMethod]
