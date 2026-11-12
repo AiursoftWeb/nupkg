@@ -87,7 +87,7 @@ namespace Aiursoft.Nupkg.Core.Search
             VersionsRequest request,
             CancellationToken cancellationToken)
         {
-            var packageId = request.PackageId.ToLower();
+            var packageId = request.PackageId.ToLowerInvariant();
             var search = _context
                 .Packages
                 .AsNoTracking()
