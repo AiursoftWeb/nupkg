@@ -22,9 +22,12 @@ Browse the running [Nupkg instance](https://nupkg.aiursoft.com).
 - A package catalog with versions, dependencies, reverse dependencies and install commands for libraries, tools and templates.
 - Personal publishing keys with expiration, revocation and package ownership.
 - Optional on-demand upstream mirroring: requested packages are downloaded and cached locally.
+- Optional S360 admission using a single internal-source policy, with independent upstream verification.
 - Shared Aiursoft accounts, OIDC, roles, themes and localization.
 
 Downloads are public. **Publish Packages** allows an account to create personal keys and maintain its own package names. **Manage Packages** allows maintaining all packages and assigning ownership. Imported and mirrored names remain reserved until assigned by an administrator.
+
+The npm sibling is [Nopkg](https://github.com/aiursoftweb/nopkg).
 
 ## Use the feed
 
@@ -74,7 +77,7 @@ For approved-only on-demand mirroring, deploy S360 with its artifact admission A
 
 ```text
 Mirror__Enabled=true
-Mirror__PackageSource=https://nuget.aiursoft.com/v3/index.json
+Mirror__PackageSource=https://api.nuget.org/v3/index.json
 S360Mirror__Enabled=true
 S360Mirror__Server=https://s360.aiursoft.com
 S360Mirror__CheckKey=<personal S360 check key>
