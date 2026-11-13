@@ -5,6 +5,41 @@ namespace Aiursoft.Nupkg.Services.SupplyChain;
 
 public class S360AdmissionClient(IHttpClientFactory clients, IOptions<S360MirrorOptions> options)
 {
+    public bool UsesRegistryPolicy => !string.IsNullOrEmpty(options.Value.PolicySource);
+    public string PolicySource(string origin) => UsesRegistryPolicy ? options.Value.PolicySource.TrimEnd('/') : origin;
+
+    public async Task<List<MirrorCandidate>> CandidatesAsync(string source, string name,
+        IEnumerable<string> versions, CancellationToken token)
+    {
+        var result = new List<MirrorCandidate>();
+        foreach (var batch in versions.Distinct().Chunk(500))
+        {
+            var candidates = batch.Select(v => new MirrorCandidate("nuget", name, v, PolicySource(source))).ToArray();
+            using var request = Create(HttpMethod.Post, "api/artifacts/mirror/candidates");
+            request.Content = JsonContent.Create(new { candidates });
+            using var response = await clients.CreateClient("S360Admission").SendAsync(request, token);
+            response.EnsureSuccessStatusCode();
+            var decisions = (await response.Content.ReadFromJsonAsync<MirrorCandidateResponse>(token))?.Decisions;
+            if (decisions == null || decisions.Count != batch.Length ||
+                decisions.Where((d, i) => d.Candidate != candidates[i]).Any())
+                throw new InvalidDataException("S360 returned unrelated mirror candidates.");
+            result.AddRange(decisions.Where(d => d.CanFetch).Select(d => d.Candidate));
+        }
+        return result;
+    }
+
+    public async Task<ArtifactDecision> VerifyMirrorAsync(ArtifactIdentity artifact, CancellationToken token)
+    {
+        using var request = Create(HttpMethod.Post, "api/artifacts/mirror/verify");
+        request.Content = JsonContent.Create(artifact);
+        using var response = await clients.CreateClient("S360Admission").SendAsync(request, token);
+        response.EnsureSuccessStatusCode();
+        var decision = await response.Content.ReadFromJsonAsync<ArtifactDecision>(token);
+        if (decision == null || decision.Dependency != artifact)
+            throw new InvalidDataException("S360 returned an unrelated mirror verification.");
+        return decision;
+    }
+
     private HttpRequestMessage Create(HttpMethod method, string path)
     {
         var settings = options.Value;

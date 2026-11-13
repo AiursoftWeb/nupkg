@@ -29,28 +29,40 @@ public class ApprovedPackageMirror(S360AdmissionClient admission, V3UpstreamClie
         }
     }
 
+    private string PolicySource => admission.PolicySource(Source);
+
     private static bool ValidName(string name) => name.Length is > 0 and <= 128 &&
         name.All(c => char.IsAsciiLetterOrDigit(c) || c is '.' or '-' or '_');
 
     private void Validate(ArtifactIdentity artifact)
     {
         // Never let discovery select another registry, name pattern or archive identity.
-        if (artifact.Ecosystem != "nuget" || artifact.Source.TrimEnd('/') != Source ||
+        if (artifact.Ecosystem != "nuget" || artifact.Source.TrimEnd('/') != PolicySource ||
             !ValidName(artifact.Name) || !NuGetVersion.TryParse(artifact.Version, out _) ||
             artifact.Sha256.Length != 64 || !artifact.Sha256.All(Uri.IsHexDigit))
             throw new InvalidDataException("S360 returned an invalid mirror artifact.");
     }
 
-    public async Task<List<ArtifactIdentity>> ApprovedAsync(string name, CancellationToken cancellationToken)
+    public async Task<List<PackageMirrorCandidate>> CandidatesAsync(string name, CancellationToken cancellationToken)
     {
         if (!ValidName(name)) return [];
-        var result = new List<ArtifactIdentity>();
-        await foreach (var artifact in admission.ApprovedAsync(Source, cancellationToken, name))
+        var result = new List<PackageMirrorCandidate>();
+        await foreach (var artifact in admission.ApprovedAsync(PolicySource, cancellationToken, name))
         {
             Validate(artifact);
             if (!artifact.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                 throw new InvalidDataException("S360 returned an unrelated package.");
-            result.Add(artifact);
+            result.Add(new PackageMirrorCandidate(artifact.Name, artifact.Version, artifact.Sha256));
+        }
+        if (admission.UsesRegistryPolicy)
+        {
+            var versions = await upstream.ListPackageVersionsAsync(name, cancellationToken);
+            var candidates = await admission.CandidatesAsync(Source, name,
+                versions.Select(v => v.ToNormalizedString()).Concat(result.Select(a => a.Version)), cancellationToken);
+            var allowed = candidates.Select(a => NuGetVersion.Parse(a.Version)).ToHashSet();
+            result = result.Where(a => allowed.Contains(NuGetVersion.Parse(a.Version))).ToList();
+            result.AddRange(candidates.Where(c => result.All(a => NuGetVersion.Parse(a.Version) != NuGetVersion.Parse(c.Version)))
+                .Select(c => new PackageMirrorCandidate(c.Name, c.Version, null)));
         }
         // NuGet normalizes equivalent version strings. Conflicting bytes must not be
         // published as one normalized version, even if origin records differ in spelling.
@@ -63,10 +75,11 @@ public class ApprovedPackageMirror(S360AdmissionClient admission, V3UpstreamClie
     {
         if (!options.Value.Enabled || !mirrorOptions.Value.Enabled) return 0;
         var count = 0;
-        await foreach (var artifact in admission.ApprovedAsync(Source, cancellationToken))
+        await foreach (var artifact in admission.ApprovedAsync(PolicySource, cancellationToken))
         {
             Validate(artifact);
-            if (await EnsureAsync(artifact.Name, NuGetVersion.Parse(artifact.Version), artifact, cancellationToken)
+            if (await EnsureAsync(artifact.Name, NuGetVersion.Parse(artifact.Version),
+                new PackageMirrorCandidate(artifact.Name, artifact.Version, artifact.Sha256), cancellationToken)
                 == PackageMirrorResult.Mirrored) count++;
         }
         return count;
@@ -76,7 +89,7 @@ public class ApprovedPackageMirror(S360AdmissionClient admission, V3UpstreamClie
         EnsureAsync(name, version, null, cancellationToken);
 
     private async Task<PackageMirrorResult> EnsureAsync(string name, NuGetVersion version,
-        ArtifactIdentity? discovered, CancellationToken cancellationToken)
+        PackageMirrorCandidate? discovered, CancellationToken cancellationToken)
     {
         if (!options.Value.Enabled || !mirrorOptions.Value.Enabled || !ValidName(name))
             return PackageMirrorResult.Denied;
@@ -95,33 +108,35 @@ public class ApprovedPackageMirror(S360AdmissionClient admission, V3UpstreamClie
                 return PackageMirrorResult.Available; // The read middleware still reassesses this provenance.
             if (await db.PackageFamilies.AnyAsync(f => f.NormalizedId == id && f.OwnerUserId != null, cancellationToken))
                 return PackageMirrorResult.Denied;
-            var artifact = discovered ?? (await ApprovedAsync(name, cancellationToken))
+            var candidate = discovered ?? (await CandidatesAsync(name, cancellationToken))
                 .SingleOrDefault(a => NuGetVersion.Parse(a.Version) == version);
-            if (artifact == null) return PackageMirrorResult.Denied;
-            Validate(artifact);
+            if (candidate == null) return PackageMirrorResult.Denied;
             try
             {
                 await using var stream = existing == null
-                    ? await upstream.DownloadPackageOrNullAsync(artifact.Name, version, cancellationToken)
+                    ? await upstream.DownloadPackageOrNullAsync(candidate.Name, version, cancellationToken)
                     : await storage.GetPackageStreamAsync(existing.Id, existing.Version, cancellationToken);
                 if (stream == null) return PackageMirrorResult.Unavailable;
                 stream.Position = 0;
                 var hash = Convert.ToHexStringLower(await SHA256.HashDataAsync(stream, cancellationToken));
-                if (!hash.Equals(artifact.Sha256, StringComparison.OrdinalIgnoreCase))
+                if (candidate.Sha256 != null && !hash.Equals(candidate.Sha256, StringComparison.OrdinalIgnoreCase))
                     throw new InvalidDataException("Archive SHA256 does not match S360.");
                 stream.Position = 0;
                 using (var reader = new PackageArchiveReader(stream, leaveStreamOpen: true))
                 {
                     var identity = await reader.GetIdentityAsync(cancellationToken);
-                    if (!identity.Id.Equals(artifact.Name, StringComparison.OrdinalIgnoreCase) || identity.Version != version)
+                    if (!identity.Id.Equals(candidate.Name, StringComparison.OrdinalIgnoreCase) || identity.Version != version)
                         throw new InvalidDataException("Archive identity does not match S360.");
                 }
-                if (!(await admission.AssessAsync([artifact], cancellationToken)).Single().Trusted)
-                    return PackageMirrorResult.Denied;
+                var artifact = new ArtifactIdentity("nuget", candidate.Name, candidate.Version, PolicySource, hash);
+                var decision = admission.UsesRegistryPolicy
+                    ? await admission.VerifyMirrorAsync(artifact, cancellationToken)
+                    : (await admission.AssessAsync([artifact], cancellationToken)).Single();
+                if (!decision.Trusted || decision.PendingVerification) return PackageMirrorResult.Denied;
                 if (existing != null)
                 {
-                    existing.MirrorSource = artifact.Source;
-                    existing.MirrorVersion = artifact.Version;
+                    existing.MirrorSource = Source;
+                    existing.MirrorVersion = candidate.Version;
                     existing.MirrorSha256 = artifact.Sha256;
                     await db.SaveChangesAsync(cancellationToken);
                 }
@@ -133,17 +148,17 @@ public class ApprovedPackageMirror(S360AdmissionClient admission, V3UpstreamClie
                     // operation even if this client disconnects. Other callers wait on the gate.
                     var result = await indexer.IndexAsync(stream, PackagePublisher.System with
                     {
-                        MirrorSource = artifact.Source, MirrorVersion = artifact.Version, MirrorSha256 = artifact.Sha256
+                        MirrorSource = Source, MirrorVersion = candidate.Version, MirrorSha256 = artifact.Sha256
                     }, CancellationToken.None);
                     if (result != PackageIndexingResult.Success) return PackageMirrorResult.Unavailable;
                 }
-                logger.LogInformation("Mirrored approved artifact {PackageId} {Version}.", artifact.Name, artifact.Version);
+                logger.LogInformation("Mirrored approved artifact {PackageId} {Version}.", candidate.Name, candidate.Version);
                 return PackageMirrorResult.Mirrored;
             }
             catch (Exception ex) when (ex is InvalidDataException or IOException)
             {
                 logger.LogWarning("Could not mirror approved artifact {PackageId} {Version}: {Reason}",
-                    artifact.Name, artifact.Version, ex.Message);
+                    candidate.Name, candidate.Version, ex.Message);
                 return PackageMirrorResult.Unavailable;
             }
         }

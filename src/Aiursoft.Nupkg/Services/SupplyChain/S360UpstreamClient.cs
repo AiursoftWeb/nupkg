@@ -8,17 +8,17 @@ using NuGet.Versioning;
 
 namespace Aiursoft.Nupkg.Services.SupplyChain;
 
-/// <summary>Advertises approved versions without downloading their archive files.</summary>
+/// <summary>Advertises policy-eligible versions without downloading their archive files.</summary>
 public class S360UpstreamClient(ApprovedPackageMirror mirror, V3UpstreamClient upstream,
     NupkgDbContext db, IOptions<MirrorOptions> options) : IUpstreamClient
 {
-    private async Task<List<ArtifactIdentity>> ArtifactsAsync(string id, CancellationToken cancellationToken)
+    private async Task<List<PackageMirrorCandidate>> ArtifactsAsync(string id, CancellationToken cancellationToken)
     {
         if (!options.Value.Enabled) return [];
         var normalized = id.ToLowerInvariant();
         if (await db.PackageFamilies.AnyAsync(f => f.NormalizedId == normalized && f.OwnerUserId != null, cancellationToken))
             return [];
-        return await mirror.ApprovedAsync(id, cancellationToken);
+        return await mirror.CandidatesAsync(id, cancellationToken);
     }
 
     public async Task<IReadOnlyList<NuGetVersion>> ListPackageVersionsAsync(string id, CancellationToken cancellationToken) =>

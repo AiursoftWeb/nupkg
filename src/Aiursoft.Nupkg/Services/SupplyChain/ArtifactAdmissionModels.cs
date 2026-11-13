@@ -18,3 +18,9 @@ public class ApprovedArtifactPage
     public int? NextAfterId { get; set; }
     public int UpperId { get; set; }
 }
+
+public record MirrorCandidate(string Ecosystem, string Name, string Version, string Source);
+public record MirrorCandidateDecision(MirrorCandidate Candidate, bool CanFetch);
+public record MirrorCandidateResponse(List<MirrorCandidateDecision> Decisions);
+
+public record PackageMirrorCandidate(string Name, string Version, string? Sha256);
