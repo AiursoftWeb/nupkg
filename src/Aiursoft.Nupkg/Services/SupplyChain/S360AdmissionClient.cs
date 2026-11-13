@@ -8,10 +8,10 @@ public class S360AdmissionClient(IHttpClientFactory clients, IOptions<S360Mirror
     public bool UsesRegistryPolicy => !string.IsNullOrEmpty(options.Value.PolicySource);
     public string PolicySource(string origin) => UsesRegistryPolicy ? options.Value.PolicySource.TrimEnd('/') : origin;
 
-    public async Task<List<ArtifactIdentity>> CandidatesAsync(string source, string name,
+    public async Task<List<MirrorCandidate>> CandidatesAsync(string source, string name,
         IEnumerable<string> versions, CancellationToken token)
     {
-        var result = new List<ArtifactIdentity>();
+        var result = new List<MirrorCandidate>();
         foreach (var batch in versions.Distinct().Chunk(500))
         {
             var candidates = batch.Select(v => new MirrorCandidate("nuget", name, v, PolicySource(source))).ToArray();
@@ -23,8 +23,7 @@ public class S360AdmissionClient(IHttpClientFactory clients, IOptions<S360Mirror
             if (decisions == null || decisions.Count != batch.Length ||
                 decisions.Where((d, i) => d.Candidate != candidates[i]).Any())
                 throw new InvalidDataException("S360 returned unrelated mirror candidates.");
-            result.AddRange(decisions.Where(d => d.CanFetch).Select(d => new ArtifactIdentity(
-                "nuget", name, d.Candidate.Version, PolicySource(source), string.Empty)));
+            result.AddRange(decisions.Where(d => d.CanFetch).Select(d => d.Candidate));
         }
         return result;
     }

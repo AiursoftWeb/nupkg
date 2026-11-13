@@ -116,6 +116,8 @@ public class S360MirrorTests : TestBase
             var name = query.TryGetValue("name", out var value) ? value.ToString() : null;
             var approved = _approved.Where(a => !_revoked.Contains(a.Name) &&
                 (name == null || a.Name.Equals(name, StringComparison.OrdinalIgnoreCase))).ToList();
+            // Single-policy discovery starts with rules only, not pre-verified artifacts.
+            if (_singlePolicy) approved = [];
             result = _emptyFirstPage && !request.RequestUri.Query.Contains("afterId=1&", StringComparison.Ordinal)
                 ? new ApprovedArtifactPage { NextAfterId = 1, UpperId = 100 }
                 : new ApprovedArtifactPage { Artifacts = approved, UpperId = 100 };
