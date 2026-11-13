@@ -1,3 +1,4 @@
+using Aiursoft.Nupkg.Core;
 using System.IO.Compression;
 using System.Net;
 using System.Security.Cryptography;
@@ -171,6 +172,65 @@ public class S360MirrorTests : TestBase
     }
 
     [TestMethod]
+    public async Task MirrorAlreadyDownloadingCannotCommitAfterLocalPublication()
+    {
+        const string name = "authority.concurrent";
+        var mirrorBytes = AddArchive(name);
+        _downloadStarted = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        _downloadRelease = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        var pending = Http.GetAsync($"/v3/package/{name}/1.2.3/{name}.1.2.3.nupkg");
+        await _downloadStarted.Task.WaitAsync(TimeSpan.FromSeconds(15));
+        var localBytes = AddArchive(name, approve: false, version: "2.0.0");
+        using var publish = new HttpRequestMessage(HttpMethod.Put, "/api/v2/package");
+        publish.Headers.Add("X-NuGet-ApiKey", "fixture-publisher");
+        publish.Content = new ByteArrayContent(localBytes);
+        Assert.AreEqual(HttpStatusCode.Created, (await Http.SendAsync(publish)).StatusCode);
+        _archives[name] = mirrorBytes;
+        _downloadRelease.SetResult(true);
+        Assert.AreNotEqual(HttpStatusCode.OK, (await pending).StatusCode);
+        using var scope = Server!.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<NupkgDbContext>();
+        Assert.AreEqual(1, await db.Packages.IgnoreQueryFilters().CountAsync(p => p.Id == name));
+        Assert.IsTrue((await db.PackageFamilies.SingleAsync(f => f.NormalizedId == name)).IsLocallyPublished);
+        CollectionAssert.AreEqual(localBytes, await Http.GetByteArrayAsync($"/v3/package/{name}/2.0.0/{name}.2.0.0.nupkg"));
+    }
+
+    [TestMethod]
+    public async Task LocalPublicationPermanentlyStopsMirroringTheWholeName()
+    {
+        const string name = "authority.converted";
+        AddArchive(name);
+        Assert.AreEqual(HttpStatusCode.OK, (await Http.GetAsync($"/v3/package/{name}/1.2.3/{name}.1.2.3.nupkg")).StatusCode);
+        var localBytes = AddArchive(name, approve: false, version: "2.0.0");
+        using var publish = new HttpRequestMessage(HttpMethod.Put, "/api/v2/package");
+        publish.Headers.Add("X-NuGet-ApiKey", "fixture-publisher");
+        publish.Content = new ByteArrayContent(localBytes);
+        Assert.AreEqual(HttpStatusCode.Created, (await Http.SendAsync(publish)).StatusCode);
+        AddArchive(name, version: "9.9.9");
+        var downloads = _downloads;
+        _unavailable = true;
+        var index = await Http.GetStringAsync($"/v3/package/{name}/index.json");
+        Assert.Contains("2.0.0", index);
+        Assert.DoesNotContain("1.2.3", index);
+        Assert.DoesNotContain("9.9.9", index);
+        CollectionAssert.AreEqual(localBytes, await Http.GetByteArrayAsync($"/v3/package/{name}/2.0.0/{name}.2.0.0.nupkg"));
+        Assert.AreEqual(HttpStatusCode.Forbidden, (await Http.GetAsync($"/v3/package/{name}/1.2.3/{name}.1.2.3.nupkg")).StatusCode);
+        Assert.AreEqual(HttpStatusCode.Forbidden, (await Http.GetAsync($"/v3/package/{name}/9.9.9/{name}.9.9.9.nupkg")).StatusCode);
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<NupkgDbContext>();
+            var family = await db.PackageFamilies.SingleAsync(f => f.NormalizedId == name);
+            Assert.IsTrue(family.IsLocallyPublished);
+            Assert.IsNull(family.OwnerUserId, "A legacy local publisher has no account, but its name must remain local.");
+            Assert.AreEqual(2, await db.Packages.IgnoreQueryFilters().CountAsync(p => p.Id == name), "Mirror history must be retained.");
+            Assert.IsTrue(await scope.ServiceProvider.GetRequiredService<PackageDatabase>()
+                .HardDeletePackageAsync(name, NuGet.Versioning.NuGetVersion.Parse("2.0.0"), CancellationToken.None));
+        }
+        Assert.AreEqual(HttpStatusCode.NotFound, (await Http.GetAsync($"/v3/package/{name}/index.json")).StatusCode);
+        Assert.AreEqual(downloads, _downloads);
+    }
+
+    [TestMethod]
     public async Task InternalSourceRuleAdvertisesAndMirrorsColdVersionWithoutPublicSourceApproval()
     {
         _singlePolicy = true;
@@ -245,6 +305,7 @@ public class S360MirrorTests : TestBase
             Assert.AreEqual(PackageIndexingResult.Success, await indexer.IndexAsync(stream, CancellationToken.None));
             var db = scope.ServiceProvider.GetRequiredService<NupkgDbContext>();
             (await db.Packages.SingleAsync(p => p.Id == "mirror.legacy")).IsLocallyPublished = false;
+            (await db.PackageFamilies.SingleAsync(f => f.NormalizedId == "mirror.legacy")).IsLocallyPublished = false;
             await db.SaveChangesAsync();
         }
         var artifact = _approved.Single();

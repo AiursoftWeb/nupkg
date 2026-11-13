@@ -63,8 +63,10 @@ namespace Aiursoft.Nupkg.Entities
         private void BuildPackageEntity(EntityTypeBuilder<Package> package)
         {
             package.HasKey(p => p.Key);
-            package.HasQueryFilter(p => !RestrictMirrorReads || p.IsLocallyPublished ||
-                p.UploadedByUserId != null || ApprovedMirrorKeys.Contains(p.Key));
+            package.HasQueryFilter(p =>
+                (!p.PackageFamily.IsLocallyPublished || p.IsLocallyPublished || p.UploadedByUserId != null) &&
+                (!RestrictMirrorReads || p.IsLocallyPublished ||
+                 p.UploadedByUserId != null || ApprovedMirrorKeys.Contains(p.Key)));
             package.HasIndex(p => p.Id);
             package.HasIndex(p => new { p.Id, p.NormalizedVersionString })
                 .IsUnique();

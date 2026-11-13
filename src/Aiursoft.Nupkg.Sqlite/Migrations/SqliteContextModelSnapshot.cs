@@ -15,7 +15,7 @@ namespace Aiursoft.Nupkg.Sqlite.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "10.0.14");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.15");
 
             modelBuilder.Entity("Aiursoft.Nupkg.Entities.GlobalSetting", b =>
                 {
@@ -199,6 +199,10 @@ namespace Aiursoft.Nupkg.Sqlite.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsLocallyPublished")
+                        .IsConcurrencyToken()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("NormalizedId")
                         .IsRequired()

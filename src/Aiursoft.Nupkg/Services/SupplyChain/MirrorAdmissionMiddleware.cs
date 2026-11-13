@@ -59,7 +59,7 @@ public class MirrorAdmissionMiddleware(RequestDelegate next, ILogger<MirrorAdmis
                 ? context.Request.RouteValues["id"]?.ToString()?.ToLowerInvariant() : null;
             var mirrors = await db.Packages.IgnoreQueryFilters().AsNoTracking()
                 .Where(p => requestedId == null || p.Id.ToLower() == requestedId)
-                .Where(p => !p.IsLocallyPublished && p.UploadedByUserId == null && p.MirrorSource != null &&
+                .Where(p => !p.PackageFamily.IsLocallyPublished && !p.IsLocallyPublished && p.UploadedByUserId == null && p.MirrorSource != null &&
                     p.MirrorVersion != null && p.MirrorSha256 != null)
                 .Select(p => new { p.Key, p.Id, p.MirrorSource, p.MirrorVersion, p.MirrorSha256 })
                 .ToListAsync(context.RequestAborted);
