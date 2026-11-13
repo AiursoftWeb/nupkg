@@ -42,7 +42,7 @@ public class Startup : IWebStartup
         services.AddScoped<Services.SupplyChain.S360AdmissionClient>();
         services.AddScoped<Services.SupplyChain.ApprovedPackageMirror>();
         services.AddSingleton<Services.SupplyChain.PackageMirrorLocks>();
-        services.AddHttpClient("S360Admission", client => client.Timeout = TimeSpan.FromSeconds(30))
+        services.AddHttpClient("S360Admission", client => client.Timeout = TimeSpan.FromMinutes(6))
             .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
 
         // AppSettings.

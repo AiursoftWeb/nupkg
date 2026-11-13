@@ -29,6 +29,9 @@ public class S360MirrorTests : TestBase
     private bool _mismatchedResponse;
     private string _source = string.Empty;
     private int _downloads;
+    private bool _singlePolicy;
+    private bool _verificationDenied;
+    private const string InternalSource = "https://nupkg.fixture/v3/index.json";
     private TaskCompletionSource<bool>? _downloadStarted;
     private TaskCompletionSource<bool>? _downloadRelease;
 
@@ -49,6 +52,10 @@ public class S360MirrorTests : TestBase
             { ["@type"] = "PackageBaseAddress/3.0.0", ["@id"] = $"http://localhost:{originPort}/flat/" },
                 new Dictionary<string, string> { ["@type"] = "RegistrationsBaseUrl/3.6.0", ["@id"] = $"http://localhost:{originPort}/registration/" },
                 new Dictionary<string, string> { ["@type"] = "SearchQueryService/3.4.0", ["@id"] = $"http://localhost:{originPort}/search" } }
+        }));
+        _upstream.MapGet("/flat/{id}/index.json", (string id) => Results.Json(new
+        {
+            versions = _archives.ContainsKey(id) ? new[] { "1.2.3", "9.9.9" } : []
         }));
         _upstream.MapGet("/flat/{id}/{version}/{file}", async (string id, HttpContext context) =>
         {
@@ -87,6 +94,22 @@ public class S360MirrorTests : TestBase
         Assert.AreEqual("mirror-fixture", request.Headers.GetValues("X-S360-Key").Single());
         if (_unavailable) return new HttpResponseMessage(HttpStatusCode.ServiceUnavailable);
         object result;
+        if (_singlePolicy && request.RequestUri!.AbsolutePath.EndsWith("/candidates", StringComparison.Ordinal))
+        {
+            using var data = JsonDocument.Parse(await request.Content!.ReadAsStringAsync(cancellationToken));
+            var candidates = data.RootElement.GetProperty("candidates").Deserialize<List<MirrorCandidate>>(new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
+            Assert.IsTrue(candidates.All(c => c.Source == InternalSource));
+            result = new MirrorCandidateResponse(candidates.Select(c => new MirrorCandidateDecision(c,
+                _approved.Any(a => a.Name.Equals(c.Name, StringComparison.OrdinalIgnoreCase) && a.Version == c.Version) && !_revoked.Contains(c.Name))).ToList());
+            return new HttpResponseMessage(HttpStatusCode.OK) { Content = JsonContent.Create(result) };
+        }
+        if (_singlePolicy && request.RequestUri!.AbsolutePath.EndsWith("/verify", StringComparison.Ordinal))
+        {
+            var artifact = (await request.Content!.ReadFromJsonAsync<ArtifactIdentity>(cancellationToken))!;
+            Assert.AreEqual(InternalSource, artifact.Source);
+            result = new ArtifactDecision { Dependency = artifact, Trusted = !_verificationDenied && _approved.Contains(artifact) && !_revoked.Contains(artifact.Name) };
+            return new HttpResponseMessage(HttpStatusCode.OK) { Content = JsonContent.Create(result) };
+        }
         if (request.Method == HttpMethod.Get)
         {
             var query = QueryHelpers.ParseQuery(request.RequestUri!.Query);
@@ -143,6 +166,25 @@ public class S360MirrorTests : TestBase
         _archives[name.ToLowerInvariant()] = bytes;
         if (approve) _approved.Add(new ArtifactIdentity("nuget", name, version, _source, Convert.ToHexStringLower(SHA256.HashData(bytes))));
         return bytes;
+    }
+
+    [TestMethod]
+    public async Task InternalSourceRuleAdvertisesAndMirrorsColdVersionWithoutPublicSourceApproval()
+    {
+        _singlePolicy = true;
+        Server!.Services.GetRequiredService<IOptions<Aiursoft.Nupkg.Core.Configuration.S360MirrorOptions>>().Value.PolicySource = InternalSource;
+        var bytes = AddArchive("Mirror.SinglePolicy");
+        _approved[0] = _approved[0] with { Source = InternalSource };
+        Assert.Contains("1.2.3", await Http.GetStringAsync("/v3/package/mirror.singlepolicy/index.json"));
+        Assert.AreEqual(0, _downloads);
+        _verificationDenied = true;
+        Assert.AreEqual(HttpStatusCode.Forbidden, (await Http.GetAsync("/v3/package/mirror.singlepolicy/1.2.3/mirror.singlepolicy.1.2.3.nupkg")).StatusCode);
+        using (var scope = Server.Services.CreateScope())
+            Assert.AreEqual(0, await scope.ServiceProvider.GetRequiredService<NupkgDbContext>().Packages.IgnoreQueryFilters().CountAsync(p => p.Id == "mirror.singlepolicy"));
+        _verificationDenied = false;
+        CollectionAssert.AreEqual(bytes, await Http.GetByteArrayAsync("/v3/package/mirror.singlepolicy/1.2.3/mirror.singlepolicy.1.2.3.nupkg"));
+        _revoked.Add("mirror.singlepolicy");
+        Assert.AreEqual(HttpStatusCode.Forbidden, (await Http.GetAsync("/v3/package/mirror.singlepolicy/1.2.3/mirror.singlepolicy.1.2.3.nupkg")).StatusCode);
     }
 
     private async Task<int> SynchronizeAsync()
