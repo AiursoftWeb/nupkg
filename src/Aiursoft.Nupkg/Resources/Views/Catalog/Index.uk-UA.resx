@@ -24,6 +24,9 @@
   <data name="Browse all packages" xml:space="preserve">
     <value>Переглянути всі пакети</value>
   </data>
+  <data name="Connect your client" xml:space="preserve">
+    <value>Підключіть ваш клієнт</value>
+  </data>
   <data name="Find and install NuGet packages from this server." xml:space="preserve">
     <value>Знайдіть та встановіть пакети NuGet з цього сервера.</value>
   </data>

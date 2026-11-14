@@ -27,11 +27,11 @@
   <data name="Copy" xml:space="preserve">
     <value>Kopiëren</value>
   </data>
-  <data name="Create a personal key under Personal &gt; API Keys. Publishing requires account permission and ownership of the package name." xml:space="preserve">
-    <value>Maak een persoonlijke sleutel aan onder Persoonlijk &gt; API-sleutels. Publiceren vereist accountrechten en eigendom van de pakketnaam.</value>
-  </data>
   <data name="Create API key" xml:space="preserve">
     <value>API-sleutel maken</value>
+  </data>
+  <data name="Create a personal key under Personal &gt; API Keys. Publishing requires account permission and ownership of the package name." xml:space="preserve">
+    <value>Maak een persoonlijke sleutel aan onder Persoonlijk &gt; API-sleutels. Publiceren vereist accountrechten en eigendom van de pakketnaam.</value>
   </data>
   <data name="Package source" xml:space="preserve">
     <value>Pakketbron</value>

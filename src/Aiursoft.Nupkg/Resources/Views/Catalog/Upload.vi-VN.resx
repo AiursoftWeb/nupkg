@@ -27,11 +27,11 @@
   <data name="Copy" xml:space="preserve">
     <value>Sao chép</value>
   </data>
-  <data name="Create a personal key under Personal &gt; API Keys. Publishing requires account permission and ownership of the package name." xml:space="preserve">
-    <value>Tạo một khóa cá nhân trong phần Cá nhân &gt; Khóa API. Việc xuất bản yêu cầu quyền tài khoản và quyền sở hữu tên gói.</value>
-  </data>
   <data name="Create API key" xml:space="preserve">
     <value>Tạo khóa API</value>
+  </data>
+  <data name="Create a personal key under Personal &gt; API Keys. Publishing requires account permission and ownership of the package name." xml:space="preserve">
+    <value>Tạo một khóa cá nhân trong phần Cá nhân &gt; Khóa API. Việc xuất bản yêu cầu quyền tài khoản và quyền sở hữu tên gói.</value>
   </data>
   <data name="Package source" xml:space="preserve">
     <value>Nguồn gói</value>

@@ -27,11 +27,11 @@
   <data name="Copy" xml:space="preserve">
     <value>복사</value>
   </data>
-  <data name="Create a personal key under Personal &gt; API Keys. Publishing requires account permission and ownership of the package name." xml:space="preserve">
-    <value>개인 &gt; API 키에서 개인 키를 생성하세요. 게시하려면 계정 권한과 패키지 이름 소유가 필요합니다.</value>
-  </data>
   <data name="Create API key" xml:space="preserve">
     <value>API 키 생성</value>
+  </data>
+  <data name="Create a personal key under Personal &gt; API Keys. Publishing requires account permission and ownership of the package name." xml:space="preserve">
+    <value>개인 &gt; API 키에서 개인 키를 생성하세요. 게시하려면 계정 권한과 패키지 이름 소유가 필요합니다.</value>
   </data>
   <data name="Package source" xml:space="preserve">
     <value>패키지 소스</value>

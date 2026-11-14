@@ -27,11 +27,11 @@
   <data name="Copy" xml:space="preserve">
     <value>複製</value>
   </data>
-  <data name="Create a personal key under Personal &gt; API Keys. Publishing requires account permission and ownership of the package name." xml:space="preserve">
-    <value>在「個人 &gt; API 金鑰」下建立個人金鑰。發佈需要帳戶權限以及擁有套件名稱的所有權。</value>
-  </data>
   <data name="Create API key" xml:space="preserve">
     <value>建立 API 金鑰</value>
+  </data>
+  <data name="Create a personal key under Personal &gt; API Keys. Publishing requires account permission and ownership of the package name." xml:space="preserve">
+    <value>在「個人 &gt; API 金鑰」下建立個人金鑰。發佈需要帳戶權限以及擁有套件名稱的所有權。</value>
   </data>
   <data name="Package source" xml:space="preserve">
     <value>套件來源</value>
