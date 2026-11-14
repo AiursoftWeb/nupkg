@@ -66,10 +66,6 @@ public class MirrorAdmissionMiddleware(RequestDelegate next, ILogger<MirrorAdmis
             var identities = mirrors.Select(p => new ArtifactIdentity("nuget", p.Id, p.MirrorVersion!,
                 admission.PolicySource(p.MirrorSource!), p.MirrorSha256!)).ToList();
             var decisions = await admission.AssessAsync(identities, context.RequestAborted);
-            if (admission.UsesRegistryPolicy)
-                for (var i = 0; i < decisions.Count; i++)
-                    if (decisions[i].PendingVerification)
-                        decisions[i] = await admission.VerifyMirrorAsync(identities[i], context.RequestAborted);
             db.ApprovedMirrorKeys = mirrors.Where((_, i) => decisions[i].Trusted).Select(p => p.Key).ToArray();
             if (action.ControllerTypeInfo == typeof(PackageContentController) &&
                 context.Request.RouteValues["id"] is string id &&

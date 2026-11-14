@@ -31,7 +31,6 @@ public class S360MirrorTests : TestBase
     private string _source = string.Empty;
     private int _downloads;
     private bool _singlePolicy;
-    private bool _verificationDenied;
     private const string InternalSource = "https://nupkg.fixture/v3/index.json";
     private TaskCompletionSource<bool>? _downloadStarted;
     private TaskCompletionSource<bool>? _downloadRelease;
@@ -95,22 +94,6 @@ public class S360MirrorTests : TestBase
         Assert.AreEqual("mirror-fixture", request.Headers.GetValues("X-S360-Key").Single());
         if (_unavailable) return new HttpResponseMessage(HttpStatusCode.ServiceUnavailable);
         object result;
-        if (_singlePolicy && request.RequestUri!.AbsolutePath.EndsWith("/candidates", StringComparison.Ordinal))
-        {
-            using var data = JsonDocument.Parse(await request.Content!.ReadAsStringAsync(cancellationToken));
-            var candidates = data.RootElement.GetProperty("candidates").Deserialize<List<MirrorCandidate>>(new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
-            Assert.IsTrue(candidates.All(c => c.Source == InternalSource));
-            result = new MirrorCandidateResponse(candidates.Select(c => new MirrorCandidateDecision(c,
-                _approved.Any(a => a.Name.Equals(c.Name, StringComparison.OrdinalIgnoreCase) && a.Version == c.Version) && !_revoked.Contains(c.Name))).ToList());
-            return new HttpResponseMessage(HttpStatusCode.OK) { Content = JsonContent.Create(result) };
-        }
-        if (_singlePolicy && request.RequestUri!.AbsolutePath.EndsWith("/verify", StringComparison.Ordinal))
-        {
-            var artifact = (await request.Content!.ReadFromJsonAsync<ArtifactIdentity>(cancellationToken))!;
-            Assert.AreEqual(InternalSource, artifact.Source);
-            result = new ArtifactDecision { Dependency = artifact, Trusted = !_verificationDenied && _approved.Contains(artifact) && !_revoked.Contains(artifact.Name) };
-            return new HttpResponseMessage(HttpStatusCode.OK) { Content = JsonContent.Create(result) };
-        }
         if (request.Method == HttpMethod.Get)
         {
             var query = QueryHelpers.ParseQuery(request.RequestUri!.Query);
@@ -125,15 +108,17 @@ public class S360MirrorTests : TestBase
         }
         else
         {
+            Assert.AreEqual("/api/artifacts/assess", request.RequestUri!.AbsolutePath);
             using var json = JsonDocument.Parse(await request.Content!.ReadAsStringAsync(cancellationToken));
+            Assert.IsTrue(json.RootElement.GetProperty("dependencies").EnumerateArray().All(a => !a.TryGetProperty("sha256", out _)));
             var identities = json.RootElement.GetProperty("dependencies")
                 .Deserialize<List<ArtifactIdentity>>(new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
             result = new ArtifactAssessmentResponse
             {
                 Decisions = identities.Select(a => new ArtifactDecision
                 {
-                    Dependency = _mismatchedResponse ? a with { Sha256 = new string('0', 64) } : a,
-                    Trusted = _approved.Contains(a) && !_revoked.Contains(a.Name),
+                    Dependency = _mismatchedResponse ? a with { Version = "0.0.0" } : a,
+                    Trusted = _approved.Any(p => p.Ecosystem == a.Ecosystem && p.Name.Equals(a.Name, StringComparison.OrdinalIgnoreCase) && p.Version == a.Version && p.Source == a.Source) && !_revoked.Contains(a.Name),
                     Reason = _revoked.Contains(a.Name) ? "Explicitly revoked." : "Approved."
                 }).ToList()
             };
@@ -239,11 +224,6 @@ public class S360MirrorTests : TestBase
         _approved[0] = _approved[0] with { Source = InternalSource };
         Assert.Contains("1.2.3", await Http.GetStringAsync("/v3/package/mirror.singlepolicy/index.json"));
         Assert.AreEqual(0, _downloads);
-        _verificationDenied = true;
-        Assert.AreEqual(HttpStatusCode.Forbidden, (await Http.GetAsync("/v3/package/mirror.singlepolicy/1.2.3/mirror.singlepolicy.1.2.3.nupkg")).StatusCode);
-        using (var scope = Server.Services.CreateScope())
-            Assert.AreEqual(0, await scope.ServiceProvider.GetRequiredService<NupkgDbContext>().Packages.IgnoreQueryFilters().CountAsync(p => p.Id == "mirror.singlepolicy"));
-        _verificationDenied = false;
         CollectionAssert.AreEqual(bytes, await Http.GetByteArrayAsync("/v3/package/mirror.singlepolicy/1.2.3/mirror.singlepolicy.1.2.3.nupkg"));
         _revoked.Add("mirror.singlepolicy");
         Assert.AreEqual(HttpStatusCode.Forbidden, (await Http.GetAsync("/v3/package/mirror.singlepolicy/1.2.3/mirror.singlepolicy.1.2.3.nupkg")).StatusCode);
@@ -283,10 +263,10 @@ public class S360MirrorTests : TestBase
     }
 
     [TestMethod]
-    public async Task WrongHashesAndWrongArchiveIdentityAreNeverIndexed()
+    public async Task CorruptArchivesAndWrongPackageIdentitiesAreNeverIndexed()
     {
         AddArchive("Mirror.Tampered");
-        _approved[0] = _approved[0] with { Sha256 = new string('b', 64) };
+        _archives["mirror.tampered"] = Encoding.UTF8.GetBytes("broken archive");
         AddArchive("Mirror.WrongIdentity", archiveName: "Mirror.SomeoneElse");
         Assert.AreEqual(0, await SynchronizeAsync());
         using var scope = Server!.Services.CreateScope();
