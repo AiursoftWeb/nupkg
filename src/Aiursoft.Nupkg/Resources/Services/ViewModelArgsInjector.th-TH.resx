@@ -132,6 +132,9 @@
   <data name="Nupkg" xml:space="preserve">
     <value>แม่แบบ</value>
   </data>
+  <data name="Nupkg — Your NuGet package registry" xml:space="preserve">
+    <value>Nupkg — ฐานข้อมูลแพ็กเกจ NuGet ของคุณ</value>
+  </data>
   <data name="Package ownership" xml:space="preserve">
     <value>ความเป็นเจ้าของแพ็กเกจ</value>
   </data>

@@ -132,6 +132,9 @@
   <data name="Nupkg" xml:space="preserve">
     <value>템플릿</value>
   </data>
+  <data name="Nupkg — Your NuGet package registry" xml:space="preserve">
+    <value>Nupkg — NuGet 패키지 레지스트리</value>
+  </data>
   <data name="Package ownership" xml:space="preserve">
     <value>패키지 소유권</value>
   </data>

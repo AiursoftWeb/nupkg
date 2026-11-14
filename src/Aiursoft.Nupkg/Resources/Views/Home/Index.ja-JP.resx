@@ -21,8 +21,17 @@
       <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
     <value>長時間実行タスク（メールやAIなど）に対する「Fire-and-forget」サポート。キュー管理、並列処理、キャンセルを備えたGUIを備えています。</value>
   </data>
+  <data name="01 / Connect your client" xml:space="preserve">
+    <value>01 / クライアントを接続</value>
+  </data>
+  <data name="02 / Keep your workflow" xml:space="preserve">
+    <value>02 / ワークフローを維持</value>
+  </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>きめ細かい権限管理のための組み込みのロールベースアクセス制御（RBAC）システム。</value>
+  </data>
+  <data name="A clear view of your registry, without leaving your browser." xml:space="preserve">
+    <value>ブラウザを離れることなく、レジストリを一望できます。</value>
   </data>
   <data name="A complete solution for user authentication and profile management right out of the box." xml:space="preserve">
     <value>ユーザー認証とプロファイル管理のための完全なソリューションが、すぐに利用できます。</value>
@@ -30,11 +39,20 @@
   <data name="A complete solution for user authentication and profile management." xml:space="preserve">
     <value>ユーザー認証およびプロファイル管理の完全なソリューション。</value>
   </data>
+  <data name="A familiar place to work" xml:space="preserve">
+    <value>馴染みのある作業環境</value>
+  </data>
   <data name="A fully responsive layout that looks great on both desktop and mobile devices." xml:space="preserve">
     <value>デスクトップとモバイルの両方のデバイスで美しく表示される、完全なレスポンシブレイアウト。</value>
   </data>
+  <data name="A home for your dependencies" xml:space="preserve">
+    <value>依存関係の置き場所</value>
+  </data>
   <data name="A modern, feature-rich, and highly extensible foundation for your next web application." xml:space="preserve">
     <value>モダンで機能豊富、かつ高度に拡張可能な基盤を、あなたの次のWebアプリケーションに提供します。</value>
+  </data>
+  <data name="A package registry should fit into your work, from the first install to your next release." xml:space="preserve">
+    <value>パッケージレジストリは、初回のインストールから次のリリースまで、あなたの作業に自然に溶け込むべきものです。</value>
   </data>
   <data name="Achieve more with Aiursoft Nupkg" xml:space="preserve">
     <value>Aiursoft Nupkgでさらに多くのことを実現</value>
@@ -42,8 +60,14 @@
   <data name="Actuator health endpoints built-in" xml:space="preserve">
     <value>組み込みのアクチュエータヘルスエンドポイント</value>
   </data>
+  <data name="Add this registry to your client configuration." xml:space="preserve">
+    <value>このレジストリをクライアント設定に追加してください。</value>
+  </data>
   <data name="Admin site included" xml:space="preserve">
     <value>管理サイトが含まれています</value>
+  </data>
+  <data name="Admission, when you need it" xml:space="preserve">
+    <value>必要なときに、アクセス制御を</value>
   </data>
   <data name="AI Driven Translation" xml:space="preserve">
     <value>AI 駆動翻訳</value>
@@ -117,8 +141,17 @@
   <data name="Beginner Friendly" xml:space="preserve">
     <value>初心者向け</value>
   </data>
+  <data name="Better together" xml:space="preserve">
+    <value>共に、より良く</value>
+  </data>
   <data name="Bilingual Tutorials" xml:space="preserve">
     <value>二か国語チュートリアル</value>
+  </data>
+  <data name="Browse packages" xml:space="preserve">
+    <value>パッケージを参照</value>
+  </data>
+  <data name="Browse the catalog and find the packages your project needs." xml:space="preserve">
+    <value>カタログを閲覧し、プロジェクトに必要なパッケージを見つけましょう。</value>
   </data>
   <data name="Build once, run anywhere. Fully containerized architecture." xml:space="preserve">
     <value>一度構築すれば、どこでも実行可能。完全にコンテナ化されたアーキテクチャ。</value>
@@ -192,17 +225,41 @@
   <data name="Concise Docs" xml:space="preserve">
     <value>簡潔なドキュメント</value>
   </data>
+  <data name="Connect in a moment" xml:space="preserve">
+    <value>すぐに接続</value>
+  </data>
+  <data name="Connect S360 to control mirrored dependencies with package policies and independent artifact verification." xml:space="preserve">
+    <value>S360に接続して、パッケージポリシーと独立した成果物検証によりミラーリングされた依存関係を制御します。</value>
+  </data>
+  <data name="Connect your client" xml:space="preserve">
+    <value>クライアントを接続</value>
+  </data>
   <data name="Consistency Validation" xml:space="preserve">
     <value>整合性検証</value>
   </data>
   <data name="Coordinate Comfortably" xml:space="preserve">
     <value>快適に連携する</value>
   </data>
+  <data name="Copy" xml:space="preserve">
+    <value>コピー</value>
+  </data>
+  <data name="Copy command" xml:space="preserve">
+    <value>コマンドをコピー</value>
+  </data>
+  <data name="Copy your registry address and keep using your existing client." xml:space="preserve">
+    <value>レジストリのアドレスをコピーし、既存のクライアントをそのまま使い続けてください。</value>
+  </data>
   <data name="Core Routing &amp; DI" xml:space="preserve">
     <value>コアルーティングと依存性注入</value>
   </data>
   <data name="Coverage Report" xml:space="preserve">
     <value>カバレッジレポート</value>
+  </data>
+  <data name="Create a key, follow its configuration instructions, and publish your archive." xml:space="preserve">
+    <value>キーを作成し、その設定手順に従って、アーカイブを公開してください。</value>
+  </data>
+  <data name="Create a personal key and publish with your account permissions." xml:space="preserve">
+    <value>パーソナルキーを作成し、アカウントの権限に基づいて公開します。</value>
   </data>
   <data name="Cross Platform" xml:space="preserve">
     <value>クロスプラットフォーム</value>
@@ -303,6 +360,15 @@
   <data name="Entity Framework Core included" xml:space="preserve">
     <value>Entity Framework Core 搭載</value>
   </data>
+  <data name="Explore Nopkg" xml:space="preserve">
+    <value>Nopkg を探す</value>
+  </data>
+  <data name="Explore packages" xml:space="preserve">
+    <value>パッケージを検索</value>
+  </data>
+  <data name="Explore your packages" xml:space="preserve">
+    <value>パッケージを探索</value>
+  </data>
   <data name="FAQ" xml:space="preserve">
     <value>よくある質問</value>
   </data>
@@ -321,8 +387,17 @@
   <data name="Features a built-in file management system with automatic avatar compression." xml:space="preserve">
     <value>自動アバター圧縮機能を備えた組み込みファイル管理システムを特徴としています。</value>
   </data>
+  <data name="Fetch once. Build again." xml:space="preserve">
+    <value>一度取得。何度でもビルド。</value>
+  </data>
   <data name="File Mgmt &amp; Optimization" xml:space="preserve">
     <value>ファイル管理と最適化</value>
+  </data>
+  <data name="Find it." xml:space="preserve">
+    <value>見つけよう。</value>
+  </data>
+  <data name="Find your next dependency…" xml:space="preserve">
+    <value>次の依存関係を見つけましょう…</value>
   </data>
   <data name="Fine-grained RBAC" xml:space="preserve">
     <value>細粒度 RBAC</value>
@@ -344,6 +419,9 @@
   </data>
   <data name="Free" xml:space="preserve">
     <value>無料</value>
+  </data>
+  <data name="Free and open source" xml:space="preserve">
+    <value>フリー＆オープンソース</value>
   </data>
   <data name="Free for Commercial Use" xml:space="preserve">
     <value>商用利用に無料</value>
@@ -375,6 +453,9 @@
   <data name="Generic Dockerfile only" xml:space="preserve">
     <value>一般的な Dockerfile のみ</value>
   </data>
+  <data name="Get started" xml:space="preserve">
+    <value>はじめる</value>
+  </data>
   <data name="GitLab CI" xml:space="preserve">
     <value>GitLab CI</value>
   </data>
@@ -389,6 +470,9 @@
   </data>
   <data name="Go to dashboard" xml:space="preserve">
     <value>ダッシュボードへ</value>
+  </data>
+  <data name="Great packages." xml:space="preserve">
+    <value>素晴らしいパッケージ。</value>
   </data>
   <data name="Handle recurring jobs like cleanup and synchronization with a comprehensive GUI for monitoring execution history and logs." xml:space="preserve">
     <value>定期的なジョブ（クリーンアップや同期など）を処理し、実行履歴やログのモニタリングが可能な包括的なGUIを提供します。</value>
@@ -450,6 +534,9 @@
   <data name="Includes Tutorials" xml:space="preserve">
     <value>チュートリアルを含む</value>
   </data>
+  <data name="Install packages" xml:space="preserve">
+    <value>パッケージのインストール</value>
+  </data>
   <data name="Integrated File Management" xml:space="preserve">
     <value>統合ファイル管理</value>
   </data>
@@ -486,17 +573,29 @@
   <data name="K8s / Swarm Ready" xml:space="preserve">
     <value>K8s / Swarm 対応済み</value>
   </data>
+  <data name="Less friction." xml:space="preserve">
+    <value>摩擦を減らす。</value>
+  </data>
   <data name="Lint Check" xml:space="preserve">
     <value>Lintチェック</value>
   </data>
   <data name="Maintain High Code Quality" xml:space="preserve">
     <value>高品質なコードを維持する</value>
   </data>
+  <data name="Make your next release" xml:space="preserve">
+    <value>次のリリースを</value>
+  </data>
+  <data name="Manage API keys" xml:space="preserve">
+    <value>APIキーの管理</value>
+  </data>
   <data name="Management Dashboard" xml:space="preserve">
     <value>管理ダッシュボード</value>
   </data>
   <data name="Markdown To HTML" xml:space="preserve">
     <value>MarkdownからHTMLへ</value>
+  </data>
+  <data name="Meet Aiursoft Nopkg, our npm registry with the same approach to publishing and caching." xml:space="preserve">
+    <value>Aiursoft Nopkg をご紹介します。公開やキャッシュへのアプローチが同じ、私たちの npm レジストリです。</value>
   </data>
   <data name="MIT Licence" xml:space="preserve">
     <value>MITライセンス</value>
@@ -506,6 +605,9 @@
   </data>
   <data name="Models are validated on both client and server sides based on data annotations." xml:space="preserve">
     <value>モデルはデータ注釈に基づいて、クライアントおよびサーバーの両方で検証されます。</value>
+  </data>
+  <data name="More building." xml:space="preserve">
+    <value>より多くの開発を。</value>
   </data>
   <data name="Multi-timezone Handling" xml:space="preserve">
     <value>マルチタイムゾーン処理</value>
@@ -521,6 +623,9 @@
   </data>
   <data name="Music Tools" xml:space="preserve">
     <value>音楽ツール</value>
+  </data>
+  <data name="Native NuGet clients" xml:space="preserve">
+    <value>ネイティブNuGetクライアント</value>
   </data>
   <data name="Needs CASL or similar" xml:space="preserve">
     <value>CASL などの必要</value>
@@ -570,17 +675,29 @@
   <data name="No dependency on any cloud vendor. Run anywhere, any time." xml:space="preserve">
     <value>クラウドベンダーへの依存なし。どこでも、いつでも実行可能。</value>
   </data>
+  <data name="Nupkg package catalog in the browser" xml:space="preserve">
+    <value>ブラウザ内の Nupkg パッケージカタログ</value>
+  </data>
   <data name="Offline Capable" xml:space="preserve">
     <value>オフライン対応</value>
   </data>
   <data name="OIDC &amp; SSO" xml:space="preserve">
     <value>OIDC &amp; SSO</value>
   </data>
+  <data name="On-demand mirroring" xml:space="preserve">
+    <value>オンデマンドミラーリング</value>
+  </data>
   <data name="One Click Start" xml:space="preserve">
     <value>ワンクリックスタート</value>
   </data>
+  <data name="One registry. Your everyday tools." xml:space="preserve">
+    <value>1つのレジストリ。日常のツール。</value>
+  </data>
   <data name="Open Source" xml:space="preserve">
     <value>オープンソース</value>
+  </data>
+  <data name="Open source. Self-hosted. Built on the NuGet protocol." xml:space="preserve">
+    <value>オープンソース。セルフホスト対応。NuGetプロトコル準拠。</value>
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>OpenID Connect 連携</value>
@@ -597,6 +714,9 @@
   <data name="Permission discovery and sync" xml:space="preserve">
     <value>権限の検出と同期</value>
   </data>
+  <data name="Personal API keys" xml:space="preserve">
+    <value>個人用APIキー</value>
+  </data>
   <data name="Pint or similar needed" xml:space="preserve">
     <value>Pintまたは同等のものが必要</value>
   </data>
@@ -611,6 +731,18 @@
   </data>
   <data name="Pre-configured pipelines for dev/prod" xml:space="preserve">
     <value>開発/本番環境用の事前設定済みパイプライン</value>
+  </data>
+  <data name="Publish locally. Mirror on demand." xml:space="preserve">
+    <value>ローカルで公開。必要に応じてミラーリング。</value>
+  </data>
+  <data name="Publish what you build. Cache what you depend on. Bring your NuGet packages together in one place, with the tools you already use." xml:space="preserve">
+    <value>構築したものを公開し、依存するものをキャッシュしましょう。NuGetパッケージを、既存のツールを活用しながら1か所に集約します。</value>
+  </data>
+  <data name="Publish with a personal API key and manage package ownership. Once a package is published locally, its future stays in your hands." xml:space="preserve">
+    <value>パーソナルAPIキーを使用して公開し、パッケージの所有権を管理します。パッケージがローカルに公開されると、その後の管理はすべてあなたの手の中にあります。</value>
+  </data>
+  <data name="Publish your work" xml:space="preserve">
+    <value>作品を公開する</value>
   </data>
   <data name="Quality Gate" xml:space="preserve">
     <value>品質ゲート</value>
@@ -639,6 +771,9 @@
   <data name="Reviews" xml:space="preserve">
     <value>レビュー</value>
   </data>
+  <data name="Right at home." xml:space="preserve">
+    <value>お気に入りの場所。</value>
+  </data>
   <data name="Robust Integration Testing" xml:space="preserve">
     <value>堅牢な統合テスト</value>
   </data>
@@ -651,6 +786,12 @@
   <data name="Seamlessly integrate with any OpenID Connect provider, with automatic role synchronization." xml:space="preserve">
     <value>あらゆるOpenID Connectプロバイダーとシームレスに統合し、自動的なロール同期を実現します。</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>検索</value>
+  </data>
+  <data name="Search packages" xml:space="preserve">
+    <value>パッケージを検索</value>
+  </data>
   <data name="Shift with confidence" xml:space="preserve">
     <value>自信を持ってシフト</value>
   </data>
@@ -659,6 +800,9 @@
   </data>
   <data name="Single Container" xml:space="preserve">
     <value>シングルコンテナ</value>
+  </data>
+  <data name="Skip to content" xml:space="preserve">
+    <value>コンテンツにスキップ</value>
   </data>
   <data name="Smart Configuration Overrides" xml:space="preserve">
     <value>スマートな設定オーバーライド</value>
@@ -756,17 +900,29 @@
   <data name="Trusted by production-grade applications including AnduinOS, StatHub, and Warp. We don&apos;t just share this code; we run our entire business on it." xml:space="preserve">
     <value>AnduinOS、StatHub、Warpを含むプロダクショングレードのアプリケーションに信頼されています。このコードを単に共有するだけでなく、私たちのビジネス全体をこのコードで運用しています。</value>
   </data>
+  <data name="Two ecosystems. One familiar experience." xml:space="preserve">
+    <value>2つのエコシステム。ひとつの馴染み深い体験。</value>
+  </data>
   <data name="Unified Env" xml:space="preserve">
     <value>統合環境</value>
   </data>
   <data name="Unified Identity" xml:space="preserve">
     <value>統合ID</value>
   </data>
+  <data name="Upstream packages are fetched when needed and stored locally. Cached artifacts stay close to your builds." xml:space="preserve">
+    <value>必要なタイミングでアップストリームのパッケージを取得し、ローカルに保存します。キャッシュされた成果物は、ビルドのそばに留まります。</value>
+  </data>
   <data name="Usage" xml:space="preserve">
     <value>使用方法</value>
   </data>
   <data name="Use it as a foundation for your SaaS, a backend for your mobile app, a corporate website, or a personal blog. The possibilities are endless." xml:space="preserve">
     <value>SaaSの基盤として、モバイルアプリのバックエンドとして、コーポレートサイトとして、個人ブログとしてお使いいただけます。可能性は無限大です。</value>
+  </data>
+  <data name="Use it. Ship it." xml:space="preserve">
+    <value>使おう。出荷しよう。</value>
+  </data>
+  <data name="Use the commands below to connect to this instance. Publishing requires a personal key and permission to publish." xml:space="preserve">
+    <value>以下のコマンドを使用して、このインスタンスに接続します。公開には、個人キーと公開権限が必要です。</value>
   </data>
   <data name="View on GitHub" xml:space="preserve">
     <value>GitHubで表示</value>
@@ -803,6 +959,18 @@
   </data>
   <data name="Your enterprise users don&apos;t need to register repeatedly." xml:space="preserve">
     <value>企業ユーザーは繰り返し登録する必要がありません。</value>
+  </data>
+  <data name="Your NuGet registry. Your infrastructure." xml:space="preserve">
+    <value>あなた専用のNuGetレジストリ。あなた専用のインフラストラクチャ。</value>
+  </data>
+  <data name="Your registry, at a glance." xml:space="preserve">
+    <value>レジストリの全体像を、ひと目で。</value>
+  </data>
+  <data name="Your releases, your rules" xml:space="preserve">
+    <value>あなたのリリース、あなたのルール</value>
+  </data>
+  <data name="Your usual client. Your own package source." xml:space="preserve">
+    <value>いつものクライアント。自分だけのパッケージソース。</value>
   </data>
   <data name="Yubikey &amp; TOTP" xml:space="preserve">
     <value>Yubikey &amp; TOTP</value>

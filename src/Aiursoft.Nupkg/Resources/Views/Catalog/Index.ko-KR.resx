@@ -24,6 +24,9 @@
   <data name="Browse all packages" xml:space="preserve">
     <value>모든 패키지 보기</value>
   </data>
+  <data name="Connect your client" xml:space="preserve">
+    <value>클라이언트 연결</value>
+  </data>
   <data name="Find and install NuGet packages from this server." xml:space="preserve">
     <value>이 서버에서 NuGet 패키지를 검색하고 설치하세요.</value>
   </data>

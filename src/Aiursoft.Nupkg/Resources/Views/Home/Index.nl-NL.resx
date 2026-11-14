@@ -21,8 +21,17 @@
       <data name="&quot;Fire-and-forget&quot; support for long-running tasks (like emails or AI), featuring a GUI for queue management, parallel processing, and cancellation." xml:space="preserve">
     <value>&quot;Fire-and-forget&quot;-ondersteuning voor langdurige taken (zoals e-mails of AI), met een GUI voor wachtrijbeheer, parallelle verwerking en annulering.</value>
   </data>
+  <data name="01 / Connect your client" xml:space="preserve">
+    <value>01 / Koppel uw client</value>
+  </data>
+  <data name="02 / Keep your workflow" xml:space="preserve">
+    <value>02 / Behoud je workflow</value>
+  </data>
   <data name="A built-in Role-Based Access Control (RBAC) system for fine-grained permission management." xml:space="preserve">
     <value>Een ingebouwd Role-Based Access Control (RBAC) systeem voor gedetailleerd rechtenbeheer.</value>
+  </data>
+  <data name="A clear view of your registry, without leaving your browser." xml:space="preserve">
+    <value>Een helder overzicht van uw registratie, zonder uw browser te verlaten.</value>
   </data>
   <data name="A complete solution for user authentication and profile management right out of the box." xml:space="preserve">
     <value>Een complete oplossing voor gebruikersauthenticatie en profielbeheer, direct klaar voor gebruik.</value>
@@ -30,11 +39,20 @@
   <data name="A complete solution for user authentication and profile management." xml:space="preserve">
     <value>Een complete oplossing voor gebruikersverificatie en profielbeheer.</value>
   </data>
+  <data name="A familiar place to work" xml:space="preserve">
+    <value>Een vertrouwde werkomgeving</value>
+  </data>
   <data name="A fully responsive layout that looks great on both desktop and mobile devices." xml:space="preserve">
     <value>Een volledig responsieve lay-out die er geweldig uitziet op zowel desktop- als mobiele apparaten.</value>
   </data>
+  <data name="A home for your dependencies" xml:space="preserve">
+    <value>Een thuisbasis voor je afhankelijkheden</value>
+  </data>
   <data name="A modern, feature-rich, and highly extensible foundation for your next web application." xml:space="preserve">
     <value>Een moderne, functierijke en zeer uitbreidbare basis voor uw volgende webapplicatie.</value>
+  </data>
+  <data name="A package registry should fit into your work, from the first install to your next release." xml:space="preserve">
+    <value>Een pakketregistratie moet zich aanpassen aan jouw werkwijze, van de eerste installatie tot je volgende release.</value>
   </data>
   <data name="Achieve more with Aiursoft Nupkg" xml:space="preserve">
     <value>Bereik meer met Aiursoft Nupkg</value>
@@ -42,8 +60,14 @@
   <data name="Actuator health endpoints built-in" xml:space="preserve">
     <value>Ingebouwde Actuator-gezondheidseindpunten</value>
   </data>
+  <data name="Add this registry to your client configuration." xml:space="preserve">
+    <value>Voeg deze registry toe aan uw clientconfiguratie.</value>
+  </data>
   <data name="Admin site included" xml:space="preserve">
     <value>Admin-site inbegrepen</value>
+  </data>
+  <data name="Admission, when you need it" xml:space="preserve">
+    <value>Toelating, wanneer je het nodig hebt</value>
   </data>
   <data name="AI Driven Translation" xml:space="preserve">
     <value>AI-gedreven vertaling</value>
@@ -117,8 +141,17 @@
   <data name="Beginner Friendly" xml:space="preserve">
     <value>Beginner Vriendelijk</value>
   </data>
+  <data name="Better together" xml:space="preserve">
+    <value>Samen beter</value>
+  </data>
   <data name="Bilingual Tutorials" xml:space="preserve">
     <value>Twee-talige tutorials</value>
+  </data>
+  <data name="Browse packages" xml:space="preserve">
+    <value>Verken pakketten</value>
+  </data>
+  <data name="Browse the catalog and find the packages your project needs." xml:space="preserve">
+    <value>Blader door de catalogus en vind de pakketten die je project nodig heeft.</value>
   </data>
   <data name="Build once, run anywhere. Fully containerized architecture." xml:space="preserve">
     <value>Eén keer bouwen, overal uitvoeren. Volledig gecontaineriseerde architectuur.</value>
@@ -192,17 +225,41 @@
   <data name="Concise Docs" xml:space="preserve">
     <value>Korte Documentatie</value>
   </data>
+  <data name="Connect in a moment" xml:space="preserve">
+    <value>Verbind in een moment</value>
+  </data>
+  <data name="Connect S360 to control mirrored dependencies with package policies and independent artifact verification." xml:space="preserve">
+    <value>Koppel S360 om gespiegelde afhankelijkheden te beheren met pakketbeleid en onafhankelijke artifactverificatie.</value>
+  </data>
+  <data name="Connect your client" xml:space="preserve">
+    <value>Koppel uw client</value>
+  </data>
   <data name="Consistency Validation" xml:space="preserve">
     <value>Consistency Validatie</value>
   </data>
   <data name="Coordinate Comfortably" xml:space="preserve">
     <value>Comfortabel coördineren</value>
   </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Kopiëren</value>
+  </data>
+  <data name="Copy command" xml:space="preserve">
+    <value>Command kopiëren</value>
+  </data>
+  <data name="Copy your registry address and keep using your existing client." xml:space="preserve">
+    <value>Kopieer uw registryadres en ga door met uw bestaande client.</value>
+  </data>
   <data name="Core Routing &amp; DI" xml:space="preserve">
     <value>Kernrouting &amp; DI</value>
   </data>
   <data name="Coverage Report" xml:space="preserve">
     <value>Coverage Rapport</value>
+  </data>
+  <data name="Create a key, follow its configuration instructions, and publish your archive." xml:space="preserve">
+    <value>Maak een sleutel aan, volg de configuratie-instructies ervan en publiceer uw archief.</value>
+  </data>
+  <data name="Create a personal key and publish with your account permissions." xml:space="preserve">
+    <value>Maak een persoonlijke sleutel en publiceer met de machtigingen van uw account.</value>
   </data>
   <data name="Cross Platform" xml:space="preserve">
     <value>Kruisplatform</value>
@@ -303,6 +360,15 @@
   <data name="Entity Framework Core included" xml:space="preserve">
     <value>Entity Framework Core inbegrepen</value>
   </data>
+  <data name="Explore Nopkg" xml:space="preserve">
+    <value>Ontdek Nopkg</value>
+  </data>
+  <data name="Explore packages" xml:space="preserve">
+    <value>Verken pakketten</value>
+  </data>
+  <data name="Explore your packages" xml:space="preserve">
+    <value>Verken uw pakketten</value>
+  </data>
   <data name="FAQ" xml:space="preserve">
     <value>Veelgestelde vragen</value>
   </data>
@@ -321,8 +387,17 @@
   <data name="Features a built-in file management system with automatic avatar compression." xml:space="preserve">
     <value>Beschikt over een ingebouwd bestandsbeheersysteem met automatische avatarcompressie.</value>
   </data>
+  <data name="Fetch once. Build again." xml:space="preserve">
+    <value>Eenmalig ophalen. Opnieuw bouwen.</value>
+  </data>
   <data name="File Mgmt &amp; Optimization" xml:space="preserve">
     <value>Bestandsbeheer &amp; optimalisatie</value>
+  </data>
+  <data name="Find it." xml:space="preserve">
+    <value>Vind het.</value>
+  </data>
+  <data name="Find your next dependency…" xml:space="preserve">
+    <value>Vind je volgende afhankelijkheid…</value>
   </data>
   <data name="Fine-grained RBAC" xml:space="preserve">
     <value>Fijnkorrelige RBAC</value>
@@ -344,6 +419,9 @@
   </data>
   <data name="Free" xml:space="preserve">
     <value>Gratis</value>
+  </data>
+  <data name="Free and open source" xml:space="preserve">
+    <value>Vrij en open source</value>
   </data>
   <data name="Free for Commercial Use" xml:space="preserve">
     <value>Gratis voor commercieel gebruik</value>
@@ -375,6 +453,9 @@
   <data name="Generic Dockerfile only" xml:space="preserve">
     <value>Alleen een generieke Dockerfile</value>
   </data>
+  <data name="Get started" xml:space="preserve">
+    <value>Aan de slag</value>
+  </data>
   <data name="GitLab CI" xml:space="preserve">
     <value>GitLab CI</value>
   </data>
@@ -389,6 +470,9 @@
   </data>
   <data name="Go to dashboard" xml:space="preserve">
     <value>Ga naar dashboard</value>
+  </data>
+  <data name="Great packages." xml:space="preserve">
+    <value>Geweldige pakketten.</value>
   </data>
   <data name="Handle recurring jobs like cleanup and synchronization with a comprehensive GUI for monitoring execution history and logs." xml:space="preserve">
     <value>Verwerk herhalende taken zoals opschonen en synchronisatie met een uitgebreide GUI voor het monitoren van uitvoeringsgeschiedenis en logs.</value>
@@ -450,6 +534,9 @@
   <data name="Includes Tutorials" xml:space="preserve">
     <value>Inclusief handleidingen</value>
   </data>
+  <data name="Install packages" xml:space="preserve">
+    <value>Pakketten installeren</value>
+  </data>
   <data name="Integrated File Management" xml:space="preserve">
     <value>Geïntegreerd Bestandsbeheer</value>
   </data>
@@ -486,17 +573,29 @@
   <data name="K8s / Swarm Ready" xml:space="preserve">
     <value>K8s / Swarm-klant</value>
   </data>
+  <data name="Less friction." xml:space="preserve">
+    <value>Minder wrijving.</value>
+  </data>
   <data name="Lint Check" xml:space="preserve">
     <value>Lintcontrole</value>
   </data>
   <data name="Maintain High Code Quality" xml:space="preserve">
     <value>Hoog codekwaliteit behouden</value>
   </data>
+  <data name="Make your next release" xml:space="preserve">
+    <value>Maak je volgende release</value>
+  </data>
+  <data name="Manage API keys" xml:space="preserve">
+    <value>API-sleutels beheren</value>
+  </data>
   <data name="Management Dashboard" xml:space="preserve">
     <value>Beheerdashboard</value>
   </data>
   <data name="Markdown To HTML" xml:space="preserve">
     <value>Markdown naar HTML</value>
+  </data>
+  <data name="Meet Aiursoft Nopkg, our npm registry with the same approach to publishing and caching." xml:space="preserve">
+    <value>Maak kennis met Aiursoft Nopkg, onze npm-registry met dezelfde aanpak voor publicatie en caching.</value>
   </data>
   <data name="MIT Licence" xml:space="preserve">
     <value>MIT-licentie</value>
@@ -506,6 +605,9 @@
   </data>
   <data name="Models are validated on both client and server sides based on data annotations." xml:space="preserve">
     <value>Modellen worden gevalideerd aan de client- en serverzijde op basis van gegevensannotaties.</value>
+  </data>
+  <data name="More building." xml:space="preserve">
+    <value>Meer bouwen.</value>
   </data>
   <data name="Multi-timezone Handling" xml:space="preserve">
     <value>Omgaan met meerdere tijdzones</value>
@@ -521,6 +623,9 @@
   </data>
   <data name="Music Tools" xml:space="preserve">
     <value>Muziekhulpmiddelen</value>
+  </data>
+  <data name="Native NuGet clients" xml:space="preserve">
+    <value>Native NuGet-clients</value>
   </data>
   <data name="Needs CASL or similar" xml:space="preserve">
     <value>Vereist CASL of vergelijkbaar</value>
@@ -570,17 +675,29 @@
   <data name="No dependency on any cloud vendor. Run anywhere, any time." xml:space="preserve">
     <value>Geen afhankelijkheid van een cloudleverancier. Overal en op elk moment uitvoeren.</value>
   </data>
+  <data name="Nupkg package catalog in the browser" xml:space="preserve">
+    <value>Nupkg-pakketcatalogus in de browser</value>
+  </data>
   <data name="Offline Capable" xml:space="preserve">
     <value>Offline Geschikt</value>
   </data>
   <data name="OIDC &amp; SSO" xml:space="preserve">
     <value>OIDC &amp; SSO</value>
   </data>
+  <data name="On-demand mirroring" xml:space="preserve">
+    <value>Spiegelopdracht</value>
+  </data>
   <data name="One Click Start" xml:space="preserve">
     <value>Eén-klik-start</value>
   </data>
+  <data name="One registry. Your everyday tools." xml:space="preserve">
+    <value>Eén register. Je dagelijkse tools.</value>
+  </data>
   <data name="Open Source" xml:space="preserve">
     <value>Open Source</value>
+  </data>
+  <data name="Open source. Self-hosted. Built on the NuGet protocol." xml:space="preserve">
+    <value>Open source. Zelf-gehost. Gebouwd op het NuGet-protocol.</value>
   </data>
   <data name="OpenID Connect Integration" xml:space="preserve">
     <value>OpenID Connect-integratie</value>
@@ -597,6 +714,9 @@
   <data name="Permission discovery and sync" xml:space="preserve">
     <value>Ontdekking en synchronisatie van machtigingen</value>
   </data>
+  <data name="Personal API keys" xml:space="preserve">
+    <value>Persoonlijke API-sleutels</value>
+  </data>
   <data name="Pint or similar needed" xml:space="preserve">
     <value>Pint of vergelijkbaar nodig</value>
   </data>
@@ -611,6 +731,18 @@
   </data>
   <data name="Pre-configured pipelines for dev/prod" xml:space="preserve">
     <value>Vooraf geconfigureerde pipelines voor dev/prod</value>
+  </data>
+  <data name="Publish locally. Mirror on demand." xml:space="preserve">
+    <value>Publiceer lokaal. Spiegelen op aanvraag.</value>
+  </data>
+  <data name="Publish what you build. Cache what you depend on. Bring your NuGet packages together in one place, with the tools you already use." xml:space="preserve">
+    <value>Publiceer wat je bouwt. Cache waar je afhankelijk van bent. Breng je NuGet-pakketten samen op één plek, met de tools die je al gebruikt.</value>
+  </data>
+  <data name="Publish with a personal API key and manage package ownership. Once a package is published locally, its future stays in your hands." xml:space="preserve">
+    <value>Publiceer met een persoonlijke API-sleutel en beheer het eigendom van pakketten. Zodra een pakket lokaal is gepubliceerd, ligt de toekomst ervan in uw handen.</value>
+  </data>
+  <data name="Publish your work" xml:space="preserve">
+    <value>Publiceer je werk</value>
   </data>
   <data name="Quality Gate" xml:space="preserve">
     <value>Kwaliteitscontrole</value>
@@ -639,6 +771,9 @@
   <data name="Reviews" xml:space="preserve">
     <value>Beoordelingen</value>
   </data>
+  <data name="Right at home." xml:space="preserve">
+    <value>Thuisgevoel.</value>
+  </data>
   <data name="Robust Integration Testing" xml:space="preserve">
     <value>Robuuste integratietests</value>
   </data>
@@ -651,6 +786,12 @@
   <data name="Seamlessly integrate with any OpenID Connect provider, with automatic role synchronization." xml:space="preserve">
     <value>Integreer naadloos met elke OpenID Connect-provider, met automatische rollensynchronisatie.</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Zoeken</value>
+  </data>
+  <data name="Search packages" xml:space="preserve">
+    <value>Zoek pakketten</value>
+  </data>
   <data name="Shift with confidence" xml:space="preserve">
     <value>Shift met vertrouwen</value>
   </data>
@@ -659,6 +800,9 @@
   </data>
   <data name="Single Container" xml:space="preserve">
     <value>Single Container</value>
+  </data>
+  <data name="Skip to content" xml:space="preserve">
+    <value>Overslaan naar inhoud</value>
   </data>
   <data name="Smart Configuration Overrides" xml:space="preserve">
     <value>Slimme configuratie-overschrijvingen</value>
@@ -735,11 +879,11 @@
   <data name="The navigation bar automatically adjusts based on user roles and permissions." xml:space="preserve">
     <value>De navigatiebalk past zich automatisch aan op basis van gebruikersrollen en machtigingen.</value>
   </data>
-  <data name="The Philosophy" xml:space="preserve">
-    <value>De filosofie</value>
-  </data>
   <data name="The nupkg is built for easy deployment. It includes full Docker support, so you can containerize your app and run it anywhere. You can also deploy it directly to IIS, Azure App Service, or any server that supports ASP.NET Core." xml:space="preserve">
     <value>De nupkg is gebouwd voor eenvoudige implementatie. Het bevat volledige Docker-ondersteuning, zodat je je app kunt containeriseren en overal kunt uitvoeren. Je kunt het ook direct implementeren naar IIS, Azure App Service of elke server die ASP.NET Core ondersteunt.</value>
+  </data>
+  <data name="The Philosophy" xml:space="preserve">
+    <value>De filosofie</value>
   </data>
   <data name="This is a nupkg project" xml:space="preserve">
     <value>Dit is een sjabloonproject</value>
@@ -756,17 +900,29 @@
   <data name="Trusted by production-grade applications including AnduinOS, StatHub, and Warp. We don&apos;t just share this code; we run our entire business on it." xml:space="preserve">
     <value>Vertrouwd door productie-gebaseerde toepassingen, waaronder AnduinOS, StatHub en Warp. We delen deze code niet alleen; we draaien onze hele bedrijfsactiviteiten erop.</value>
   </data>
+  <data name="Two ecosystems. One familiar experience." xml:space="preserve">
+    <value>Twee ecosystemen. Eén vertrouwde ervaring.</value>
+  </data>
   <data name="Unified Env" xml:space="preserve">
     <value>Gecombineerde omgeving</value>
   </data>
   <data name="Unified Identity" xml:space="preserve">
     <value>Gecombineerde Identiteit</value>
   </data>
+  <data name="Upstream packages are fetched when needed and stored locally. Cached artifacts stay close to your builds." xml:space="preserve">
+    <value>Upstream-pakketten worden opgehaald wanneer nodig en lokaal opgeslagen. Gecachte artefacten blijven dicht bij uw builds.</value>
+  </data>
   <data name="Usage" xml:space="preserve">
     <value>Gebruik</value>
   </data>
   <data name="Use it as a foundation for your SaaS, a backend for your mobile app, a corporate website, or a personal blog. The possibilities are endless." xml:space="preserve">
     <value>Gebruik het als basis voor je SaaS, als backend voor je mobiele app, als bedrijfswebsite of als persoonlijke blog. De mogelijkheden zijn eindeloos.</value>
+  </data>
+  <data name="Use it. Ship it." xml:space="preserve">
+    <value>Gebruik het. Levert het.</value>
+  </data>
+  <data name="Use the commands below to connect to this instance. Publishing requires a personal key and permission to publish." xml:space="preserve">
+    <value>Gebruik de onderstaande commando&apos;s om verbinding te maken met deze instantie. Publiceren vereist een persoonlijke sleutel en de machtiging om te publiceren.</value>
   </data>
   <data name="View on GitHub" xml:space="preserve">
     <value>Bekijk op GitHub</value>
@@ -803,6 +959,18 @@
   </data>
   <data name="Your enterprise users don&apos;t need to register repeatedly." xml:space="preserve">
     <value>Uw bedrijfsgebruikers hoeven zich niet herhaaldelijk te registreren.</value>
+  </data>
+  <data name="Your NuGet registry. Your infrastructure." xml:space="preserve">
+    <value>Uw NuGet-registratie. Uw infrastructuur.</value>
+  </data>
+  <data name="Your registry, at a glance." xml:space="preserve">
+    <value>Uw registry in één oogopslag.</value>
+  </data>
+  <data name="Your releases, your rules" xml:space="preserve">
+    <value>Jouw releases, jouw regels</value>
+  </data>
+  <data name="Your usual client. Your own package source." xml:space="preserve">
+    <value>Uw gewone client. Uw eigen pakketbron.</value>
   </data>
   <data name="Yubikey &amp; TOTP" xml:space="preserve">
     <value>Yubikey &amp; TOTP</value>

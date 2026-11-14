@@ -91,6 +91,8 @@ public class ViewModelArgsInjector(
         _ = localizer["Package ownership"];
         _ = localizer["Revoke API key"];
         _ = localizer["Use API key"];
+    
+        _ = localizer["Nupkg — Your NuGet package registry"];
     }
 
     public void InjectSimple(

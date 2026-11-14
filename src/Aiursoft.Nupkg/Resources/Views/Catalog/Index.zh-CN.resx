@@ -24,6 +24,9 @@
   <data name="Browse all packages" xml:space="preserve">
     <value>浏览所有软件包</value>
   </data>
+  <data name="Connect your client" xml:space="preserve">
+    <value>连接您的客户端</value>
+  </data>
   <data name="Find and install NuGet packages from this server." xml:space="preserve">
     <value>从该服务器查找并安装 NuGet 软件包。</value>
   </data>
