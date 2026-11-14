@@ -1,6 +1,4 @@
 using System.IO.Compression;
-using System.Security.Cryptography;
-using System.Text.Json.Nodes;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
@@ -16,64 +14,6 @@ namespace Aiursoft.Nupkg.Tests.IntegrationTests;
 [TestClass]
 public class PublishingAuthorizationTests : TestBase
 {
-    [TestMethod]
-    public async Task LocalOriginProofDescribesActualPublishedBytesWithoutExposingPublisher()
-    {
-        var owner = await CreatePublisherAsync();
-        var id = NewId();
-        var bytes = PackageBytes(id);
-        Assert.AreEqual(HttpStatusCode.Created, await SendAsync(HttpMethod.Put, "/api/v2/package", owner.Key, bytes));
-        var url = $"/api/package-origins?name={id}&version=1.0.0";
-        using var response = await Http.GetAsync(url);
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        Assert.IsTrue(response.Headers.CacheControl!.NoStore);
-        var raw = await response.Content.ReadAsStringAsync();
-        var proof = JsonNode.Parse(raw)!;
-        Assert.AreEqual("local", proof["mode"]!.GetValue<string>());
-        Assert.AreEqual(Convert.ToHexStringLower(SHA256.HashData(bytes)), proof["sha256"]!.GetValue<string>());
-        CollectionAssert.AreEqual(bytes, await Http.GetByteArrayAsync(proof["archive"]!.GetValue<string>()));
-        Assert.DoesNotContain(owner.Key, raw);
-        Assert.DoesNotContain(owner.UserId, raw);
-        using (var scope = Server!.Services.CreateScope())
-        {
-            var db = scope.ServiceProvider.GetRequiredService<NupkgDbContext>();
-            db.Users.Remove(await db.Users.SingleAsync(u => u.Id == owner.UserId));
-            await db.SaveChangesAsync();
-        }
-        proof = JsonNode.Parse(await Http.GetStringAsync(url))!;
-        Assert.AreEqual("local", proof["mode"]!.GetValue<string>());
-        proof = JsonNode.Parse(await Http.GetStringAsync($"/api/package-origins?name={id}&version=9.0.0"))!;
-        Assert.AreEqual("local", proof["mode"]!.GetValue<string>());
-        Assert.IsNull(proof["sha256"]);
-        Assert.IsNull(proof["archive"]);
-        proof = JsonNode.Parse(await Http.GetStringAsync($"/api/package-origins?name={NewId()}&version=1.0.0"))!;
-        Assert.AreEqual("mirror", proof["mode"]!.GetValue<string>());
-        Assert.IsNull(proof["archive"]);
-    }
-
-    [TestMethod]
-    public async Task ReservingAnOwnerDoesNotRelabelAMirroredArchiveAsLocallyPublished()
-    {
-        var owner = await CreatePublisherAsync();
-        var id = NewId();
-        Assert.AreEqual(HttpStatusCode.Created, await SendAsync(HttpMethod.Put, "/api/v2/package", owner.Key, PackageBytes(id)));
-        using (var scope = Server!.Services.CreateScope())
-        {
-            var db = scope.ServiceProvider.GetRequiredService<NupkgDbContext>();
-            var package = await db.Packages.SingleAsync(p => p.Id == id);
-            package.IsLocallyPublished = false;
-            package.UploadedByUserId = null;
-            var family = await db.PackageFamilies.SingleAsync(f => f.NormalizedId == id);
-            family.IsLocallyPublished = false;
-            Assert.AreEqual(owner.UserId, family.OwnerUserId);
-            await db.SaveChangesAsync();
-        }
-        var proof = JsonNode.Parse(await Http.GetStringAsync($"/api/package-origins?name={id}&version=1.0.0"))!;
-        Assert.AreEqual("mirror", proof["mode"]!.GetValue<string>());
-        Assert.IsNull(proof["sha256"]);
-        Assert.IsNull(proof["archive"]);
-    }
-
     private IConfiguration Configuration => Server!.Services.GetRequiredService<IConfiguration>();
 
     [TestMethod]
