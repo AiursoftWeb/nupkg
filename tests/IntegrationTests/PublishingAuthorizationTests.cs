@@ -51,6 +51,29 @@ public class PublishingAuthorizationTests : TestBase
         Assert.IsNull(proof["archive"]);
     }
 
+    [TestMethod]
+    public async Task ReservingAnOwnerDoesNotRelabelAMirroredArchiveAsLocallyPublished()
+    {
+        var owner = await CreatePublisherAsync();
+        var id = NewId();
+        Assert.AreEqual(HttpStatusCode.Created, await SendAsync(HttpMethod.Put, "/api/v2/package", owner.Key, PackageBytes(id)));
+        using (var scope = Server!.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<NupkgDbContext>();
+            var package = await db.Packages.SingleAsync(p => p.Id == id);
+            package.IsLocallyPublished = false;
+            package.UploadedByUserId = null;
+            var family = await db.PackageFamilies.SingleAsync(f => f.NormalizedId == id);
+            family.IsLocallyPublished = false;
+            Assert.AreEqual(owner.UserId, family.OwnerUserId);
+            await db.SaveChangesAsync();
+        }
+        var proof = JsonNode.Parse(await Http.GetStringAsync($"/api/package-origins?name={id}&version=1.0.0"))!;
+        Assert.AreEqual("mirror", proof["mode"]!.GetValue<string>());
+        Assert.IsNull(proof["sha256"]);
+        Assert.IsNull(proof["archive"]);
+    }
+
     private IConfiguration Configuration => Server!.Services.GetRequiredService<IConfiguration>();
 
     [TestMethod]

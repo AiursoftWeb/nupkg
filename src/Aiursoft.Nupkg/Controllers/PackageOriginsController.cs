@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using EFCoreSecondLevelCacheInterceptor;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,11 +20,11 @@ public class PackageOriginsController(NupkgDbContext db, IPackageStorageService 
             !NuGetVersion.TryParse(version, out var parsed)) return BadRequest();
         var id = name.ToLowerInvariant();
         var normalized = parsed.ToNormalizedString().ToLowerInvariant();
-        var local = await db.PackageFamilies.AsNoTracking().AnyAsync(f => f.NormalizedId == id &&
-            (f.IsLocallyPublished || f.OwnerUserId != null), token);
+        var local = await db.PackageFamilies.AsNoTracking().NotCacheable().AnyAsync(f => f.NormalizedId == id &&
+            f.IsLocallyPublished, token);
         string? hash = null;
         string? archive = null;
-        if (local && await db.Packages.IgnoreQueryFilters().AsNoTracking().AnyAsync(p =>
+        if (local && await db.Packages.IgnoreQueryFilters().AsNoTracking().NotCacheable().AnyAsync(p =>
                 p.Id.ToLower() == id && p.NormalizedVersionString == normalized &&
                 (p.IsLocallyPublished || p.UploadedByUserId != null), token))
         {
