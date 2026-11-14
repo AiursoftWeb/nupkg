@@ -31,6 +31,9 @@ public class PackageFamily
     [ForeignKey(nameof(OwnerUserId))]
     public User? OwnerUser { get; set; }
 
+    [ConcurrencyCheck]
+    public bool IsLocallyPublished { get; set; }
+
     public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
 
     [InverseProperty(nameof(Package.PackageFamily))]

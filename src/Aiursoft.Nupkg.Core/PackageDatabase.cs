@@ -18,6 +18,15 @@ namespace Aiursoft.Nupkg.Core
             }
             try
             {
+                var family = await _context.PackageFamilies.SingleAsync(
+                    f => f.Id == package.PackageFamilyId, cancellationToken);
+                if (!package.IsLocallyPublished && package.MirrorSource != null && family.IsLocallyPublished)
+                    return PackageAddResult.PackageAlreadyExists;
+                if (package.IsLocallyPublished)
+                    family.IsLocallyPublished = true;
+                // Include the family mode in the same optimistic write as the new version.
+                // A mirror finishing after local publication must not commit its old mode.
+                _context.Entry(family).Property(f => f.IsLocallyPublished).IsModified = true;
                 _context.Packages.Add(package);
 
                 await _context.SaveChangesAsync(cancellationToken);
@@ -73,8 +82,15 @@ namespace Aiursoft.Nupkg.Core
         }
 
         private static bool Owns(PackageFamily registration, PackagePublisher publisher) =>
-            publisher.MirrorSource != null ? registration.OwnerUserId == null :
+            publisher.MirrorSource != null ? !registration.IsLocallyPublished && registration.OwnerUserId == null :
             publisher.CanManagePackages || (publisher.UserId != null && registration.OwnerUserId == publisher.UserId);
+
+        public Task<bool> IsLocallyManagedAsync(string id, CancellationToken cancellationToken)
+        {
+            var normalizedId = id.ToLowerInvariant();
+            return _context.PackageFamilies.AsNoTracking().AnyAsync(
+                f => f.NormalizedId == normalizedId && (f.IsLocallyPublished || f.OwnerUserId != null), cancellationToken);
+        }
 
         public async Task<bool> ExistsAsync(string id, CancellationToken cancellationToken)
         {

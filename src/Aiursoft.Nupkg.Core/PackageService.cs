@@ -35,7 +35,9 @@ namespace Aiursoft.Nupkg.Core
             string id,
             CancellationToken cancellationToken)
         {
-            var upstreamVersions = await _upstream.ListPackageVersionsAsync(id, cancellationToken);
+            var upstreamVersions = await _db.IsLocallyManagedAsync(id, cancellationToken)
+                ? Array.Empty<NuGetVersion>()
+                : await _upstream.ListPackageVersionsAsync(id, cancellationToken);
 
             // Merge the local package versions into the upstream package versions.
             var localPackages = await _db.FindAsync(id, includeUnlisted: true, cancellationToken);
@@ -49,7 +51,9 @@ namespace Aiursoft.Nupkg.Core
 
         public async Task<IReadOnlyList<Package>> FindPackagesAsync(string id, CancellationToken cancellationToken)
         {
-            var upstreamPackages = await _upstream.ListPackagesAsync(id, cancellationToken);
+            var upstreamPackages = await _db.IsLocallyManagedAsync(id, cancellationToken)
+                ? Array.Empty<Package>()
+                : await _upstream.ListPackagesAsync(id, cancellationToken);
             var localPackages = await _db.FindAsync(id, includeUnlisted: true, cancellationToken);
 
             if (!upstreamPackages.Any()) return localPackages;
@@ -98,6 +102,8 @@ namespace Aiursoft.Nupkg.Core
             {
                 return true;
             }
+
+            if (await _db.IsLocallyManagedAsync(id, cancellationToken)) return false;
 
             _logger.LogInformation(
                 "Package {PackageId} {PackageVersion} does not exist locally. Checking upstream feed...",

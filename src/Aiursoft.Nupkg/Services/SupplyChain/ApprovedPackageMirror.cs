@@ -104,10 +104,10 @@ public class ApprovedPackageMirror(S360AdmissionClient admission, V3UpstreamClie
                 p.Id.ToLower() == id && p.NormalizedVersionString == normalized, cancellationToken);
             if (existing is { IsLocallyPublished: true } || existing?.UploadedByUserId != null)
                 return PackageMirrorResult.Available;
+            if (await db.PackageFamilies.AnyAsync(f => f.NormalizedId == id && (f.IsLocallyPublished || f.OwnerUserId != null), cancellationToken))
+                return PackageMirrorResult.Denied;
             if (existing is { MirrorSource: not null, MirrorVersion: not null, MirrorSha256: not null })
                 return PackageMirrorResult.Available; // The read middleware still reassesses this provenance.
-            if (await db.PackageFamilies.AnyAsync(f => f.NormalizedId == id && f.OwnerUserId != null, cancellationToken))
-                return PackageMirrorResult.Denied;
             var candidate = discovered ?? (await CandidatesAsync(name, cancellationToken))
                 .SingleOrDefault(a => NuGetVersion.Parse(a.Version) == version);
             if (candidate == null) return PackageMirrorResult.Denied;

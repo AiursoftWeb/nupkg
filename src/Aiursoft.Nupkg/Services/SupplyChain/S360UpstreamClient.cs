@@ -16,7 +16,7 @@ public class S360UpstreamClient(ApprovedPackageMirror mirror, V3UpstreamClient u
     {
         if (!options.Value.Enabled) return [];
         var normalized = id.ToLowerInvariant();
-        if (await db.PackageFamilies.AnyAsync(f => f.NormalizedId == normalized && f.OwnerUserId != null, cancellationToken))
+        if (await db.PackageFamilies.AnyAsync(f => f.NormalizedId == normalized && (f.IsLocallyPublished || f.OwnerUserId != null), cancellationToken))
             return [];
         return await mirror.CandidatesAsync(id, cancellationToken);
     }

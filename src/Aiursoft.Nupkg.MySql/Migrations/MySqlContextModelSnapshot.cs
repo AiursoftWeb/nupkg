@@ -17,7 +17,7 @@ namespace Aiursoft.Nupkg.MySql.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.14")
+                .HasAnnotation("ProductVersion", "10.0.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -210,6 +210,10 @@ namespace Aiursoft.Nupkg.MySql.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsLocallyPublished")
+                        .IsConcurrencyToken()
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("NormalizedId")
                         .IsRequired()
