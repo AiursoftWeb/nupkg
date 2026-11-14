@@ -24,6 +24,9 @@
   <data name="Browse all packages" xml:space="preserve">
     <value>Περιήγηση σε όλα τα πακέτα</value>
   </data>
+  <data name="Connect your client" xml:space="preserve">
+    <value>Συζευξτε τον πελάτη σας</value>
+  </data>
   <data name="Find and install NuGet packages from this server." xml:space="preserve">
     <value>Βρείτε και εγκαταστήστε πακέτα NuGet από αυτόν τον διακομιστή.</value>
   </data>

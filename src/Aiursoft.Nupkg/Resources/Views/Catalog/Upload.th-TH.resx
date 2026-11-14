@@ -27,11 +27,11 @@
   <data name="Copy" xml:space="preserve">
     <value>คัดลอก</value>
   </data>
-  <data name="Create a personal key under Personal &gt; API Keys. Publishing requires account permission and ownership of the package name." xml:space="preserve">
-    <value>สร้างคีย์ส่วนตัวภายใต้ ส่วนบุคคล &gt; คีย์ API การเผยแพร่ต้องการสิทธิ์ของบัญชีและการเป็นเจ้าของชื่อแพ็กเกจ</value>
-  </data>
   <data name="Create API key" xml:space="preserve">
     <value>สร้าง API key</value>
+  </data>
+  <data name="Create a personal key under Personal &gt; API Keys. Publishing requires account permission and ownership of the package name." xml:space="preserve">
+    <value>สร้างคีย์ส่วนตัวภายใต้ ส่วนบุคคล &gt; คีย์ API การเผยแพร่ต้องการสิทธิ์ของบัญชีและการเป็นเจ้าของชื่อแพ็กเกจ</value>
   </data>
   <data name="Package source" xml:space="preserve">
     <value>แหล่งแพ็กเกจ</value>
