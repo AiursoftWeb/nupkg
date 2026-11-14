@@ -20,9 +20,6 @@ public class CatalogController(ISearchService search, IPackageService packages,
 
     [HttpGet("/packages", Name = "PackageCatalog")]
     [HttpGet("/Catalog/Index")]
-    [HttpGet("/")]
-    [HttpGet("/Home")]
-    [HttpGet("/Home/Index")]
     [HttpGet("/Dashboard/Index")]
     [HttpGet("/Dashboard")]
     [RenderInNavBar(NavGroupName = "Features", NavGroupOrder = 1,
