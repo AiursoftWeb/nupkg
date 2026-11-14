@@ -129,6 +129,9 @@
   <data name="Nupkg" xml:space="preserve">
     <value>قالب</value>
   </data>
+  <data name="Nupkg — Your NuGet package registry" xml:space="preserve">
+    <value>Nupkg — مستودع حزم NuGet الخاص بك</value>
+  </data>
   <data name="Package ownership" xml:space="preserve">
     <value>ملكية الحزمة</value>
   </data>

@@ -132,6 +132,9 @@
   <data name="Nupkg" xml:space="preserve">
     <value>Nupkg</value>
   </data>
+  <data name="Nupkg — Your NuGet package registry" xml:space="preserve">
+    <value>Nupkg — Your NuGet package registry</value>
+  </data>
   <data name="Package ownership" xml:space="preserve">
     <value>Package ownership</value>
   </data>
