@@ -15,29 +15,12 @@ public class S360AdmissionClient(IHttpClientFactory clients, IOptions<S360Mirror
         foreach (var batch in versions.Distinct().Chunk(500))
         {
             var candidates = batch.Select(v => new MirrorCandidate("nuget", name, v, PolicySource(source))).ToArray();
-            using var request = Create(HttpMethod.Post, "api/artifacts/mirror/candidates");
-            request.Content = JsonContent.Create(new { candidates });
-            using var response = await clients.CreateClient("S360Admission").SendAsync(request, token);
-            response.EnsureSuccessStatusCode();
-            var decisions = (await response.Content.ReadFromJsonAsync<MirrorCandidateResponse>(token))?.Decisions;
-            if (decisions == null || decisions.Count != batch.Length ||
-                decisions.Where((d, i) => d.Candidate != candidates[i]).Any())
-                throw new InvalidDataException("S360 returned unrelated mirror candidates.");
-            result.AddRange(decisions.Where(d => d.CanFetch).Select(d => d.Candidate));
+            var decisions = await AssessAsync(candidates.Select(c =>
+                new ArtifactIdentity(c.Ecosystem, c.Name, c.Version, c.Source, "")).ToList(), token);
+            result.AddRange(decisions.Where(d => d.Trusted).Select(d =>
+                new MirrorCandidate(d.Dependency.Ecosystem, d.Dependency.Name, d.Dependency.Version, d.Dependency.Source)));
         }
         return result;
-    }
-
-    public async Task<ArtifactDecision> VerifyMirrorAsync(ArtifactIdentity artifact, CancellationToken token)
-    {
-        using var request = Create(HttpMethod.Post, "api/artifacts/mirror/verify");
-        request.Content = JsonContent.Create(artifact);
-        using var response = await clients.CreateClient("S360Admission").SendAsync(request, token);
-        response.EnsureSuccessStatusCode();
-        var decision = await response.Content.ReadFromJsonAsync<ArtifactDecision>(token);
-        if (decision == null || decision.Dependency != artifact)
-            throw new InvalidDataException("S360 returned an unrelated mirror verification.");
-        return decision;
     }
 
     private HttpRequestMessage Create(HttpMethod method, string path)
@@ -54,13 +37,18 @@ public class S360AdmissionClient(IHttpClientFactory clients, IOptions<S360Mirror
         foreach (var batch in artifacts.Chunk(500))
         {
             using var request = Create(HttpMethod.Post, "api/artifacts/assess");
-            request.Content = JsonContent.Create(new { dependencies = batch });
+            request.Content = JsonContent.Create(new { dependencies = batch.Select(a => new { a.Ecosystem, a.Name, a.Version, a.Source }) });
             using var response = await clients.CreateClient("S360Admission").SendAsync(request, cancellationToken);
             response.EnsureSuccessStatusCode();
             var result = await response.Content.ReadFromJsonAsync<ArtifactAssessmentResponse>(cancellationToken)
                 ?? throw new InvalidDataException("S360 returned an empty assessment.");
-            if (result.Decisions.Count != batch.Length || result.Decisions.Where((d, i) => d.Dependency != batch[i]).Any())
+            if (result.Decisions == null || result.Decisions.Count != batch.Length ||
+                result.Decisions.Cast<ArtifactDecision?>().Where((d, i) => d?.Dependency is not { } dependency ||
+                    dependency with { Sha256 = batch[i].Sha256 } != batch[i]).Any())
                 throw new InvalidDataException("S360 assessment does not match the requested artifacts.");
+            if (result.Decisions.Any(d => d.PendingVerification))
+                throw new HttpRequestException("S360 vulnerability data is unavailable.");
+            for (var i = 0; i < batch.Length; i++) result.Decisions[i].Dependency = batch[i];
             decisions.AddRange(result.Decisions);
         }
         return decisions;
