@@ -4,8 +4,5 @@ namespace Aiursoft.Nupkg.Models.HomeViewModels;
 
 public class IndexViewModel : UiStackLayoutViewModel
 {
-    public IndexViewModel()
-    {
-        PageTitle = "Home";
-    }
+    public IndexViewModel() => PageTitle = "Nupkg — Your NuGet package registry";
 }
