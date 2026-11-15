@@ -5,7 +5,6 @@ using Aiursoft.Nupkg.Models.PackagesViewModels;
 using Aiursoft.Nupkg.Services;
 using Aiursoft.UiStack.Navigation;
 using Aiursoft.WebTools.Attributes;
-using Markdig;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Versioning;
 using Aiursoft.Nupkg.Entities;
@@ -16,7 +15,6 @@ namespace Aiursoft.Nupkg.Controllers;
 public class CatalogController(ISearchService search, IPackageService packages,
     IPackageContentService content, IUrlGenerator urls, IConfiguration configuration, NupkgDbContext db) : Controller
 {
-    private static readonly MarkdownPipeline ReadmePipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().DisableHtml().Build();
 
     [HttpGet("/packages", Name = "PackageCatalog")]
     [HttpGet("/Catalog/Index")]
@@ -43,7 +41,7 @@ public class CatalogController(ISearchService search, IPackageService packages,
 
     [HttpGet("/packages/{id}/{version?}", Name = "PackageDetails")]
     public async Task<IActionResult> Details(string id, string? version = null, string q = "", int page = 1,
-        string packageType = "any", string framework = "any", bool prerelease = true, int dependentsPage = 1, string tab = "overview")
+        string packageType = "any", string framework = "any", bool prerelease = true, int dependentsPage = 1, string tab = "overview", int versionsPage = 1)
     {
         dependentsPage = Math.Clamp(dependentsPage, 1, int.MaxValue / 20);
         var versions = await packages.FindPackagesAsync(id, HttpContext.RequestAborted);
@@ -58,7 +56,7 @@ public class CatalogController(ISearchService search, IPackageService packages,
             if (stream != null)
             {
                 using var reader = new StreamReader(stream);
-                readme = Markdown.ToHtml(await reader.ReadToEndAsync(HttpContext.RequestAborted), ReadmePipeline);
+                readme = PackageReadme.Render(await reader.ReadToEndAsync(HttpContext.RequestAborted), HttpUrl(selected.RepositoryUrl));
             }
         }
         var types = selected.PackageTypes.Select(t => t.Name).ToList();
@@ -71,7 +69,7 @@ public class CatalogController(ISearchService search, IPackageService packages,
         var dependents = await search.FindDependentsAsync(id, (dependentsPage - 1) * 20, 20, HttpContext.RequestAborted);
         return this.StackView(new DetailsViewModel
         {
-            PageTitle = selected.Id, Package = selected,
+            PageTitle = selected.Id, Package = selected, VersionsPage = Math.Clamp(versionsPage, 1, Math.Max(1, (versions.Count(p => p.Listed) + 19) / 20)),
             IconUrl = selected.HasEmbeddedIcon ? urls.GetPackageIconDownloadUrl(selected.Id, selected.Version) : HttpUrl(selected.IconUrl),
             ProjectUrl = HttpUrl(selected.ProjectUrl), SourceUrl = HttpUrl(selected.RepositoryUrl), LicenseUrl = HttpUrl(selected.LicenseUrl),
             IsTemplate = !types.Contains("DotnetTool", StringComparer.OrdinalIgnoreCase) && types.Contains("Template", StringComparer.OrdinalIgnoreCase),

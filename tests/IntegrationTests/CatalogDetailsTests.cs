@@ -49,7 +49,7 @@ public class CatalogDetailsTests : TestBase
         Assert.Contains("https://example.test/source", html);
         Assert.Contains("https://example.test/license", html);
         Assert.Contains("net10.0", html);
-        Assert.Contains("Last updated", html);
+        Assert.Contains("Latest registry update", html);
         Assert.Contains($"dotnet add package {id} --version 1.0.0 --source {Http.BaseAddress}v3/index.json", html);
         Assert.Contains($"Install-Package {id} -Version 1.0.0 -Source {Http.BaseAddress}v3/index.json", html);
         Assert.Contains($"paket add {id} --version 1.0.0", html);
@@ -132,6 +132,29 @@ public class CatalogDetailsTests : TestBase
         Assert.Contains("tab=usedby", html);
         Assert.Contains("#package-dependents", html);
         Assert.Contains("show active\" id=\"package-dependents\"", html);
+    }
+
+    [TestMethod]
+    public async Task VersionHistoryPagesWithoutLosingFiltersOrSelectedVersion()
+    {
+        var id = NewId();
+        await SeedFamilyAsync(Enumerable.Range(0, 25).Select(n => Version(id, $"1.0.{n}")).ToArray());
+        var html = WebUtility.HtmlDecode(await Http.GetStringAsync($"/packages/{id}/1.0.24?tab=versions&q=fixture&page=3&versionsPage=2"));
+        Assert.AreEqual(5, Regex.Matches(html, "package-version-row").Count);
+        Assert.Contains("Page 2 of 2", html);
+        Assert.Contains("q=fixture", html);
+        Assert.Contains("page=3", html);
+        Assert.Contains("tab=versions", html);
+        Assert.Contains($"dotnet add package {id} --version 1.0.24", html);
+    }
+
+    [TestMethod]
+    public void ReadmeLinksAreSafeAndRepositoryImagesResolve()
+    {
+        var html = Services.PackageReadme.Render("![Overview](./assets/overview.png)\n[bad](javascript:alert)\n<script>alert(1)</script>", "https://github.com/aiursoft/example");
+        Assert.Contains("https://raw.githubusercontent.com/aiursoft/example/HEAD/assets/overview.png", html);
+        Assert.DoesNotContain("href=\"javascript:", html);
+        Assert.DoesNotContain("<script>", html);
     }
 
     private async Task SeedFamilyAsync(params Package[] packages)
