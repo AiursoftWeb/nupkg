@@ -34,6 +34,7 @@ public class S360MirrorTests : TestBase
     private const string InternalSource = "https://nupkg.fixture/v3/index.json";
     private TaskCompletionSource<bool>? _downloadStarted;
     private TaskCompletionSource<bool>? _downloadRelease;
+    private TaskCompletionSource<bool>? _downloadCancelled;
 
     [TestInitialize]
     public override async Task CreateServer()
@@ -61,7 +62,15 @@ public class S360MirrorTests : TestBase
         {
             Interlocked.Increment(ref _downloads);
             _downloadStarted?.TrySetResult(true);
-            if (_downloadRelease != null) await _downloadRelease.Task.WaitAsync(context.RequestAborted);
+            if (_downloadRelease != null)
+            {
+                try { await _downloadRelease.Task.WaitAsync(context.RequestAborted); }
+                catch (OperationCanceledException)
+                {
+                    _downloadCancelled?.TrySetResult(true);
+                    throw;
+                }
+            }
             return _archives.TryGetValue(id, out var bytes) ? Results.Bytes(bytes) : Results.NotFound();
         });
         _upstream.MapGet("/registration/{id}/index.json", (string id) => Results.Json(new
@@ -429,6 +438,7 @@ public class S360MirrorTests : TestBase
         var bytes = AddArchive("Lazy.Interrupted");
         _downloadStarted = new(TaskCreationOptions.RunContinuationsAsynchronously);
         _downloadRelease = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        _downloadCancelled = new(TaskCreationOptions.RunContinuationsAsynchronously);
         using var cancellation = new CancellationTokenSource();
         var url = "/v3/package/lazy.interrupted/1.2.3/lazy.interrupted.1.2.3.nupkg";
         var interrupted = Http.GetAsync(url, cancellation.Token);
@@ -438,6 +448,9 @@ public class S360MirrorTests : TestBase
         try { await interrupted; }
         catch (OperationCanceledException) { cancelled = true; }
         Assert.IsTrue(cancelled);
+        // Client cancellation completes before the disconnect reaches the upstream.
+        // Wait for that interruption before allowing a fresh request to finish.
+        await _downloadCancelled.Task.WaitAsync(TimeSpan.FromSeconds(15));
         _downloadRelease.SetResult(true);
         CollectionAssert.AreEqual(bytes, await Http.GetByteArrayAsync(url));
         Assert.AreEqual(2, _downloads);

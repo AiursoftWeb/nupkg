@@ -15,6 +15,7 @@ public class DetailsViewModel : UiStackLayoutViewModel
     public string Framework { get; set; } = "any";
     public bool Prerelease { get; set; } = true;
     public int Page { get; set; } = 1;
+    public int VersionsPage { get; set; } = 1;
     public long TotalDependents { get; set; }
     public int DependentsPage { get; set; } = 1;
     public string ActiveTab { get; set; } = "overview";
