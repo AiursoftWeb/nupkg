@@ -45,6 +45,9 @@
   <data name="Package pages" xml:space="preserve">
     <value>หน้าเพจแพ็กเกจ</value>
   </data>
+  <data name="Package registry" xml:space="preserve">
+    <value>ศูนย์รวมแพ็กเกจ</value>
+  </data>
   <data name="Package type" xml:space="preserve">
     <value>ประเภทแพ็กเกจ</value>
   </data>

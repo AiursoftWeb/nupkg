@@ -18,8 +18,14 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Authors" xml:space="preserve">
+      <data name="Added to registry" xml:space="preserve">
+    <value>레지스트리에 추가됨</value>
+  </data>
+  <data name="Authors" xml:space="preserve">
     <value>작성자</value>
+  </data>
+  <data name="Available versions" xml:space="preserve">
+    <value>사용 가능한 버전</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>복사</value>
@@ -29,6 +35,9 @@
   </data>
   <data name="Dependent package pages" xml:space="preserve">
     <value>종속 패키지 페이지</value>
+  </data>
+  <data name="Dependent packages" xml:space="preserve">
+    <value>종속 패키지</value>
   </data>
   <data name="Download package" xml:space="preserve">
     <value>패키지 다운로드</value>
@@ -47,6 +56,9 @@
   </data>
   <data name="Last updated" xml:space="preserve">
     <value>마지막 업데이트</value>
+  </data>
+  <data name="Latest registry update" xml:space="preserve">
+    <value>최신 레지스트리 업데이트</value>
   </data>
   <data name="License" xml:space="preserve">
     <value>라이선스</value>
@@ -75,8 +87,20 @@
   <data name="Package Manager" xml:space="preserve">
     <value>패키지 관리자</value>
   </data>
+  <data name="Package details" xml:space="preserve">
+    <value>패키지 세부 정보</value>
+  </data>
+  <data name="Package information" xml:space="preserve">
+    <value>패키지 정보</value>
+  </data>
+  <data name="Package metadata" xml:space="preserve">
+    <value>패키지 메타데이터</value>
+  </data>
   <data name="Packages" xml:space="preserve">
     <value>패키지</value>
+  </data>
+  <data name="Packages on this registry that declare a dependency on this package. This is not a list of projects or download counts." xml:space="preserve">
+    <value>이 레지스트리에 있는 이 패키지에 대한 종속성을 선언하는 패키지입니다. 이는 프로젝트 목록이나 다운로드 수가 아닙니다.</value>
   </data>
   <data name="Prerelease" xml:space="preserve">
     <value>사전 릴리스</value>
@@ -90,6 +114,9 @@
   <data name="Published" xml:space="preserve">
     <value>게시됨</value>
   </data>
+  <data name="Registry" xml:space="preserve">
+    <value>레지스트리</value>
+  </data>
   <data name="Release notes" xml:space="preserve">
     <value>릴리스 노트</value>
   </data>
@@ -99,8 +126,14 @@
   <data name="Tags" xml:space="preserve">
     <value>태그</value>
   </data>
+  <data name="The install command selects this registry explicitly." xml:space="preserve">
+    <value>설치 명령은 이 레지스트리를 명시적으로 선택합니다.</value>
+  </data>
   <data name="Used by" xml:space="preserve">
     <value>사용처</value>
+  </data>
+  <data name="Version pages" xml:space="preserve">
+    <value>버전 페이지</value>
   </data>
   <data name="Versions" xml:space="preserve">
     <value>버전</value>

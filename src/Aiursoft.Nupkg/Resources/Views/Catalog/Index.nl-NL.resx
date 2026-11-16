@@ -45,6 +45,9 @@
   <data name="Package pages" xml:space="preserve">
     <value>Pagina&apos;s met pakketten</value>
   </data>
+  <data name="Package registry" xml:space="preserve">
+    <value>Pakketregister</value>
+  </data>
   <data name="Package type" xml:space="preserve">
     <value>Pakkettype</value>
   </data>

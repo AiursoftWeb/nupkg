@@ -45,6 +45,9 @@
   <data name="Package pages" xml:space="preserve">
     <value>パッケージページ</value>
   </data>
+  <data name="Package registry" xml:space="preserve">
+    <value>パッケージレジストリ</value>
+  </data>
   <data name="Package type" xml:space="preserve">
     <value>パッケージの種類</value>
   </data>

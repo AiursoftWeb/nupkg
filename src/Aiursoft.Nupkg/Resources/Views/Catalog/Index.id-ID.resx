@@ -45,6 +45,9 @@
   <data name="Package pages" xml:space="preserve">
     <value>Halaman paket</value>
   </data>
+  <data name="Package registry" xml:space="preserve">
+    <value>Registrasi paket</value>
+  </data>
   <data name="Package type" xml:space="preserve">
     <value>Jenis paket</value>
   </data>

@@ -18,8 +18,14 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Authors" xml:space="preserve">
+      <data name="Added to registry" xml:space="preserve">
+    <value>Προστέθηκε στο μητρώο</value>
+  </data>
+  <data name="Authors" xml:space="preserve">
     <value>Συγγραφείς</value>
+  </data>
+  <data name="Available versions" xml:space="preserve">
+    <value>Διαθέσιμες εκδόσεις</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>Αντιγραφή</value>
@@ -29,6 +35,9 @@
   </data>
   <data name="Dependent package pages" xml:space="preserve">
     <value>Σελίδες εξαρτώμενων πακέτων</value>
+  </data>
+  <data name="Dependent packages" xml:space="preserve">
+    <value>Εξαρτώμενα πακέτα</value>
   </data>
   <data name="Download package" xml:space="preserve">
     <value>Λήψη πακέτου</value>
@@ -47,6 +56,9 @@
   </data>
   <data name="Last updated" xml:space="preserve">
     <value>Τελευταία ενημέρωση</value>
+  </data>
+  <data name="Latest registry update" xml:space="preserve">
+    <value>Τελευταία ενημέρωση καταλόγου</value>
   </data>
   <data name="License" xml:space="preserve">
     <value>Άδεια</value>
@@ -75,8 +87,20 @@
   <data name="Package Manager" xml:space="preserve">
     <value>Διαχειριστής Συσκευασμάτων</value>
   </data>
+  <data name="Package details" xml:space="preserve">
+    <value>Λεπτομέρειες πακέτου</value>
+  </data>
+  <data name="Package information" xml:space="preserve">
+    <value>Πληροφορίες πακέτου</value>
+  </data>
+  <data name="Package metadata" xml:space="preserve">
+    <value>Μεταδεδομένα πακέτου</value>
+  </data>
   <data name="Packages" xml:space="preserve">
     <value>Πακέτα</value>
+  </data>
+  <data name="Packages on this registry that declare a dependency on this package. This is not a list of projects or download counts." xml:space="preserve">
+    <value>Τα πακέτα σε αυτό το μητρώο που δηλώνουν εξάρτηση από αυτό το πακέτο. Αυτό δεν είναι μια λίστα με έργα ή αριθμούς λήψεων.</value>
   </data>
   <data name="Prerelease" xml:space="preserve">
     <value>Προεγκατάσταση</value>
@@ -90,6 +114,9 @@
   <data name="Published" xml:space="preserve">
     <value>Δημοσιεύθηκε</value>
   </data>
+  <data name="Registry" xml:space="preserve">
+    <value>Κατάλογος</value>
+  </data>
   <data name="Release notes" xml:space="preserve">
     <value>Σημειώσεις έκδοσης</value>
   </data>
@@ -99,8 +126,14 @@
   <data name="Tags" xml:space="preserve">
     <value>Ετικέτες</value>
   </data>
+  <data name="The install command selects this registry explicitly." xml:space="preserve">
+    <value>Η εντολή εγκατάστασης επιλέγει αυτό το μητρώο ρητά.</value>
+  </data>
   <data name="Used by" xml:space="preserve">
     <value>Χρησιμοποιείται από</value>
+  </data>
+  <data name="Version pages" xml:space="preserve">
+    <value>Σελίδες εκδόσεων</value>
   </data>
   <data name="Versions" xml:space="preserve">
     <value>Εκδόσεις</value>

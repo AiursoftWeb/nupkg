@@ -18,8 +18,14 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Authors" xml:space="preserve">
+      <data name="Added to registry" xml:space="preserve">
+    <value>Đã thêm vào sổ đăng ký</value>
+  </data>
+  <data name="Authors" xml:space="preserve">
     <value>Tác giả</value>
+  </data>
+  <data name="Available versions" xml:space="preserve">
+    <value>Phiên bản khả dụng</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>Sao chép</value>
@@ -29,6 +35,9 @@
   </data>
   <data name="Dependent package pages" xml:space="preserve">
     <value>Trang các gói phụ thuộc</value>
+  </data>
+  <data name="Dependent packages" xml:space="preserve">
+    <value>Các gói phụ thuộc</value>
   </data>
   <data name="Download package" xml:space="preserve">
     <value>Tải xuống gói</value>
@@ -47,6 +56,9 @@
   </data>
   <data name="Last updated" xml:space="preserve">
     <value>Cập nhật lần cuối</value>
+  </data>
+  <data name="Latest registry update" xml:space="preserve">
+    <value>Cập nhật đăng ký cuối cùng</value>
   </data>
   <data name="License" xml:space="preserve">
     <value>Giấy phép</value>
@@ -75,8 +87,20 @@
   <data name="Package Manager" xml:space="preserve">
     <value>Trình quản lý gói</value>
   </data>
+  <data name="Package details" xml:space="preserve">
+    <value>Chi tiết gói</value>
+  </data>
+  <data name="Package information" xml:space="preserve">
+    <value>Thông tin gói</value>
+  </data>
+  <data name="Package metadata" xml:space="preserve">
+    <value>Dữ liệu mô tả gói</value>
+  </data>
   <data name="Packages" xml:space="preserve">
     <value>Gói</value>
+  </data>
+  <data name="Packages on this registry that declare a dependency on this package. This is not a list of projects or download counts." xml:space="preserve">
+    <value>Các gói trên registry này có khai báo sự phụ thuộc vào gói này. Đây không phải là danh sách các dự án hoặc số lượt tải xuống.</value>
   </data>
   <data name="Prerelease" xml:space="preserve">
     <value>Phiên bản trước</value>
@@ -90,6 +114,9 @@
   <data name="Published" xml:space="preserve">
     <value>Đã xuất bản</value>
   </data>
+  <data name="Registry" xml:space="preserve">
+    <value>Registry</value>
+  </data>
   <data name="Release notes" xml:space="preserve">
     <value>Ghi chú phát hành</value>
   </data>
@@ -99,8 +126,14 @@
   <data name="Tags" xml:space="preserve">
     <value>Thẻ</value>
   </data>
+  <data name="The install command selects this registry explicitly." xml:space="preserve">
+    <value>Lệnh cài đặt chọn đăng ký này một cách rõ ràng.</value>
+  </data>
   <data name="Used by" xml:space="preserve">
     <value>Được sử dụng bởi</value>
+  </data>
+  <data name="Version pages" xml:space="preserve">
+    <value>Trang phiên bản</value>
   </data>
   <data name="Versions" xml:space="preserve">
     <value>Phiên bản</value>

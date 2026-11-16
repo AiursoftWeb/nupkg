@@ -45,6 +45,9 @@
   <data name="Package pages" xml:space="preserve">
     <value>软件包页面</value>
   </data>
+  <data name="Package registry" xml:space="preserve">
+    <value>软件包注册表</value>
+  </data>
   <data name="Package type" xml:space="preserve">
     <value>软件包类型</value>
   </data>

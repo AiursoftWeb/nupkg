@@ -45,6 +45,9 @@
   <data name="Package pages" xml:space="preserve">
     <value>Paket sayfaları</value>
   </data>
+  <data name="Package registry" xml:space="preserve">
+    <value>Paket kaydı</value>
+  </data>
   <data name="Package type" xml:space="preserve">
     <value>Paket türü</value>
   </data>
