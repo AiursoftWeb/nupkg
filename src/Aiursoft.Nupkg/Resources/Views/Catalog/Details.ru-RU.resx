@@ -18,8 +18,14 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Authors" xml:space="preserve">
+      <data name="Added to registry" xml:space="preserve">
+    <value>Добавлено в реестр</value>
+  </data>
+  <data name="Authors" xml:space="preserve">
     <value>Авторы</value>
+  </data>
+  <data name="Available versions" xml:space="preserve">
+    <value>Доступные версии</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>Копировать</value>
@@ -29,6 +35,9 @@
   </data>
   <data name="Dependent package pages" xml:space="preserve">
     <value>Страницы зависимых пакетов</value>
+  </data>
+  <data name="Dependent packages" xml:space="preserve">
+    <value>Зависимые пакеты</value>
   </data>
   <data name="Download package" xml:space="preserve">
     <value>Скачать пакет</value>
@@ -47,6 +56,9 @@
   </data>
   <data name="Last updated" xml:space="preserve">
     <value>Последнее обновление</value>
+  </data>
+  <data name="Latest registry update" xml:space="preserve">
+    <value>Последнее обновление реестра</value>
   </data>
   <data name="License" xml:space="preserve">
     <value>Лицензия</value>
@@ -75,8 +87,20 @@
   <data name="Package Manager" xml:space="preserve">
     <value>Менеджер пакетов</value>
   </data>
+  <data name="Package details" xml:space="preserve">
+    <value>Сведения о пакете</value>
+  </data>
+  <data name="Package information" xml:space="preserve">
+    <value>Информация о пакете</value>
+  </data>
+  <data name="Package metadata" xml:space="preserve">
+    <value>Метаданные пакета</value>
+  </data>
   <data name="Packages" xml:space="preserve">
     <value>Пакеты</value>
+  </data>
+  <data name="Packages on this registry that declare a dependency on this package. This is not a list of projects or download counts." xml:space="preserve">
+    <value>Пакеты в этом реестре, которые указывают на зависимость от данного пакета. Это не список проектов или количество загрузок.</value>
   </data>
   <data name="Prerelease" xml:space="preserve">
     <value>Предварительная версия</value>
@@ -90,6 +114,9 @@
   <data name="Published" xml:space="preserve">
     <value>Опубликован</value>
   </data>
+  <data name="Registry" xml:space="preserve">
+    <value>Реестр</value>
+  </data>
   <data name="Release notes" xml:space="preserve">
     <value>Заметки о выпуске</value>
   </data>
@@ -99,8 +126,14 @@
   <data name="Tags" xml:space="preserve">
     <value>Метки</value>
   </data>
+  <data name="The install command selects this registry explicitly." xml:space="preserve">
+    <value>Команда установки явно выбирает этот реестр.</value>
+  </data>
   <data name="Used by" xml:space="preserve">
     <value>Используется в</value>
+  </data>
+  <data name="Version pages" xml:space="preserve">
+    <value>Страницы версий</value>
   </data>
   <data name="Versions" xml:space="preserve">
     <value>Версии</value>

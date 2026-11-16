@@ -18,8 +18,14 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Authors" xml:space="preserve">
+      <data name="Added to registry" xml:space="preserve">
+    <value>Im Registry hinzugefügt</value>
+  </data>
+  <data name="Authors" xml:space="preserve">
     <value>Autoren</value>
+  </data>
+  <data name="Available versions" xml:space="preserve">
+    <value>Verfügbare Versionen</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>Kopieren</value>
@@ -29,6 +35,9 @@
   </data>
   <data name="Dependent package pages" xml:space="preserve">
     <value>Seiten der abhängigen Pakete</value>
+  </data>
+  <data name="Dependent packages" xml:space="preserve">
+    <value>Abhängige Pakete</value>
   </data>
   <data name="Download package" xml:space="preserve">
     <value>Paket herunterladen</value>
@@ -47,6 +56,9 @@
   </data>
   <data name="Last updated" xml:space="preserve">
     <value>Zuletzt aktualisiert</value>
+  </data>
+  <data name="Latest registry update" xml:space="preserve">
+    <value>Letzte Registry-Aktualisierung</value>
   </data>
   <data name="License" xml:space="preserve">
     <value>Lizenz</value>
@@ -75,8 +87,20 @@
   <data name="Package Manager" xml:space="preserve">
     <value>Paket-Manager</value>
   </data>
+  <data name="Package details" xml:space="preserve">
+    <value>Paketdetails</value>
+  </data>
+  <data name="Package information" xml:space="preserve">
+    <value>Paketinformationen</value>
+  </data>
+  <data name="Package metadata" xml:space="preserve">
+    <value>Paketmetadaten</value>
+  </data>
   <data name="Packages" xml:space="preserve">
     <value>Pakete</value>
+  </data>
+  <data name="Packages on this registry that declare a dependency on this package. This is not a list of projects or download counts." xml:space="preserve">
+    <value>Pakete in diesem Registry, die eine Abhängigkeit von diesem Paket deklarieren. Dies ist keine Liste von Projekten oder Downloadzahlen.</value>
   </data>
   <data name="Prerelease" xml:space="preserve">
     <value>Vorausveröffentlichung</value>
@@ -90,6 +114,9 @@
   <data name="Published" xml:space="preserve">
     <value>Veröffentlicht</value>
   </data>
+  <data name="Registry" xml:space="preserve">
+    <value>Registry</value>
+  </data>
   <data name="Release notes" xml:space="preserve">
     <value>Versionshinweise</value>
   </data>
@@ -99,8 +126,14 @@
   <data name="Tags" xml:space="preserve">
     <value>Schlagwörter</value>
   </data>
+  <data name="The install command selects this registry explicitly." xml:space="preserve">
+    <value>Der Installationsbefehl wählt dieses Register ausdrücklich aus.</value>
+  </data>
   <data name="Used by" xml:space="preserve">
     <value>Verwendet von</value>
+  </data>
+  <data name="Version pages" xml:space="preserve">
+    <value>Versionsseiten</value>
   </data>
   <data name="Versions" xml:space="preserve">
     <value>Versionen</value>

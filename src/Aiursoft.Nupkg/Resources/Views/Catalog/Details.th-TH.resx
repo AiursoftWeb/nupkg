@@ -18,8 +18,14 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Authors" xml:space="preserve">
+      <data name="Added to registry" xml:space="preserve">
+    <value>เพิ่มลงในรีจิสทรี</value>
+  </data>
+  <data name="Authors" xml:space="preserve">
     <value>ผู้เขียน</value>
+  </data>
+  <data name="Available versions" xml:space="preserve">
+    <value>เวอร์ชันที่มีอยู่</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>คัดลอก</value>
@@ -29,6 +35,9 @@
   </data>
   <data name="Dependent package pages" xml:space="preserve">
     <value>หน้าของแพ็กเกจที่ขึ้นตรง</value>
+  </data>
+  <data name="Dependent packages" xml:space="preserve">
+    <value>แพ็กเกจที่ขึ้นอยู่</value>
   </data>
   <data name="Download package" xml:space="preserve">
     <value>ดาวน์โหลดแพ็กเกจ</value>
@@ -47,6 +56,9 @@
   </data>
   <data name="Last updated" xml:space="preserve">
     <value>อัปเดตล่าสุด</value>
+  </data>
+  <data name="Latest registry update" xml:space="preserve">
+    <value>อัปเดตล่าสุดในรีจิสทรี</value>
   </data>
   <data name="License" xml:space="preserve">
     <value>ใบอนุญาต</value>
@@ -75,8 +87,20 @@
   <data name="Package Manager" xml:space="preserve">
     <value>Package Manager</value>
   </data>
+  <data name="Package details" xml:space="preserve">
+    <value>รายละเอียดแพ็กเกจ</value>
+  </data>
+  <data name="Package information" xml:space="preserve">
+    <value>ข้อมูลแพ็กเกจ</value>
+  </data>
+  <data name="Package metadata" xml:space="preserve">
+    <value>ข้อมูลเมตาของแพ็กเกจ</value>
+  </data>
   <data name="Packages" xml:space="preserve">
     <value>แพ็กเกจ</value>
+  </data>
+  <data name="Packages on this registry that declare a dependency on this package. This is not a list of projects or download counts." xml:space="preserve">
+    <value>แพ็กเกจในเรจิสทรีนี้ที่ประกาศการพึ่งพาแพ็กเกจนี้ รายการนี้ไม่ใช่รายการของโปรเจกต์หรือจำนวนการดาวน์โหลด</value>
   </data>
   <data name="Prerelease" xml:space="preserve">
     <value>ก่อนเปิดตัว</value>
@@ -90,6 +114,9 @@
   <data name="Published" xml:space="preserve">
     <value>เผยแพร่เมื่อ</value>
   </data>
+  <data name="Registry" xml:space="preserve">
+    <value>รีจิสทรี</value>
+  </data>
   <data name="Release notes" xml:space="preserve">
     <value>บันทึกการปล่อยเวอร์ชัน</value>
   </data>
@@ -99,8 +126,14 @@
   <data name="Tags" xml:space="preserve">
     <value>แท็ก</value>
   </data>
+  <data name="The install command selects this registry explicitly." xml:space="preserve">
+    <value>คำสั่งติดตั้งจะเลือก registry นี้โดยเฉพาะ</value>
+  </data>
   <data name="Used by" xml:space="preserve">
     <value>ใช้โดย</value>
+  </data>
+  <data name="Version pages" xml:space="preserve">
+    <value>หน้าเวอร์ชัน</value>
   </data>
   <data name="Versions" xml:space="preserve">
     <value>เวอร์ชัน</value>

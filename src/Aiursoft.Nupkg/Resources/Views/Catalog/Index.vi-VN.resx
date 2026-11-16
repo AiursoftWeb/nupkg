@@ -45,6 +45,9 @@
   <data name="Package pages" xml:space="preserve">
     <value>Trang gói</value>
   </data>
+  <data name="Package registry" xml:space="preserve">
+    <value>Sổ đăng ký gói</value>
+  </data>
   <data name="Package type" xml:space="preserve">
     <value>Loại gói</value>
   </data>

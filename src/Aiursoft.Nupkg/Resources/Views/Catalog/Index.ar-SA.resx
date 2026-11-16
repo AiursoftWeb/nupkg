@@ -45,6 +45,9 @@
   <data name="Package pages" xml:space="preserve">
     <value>صفحات الحزم</value>
   </data>
+  <data name="Package registry" xml:space="preserve">
+    <value>سجل الحزم</value>
+  </data>
   <data name="Package type" xml:space="preserve">
     <value>نوع الحزمة</value>
   </data>

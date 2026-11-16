@@ -18,8 +18,14 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Authors" xml:space="preserve">
+      <data name="Added to registry" xml:space="preserve">
+    <value>Añadido al registro</value>
+  </data>
+  <data name="Authors" xml:space="preserve">
     <value>Autores</value>
+  </data>
+  <data name="Available versions" xml:space="preserve">
+    <value>Versiones disponibles</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>Copiar</value>
@@ -29,6 +35,9 @@
   </data>
   <data name="Dependent package pages" xml:space="preserve">
     <value>Páginas de paquetes dependientes</value>
+  </data>
+  <data name="Dependent packages" xml:space="preserve">
+    <value>Paquetes dependientes</value>
   </data>
   <data name="Download package" xml:space="preserve">
     <value>Descargar paquete</value>
@@ -47,6 +56,9 @@
   </data>
   <data name="Last updated" xml:space="preserve">
     <value>Última actualización</value>
+  </data>
+  <data name="Latest registry update" xml:space="preserve">
+    <value>Última actualización del registro</value>
   </data>
   <data name="License" xml:space="preserve">
     <value>Licencia</value>
@@ -75,8 +87,20 @@
   <data name="Package Manager" xml:space="preserve">
     <value>Administrador de paquetes</value>
   </data>
+  <data name="Package details" xml:space="preserve">
+    <value>Detalles del paquete</value>
+  </data>
+  <data name="Package information" xml:space="preserve">
+    <value>Información del paquete</value>
+  </data>
+  <data name="Package metadata" xml:space="preserve">
+    <value>Metadatos del paquete</value>
+  </data>
   <data name="Packages" xml:space="preserve">
     <value>Paquetes</value>
+  </data>
+  <data name="Packages on this registry that declare a dependency on this package. This is not a list of projects or download counts." xml:space="preserve">
+    <value>Paquetes de este registro que declaran una dependencia de este paquete. Esto no es una lista de proyectos ni de recuentos de descargas.</value>
   </data>
   <data name="Prerelease" xml:space="preserve">
     <value>Prerelease</value>
@@ -90,6 +114,9 @@
   <data name="Published" xml:space="preserve">
     <value>Publicado</value>
   </data>
+  <data name="Registry" xml:space="preserve">
+    <value>Registro</value>
+  </data>
   <data name="Release notes" xml:space="preserve">
     <value>Notas de la versión</value>
   </data>
@@ -99,8 +126,14 @@
   <data name="Tags" xml:space="preserve">
     <value>Etiquetas</value>
   </data>
+  <data name="The install command selects this registry explicitly." xml:space="preserve">
+    <value>El comando de instalación selecciona este registro de forma explícita.</value>
+  </data>
   <data name="Used by" xml:space="preserve">
     <value>Usado por</value>
+  </data>
+  <data name="Version pages" xml:space="preserve">
+    <value>Páginas de versiones</value>
   </data>
   <data name="Versions" xml:space="preserve">
     <value>Versiones</value>

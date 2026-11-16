@@ -45,6 +45,9 @@
   <data name="Package pages" xml:space="preserve">
     <value>Σελίδες πακέτων</value>
   </data>
+  <data name="Package registry" xml:space="preserve">
+    <value>Κατάλογος πακέτων</value>
+  </data>
   <data name="Package type" xml:space="preserve">
     <value>Τύπος πακέτου</value>
   </data>

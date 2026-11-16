@@ -18,8 +18,14 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Authors" xml:space="preserve">
+      <data name="Added to registry" xml:space="preserve">
+    <value>Toegevoegd aan register</value>
+  </data>
+  <data name="Authors" xml:space="preserve">
     <value>Auteurs</value>
+  </data>
+  <data name="Available versions" xml:space="preserve">
+    <value>Beschikbare versies</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>Kopiëren</value>
@@ -29,6 +35,9 @@
   </data>
   <data name="Dependent package pages" xml:space="preserve">
     <value>Pagina&apos;s met afhankelijke pakketten</value>
+  </data>
+  <data name="Dependent packages" xml:space="preserve">
+    <value>Afhankelijke pakketten</value>
   </data>
   <data name="Download package" xml:space="preserve">
     <value>Pakket downloaden</value>
@@ -47,6 +56,9 @@
   </data>
   <data name="Last updated" xml:space="preserve">
     <value>Laatst bijgewerkt</value>
+  </data>
+  <data name="Latest registry update" xml:space="preserve">
+    <value>Laatste registerupdate</value>
   </data>
   <data name="License" xml:space="preserve">
     <value>Licentie</value>
@@ -75,8 +87,20 @@
   <data name="Package Manager" xml:space="preserve">
     <value>Pakketbeheerder</value>
   </data>
+  <data name="Package details" xml:space="preserve">
+    <value>Pakketdetails</value>
+  </data>
+  <data name="Package information" xml:space="preserve">
+    <value>Pakketinformatie</value>
+  </data>
+  <data name="Package metadata" xml:space="preserve">
+    <value>Pakketmetagegevens</value>
+  </data>
   <data name="Packages" xml:space="preserve">
     <value>Pakketten</value>
+  </data>
+  <data name="Packages on this registry that declare a dependency on this package. This is not a list of projects or download counts." xml:space="preserve">
+    <value>Pakketten in dit register die een afhankelijkheid van dit pakket declareren. Dit is geen lijst met projecten of downloadaantallen.</value>
   </data>
   <data name="Prerelease" xml:space="preserve">
     <value>Pre-release</value>
@@ -90,6 +114,9 @@
   <data name="Published" xml:space="preserve">
     <value>Gepubliceerd</value>
   </data>
+  <data name="Registry" xml:space="preserve">
+    <value>Register</value>
+  </data>
   <data name="Release notes" xml:space="preserve">
     <value>Release notes</value>
   </data>
@@ -99,8 +126,14 @@
   <data name="Tags" xml:space="preserve">
     <value>Tags</value>
   </data>
+  <data name="The install command selects this registry explicitly." xml:space="preserve">
+    <value>Het installatiecommando selecteert expliciet dit register.</value>
+  </data>
   <data name="Used by" xml:space="preserve">
     <value>Gebruikt door</value>
+  </data>
+  <data name="Version pages" xml:space="preserve">
+    <value>Versiepagina&apos;s</value>
   </data>
   <data name="Versions" xml:space="preserve">
     <value>Versies</value>

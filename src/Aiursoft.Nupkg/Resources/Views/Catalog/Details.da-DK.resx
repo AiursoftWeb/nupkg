@@ -18,8 +18,14 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Authors" xml:space="preserve">
+      <data name="Added to registry" xml:space="preserve">
+    <value>Tilføjet til registreringskontoret</value>
+  </data>
+  <data name="Authors" xml:space="preserve">
     <value>Forfattere</value>
+  </data>
+  <data name="Available versions" xml:space="preserve">
+    <value>Tilgængelige versioner</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>Kopiér</value>
@@ -29,6 +35,9 @@
   </data>
   <data name="Dependent package pages" xml:space="preserve">
     <value>Sider for afhængige pakker</value>
+  </data>
+  <data name="Dependent packages" xml:space="preserve">
+    <value>Afhængige pakker</value>
   </data>
   <data name="Download package" xml:space="preserve">
     <value>Download pakke</value>
@@ -47,6 +56,9 @@
   </data>
   <data name="Last updated" xml:space="preserve">
     <value>Senest opdateret</value>
+  </data>
+  <data name="Latest registry update" xml:space="preserve">
+    <value>Seneste opdatering af register</value>
   </data>
   <data name="License" xml:space="preserve">
     <value>Licens</value>
@@ -75,8 +87,20 @@
   <data name="Package Manager" xml:space="preserve">
     <value>Pakkehåndtering</value>
   </data>
+  <data name="Package details" xml:space="preserve">
+    <value>Pakkeoplysninger</value>
+  </data>
+  <data name="Package information" xml:space="preserve">
+    <value>Pakkeinformation</value>
+  </data>
+  <data name="Package metadata" xml:space="preserve">
+    <value>Pakke-metadata</value>
+  </data>
   <data name="Packages" xml:space="preserve">
     <value>Pakker</value>
+  </data>
+  <data name="Packages on this registry that declare a dependency on this package. This is not a list of projects or download counts." xml:space="preserve">
+    <value>Pakker i dette register, der angiver en afhængighed af denne pakke. Dette er ikke en liste over projekter eller downloadtall.</value>
   </data>
   <data name="Prerelease" xml:space="preserve">
     <value>Prerelease</value>
@@ -90,6 +114,9 @@
   <data name="Published" xml:space="preserve">
     <value>Udgivet</value>
   </data>
+  <data name="Registry" xml:space="preserve">
+    <value>Register</value>
+  </data>
   <data name="Release notes" xml:space="preserve">
     <value>Udgivelsesnoter</value>
   </data>
@@ -99,8 +126,14 @@
   <data name="Tags" xml:space="preserve">
     <value>Tags</value>
   </data>
+  <data name="The install command selects this registry explicitly." xml:space="preserve">
+    <value>Installkommandoen vælger dette register eksplicit.</value>
+  </data>
   <data name="Used by" xml:space="preserve">
     <value>Bruges af</value>
+  </data>
+  <data name="Version pages" xml:space="preserve">
+    <value>Versionsider</value>
   </data>
   <data name="Versions" xml:space="preserve">
     <value>Versioner</value>

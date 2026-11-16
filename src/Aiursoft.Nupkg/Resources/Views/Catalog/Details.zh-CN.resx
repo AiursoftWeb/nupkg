@@ -18,8 +18,14 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Authors" xml:space="preserve">
+      <data name="Added to registry" xml:space="preserve">
+    <value>已添加到注册表</value>
+  </data>
+  <data name="Authors" xml:space="preserve">
     <value>作者</value>
+  </data>
+  <data name="Available versions" xml:space="preserve">
+    <value>可用版本</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>复制</value>
@@ -29,6 +35,9 @@
   </data>
   <data name="Dependent package pages" xml:space="preserve">
     <value>依赖包页面</value>
+  </data>
+  <data name="Dependent packages" xml:space="preserve">
+    <value>依赖此包的包</value>
   </data>
   <data name="Download package" xml:space="preserve">
     <value>下载软件包</value>
@@ -47,6 +56,9 @@
   </data>
   <data name="Last updated" xml:space="preserve">
     <value>最后更新时间</value>
+  </data>
+  <data name="Latest registry update" xml:space="preserve">
+    <value>最新注册表更新</value>
   </data>
   <data name="License" xml:space="preserve">
     <value>许可证</value>
@@ -75,8 +87,20 @@
   <data name="Package Manager" xml:space="preserve">
     <value>包管理器</value>
   </data>
+  <data name="Package details" xml:space="preserve">
+    <value>包详情</value>
+  </data>
+  <data name="Package information" xml:space="preserve">
+    <value>包信息</value>
+  </data>
+  <data name="Package metadata" xml:space="preserve">
+    <value>软件包元数据</value>
+  </data>
   <data name="Packages" xml:space="preserve">
     <value>软件包</value>
+  </data>
+  <data name="Packages on this registry that declare a dependency on this package. This is not a list of projects or download counts." xml:space="preserve">
+    <value>此注册表中声明依赖于该包的包。这不是项目列表或下载量统计。</value>
   </data>
   <data name="Prerelease" xml:space="preserve">
     <value>预发布</value>
@@ -90,6 +114,9 @@
   <data name="Published" xml:space="preserve">
     <value>发布时间</value>
   </data>
+  <data name="Registry" xml:space="preserve">
+    <value>注册表</value>
+  </data>
   <data name="Release notes" xml:space="preserve">
     <value>发行说明</value>
   </data>
@@ -99,8 +126,14 @@
   <data name="Tags" xml:space="preserve">
     <value>标签</value>
   </data>
+  <data name="The install command selects this registry explicitly." xml:space="preserve">
+    <value>安装命令会明确选择此注册表。</value>
+  </data>
   <data name="Used by" xml:space="preserve">
     <value>使用者</value>
+  </data>
+  <data name="Version pages" xml:space="preserve">
+    <value>版本页</value>
   </data>
   <data name="Versions" xml:space="preserve">
     <value>版本</value>

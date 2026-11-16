@@ -45,6 +45,9 @@
   <data name="Package pages" xml:space="preserve">
     <value>套件頁面</value>
   </data>
+  <data name="Package registry" xml:space="preserve">
+    <value>套件註冊表</value>
+  </data>
   <data name="Package type" xml:space="preserve">
     <value>套件類型</value>
   </data>

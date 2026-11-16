@@ -18,8 +18,14 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Authors" xml:space="preserve">
+      <data name="Added to registry" xml:space="preserve">
+    <value>पंजीकरण में जोड़ा गया</value>
+  </data>
+  <data name="Authors" xml:space="preserve">
     <value>लेखक</value>
+  </data>
+  <data name="Available versions" xml:space="preserve">
+    <value>उपलब्ध संस्करण</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>कॉपी करें</value>
@@ -29,6 +35,9 @@
   </data>
   <data name="Dependent package pages" xml:space="preserve">
     <value>निर्भर पैकेज पेज</value>
+  </data>
+  <data name="Dependent packages" xml:space="preserve">
+    <value>निर्भर पैकेज</value>
   </data>
   <data name="Download package" xml:space="preserve">
     <value>पैकेज डाउनलोड करें</value>
@@ -47,6 +56,9 @@
   </data>
   <data name="Last updated" xml:space="preserve">
     <value>अंतिम अपडेट</value>
+  </data>
+  <data name="Latest registry update" xml:space="preserve">
+    <value>सबसे नवीन रजिस्ट्री अपडेट</value>
   </data>
   <data name="License" xml:space="preserve">
     <value>लाइसेंस</value>
@@ -75,8 +87,20 @@
   <data name="Package Manager" xml:space="preserve">
     <value>पैकेज मैनेजर</value>
   </data>
+  <data name="Package details" xml:space="preserve">
+    <value>पैकेज विवरण</value>
+  </data>
+  <data name="Package information" xml:space="preserve">
+    <value>पैकेज जानकारी</value>
+  </data>
+  <data name="Package metadata" xml:space="preserve">
+    <value>पैकेज मेटाडेटा</value>
+  </data>
   <data name="Packages" xml:space="preserve">
     <value>पैकेज</value>
+  </data>
+  <data name="Packages on this registry that declare a dependency on this package. This is not a list of projects or download counts." xml:space="preserve">
+    <value>इस रजिस्ट्री पर वे पैकेज जो इस पैकेज पर निर्भरता की घोषणा करते हैं। यह प्रोजेक्ट्स या डाउनलोड संख्याओं की सूची नहीं है।</value>
   </data>
   <data name="Prerelease" xml:space="preserve">
     <value>पूर्व-रिलीज़</value>
@@ -90,6 +114,9 @@
   <data name="Published" xml:space="preserve">
     <value>प्रकाशित</value>
   </data>
+  <data name="Registry" xml:space="preserve">
+    <value>पंजीकरण</value>
+  </data>
   <data name="Release notes" xml:space="preserve">
     <value>रिलीज़ नोट्स</value>
   </data>
@@ -99,8 +126,14 @@
   <data name="Tags" xml:space="preserve">
     <value>टैग</value>
   </data>
+  <data name="The install command selects this registry explicitly." xml:space="preserve">
+    <value>इंस्टॉल कमांड इस रजिस्ट्री को स्पष्ट रूप से चुनती है।</value>
+  </data>
   <data name="Used by" xml:space="preserve">
     <value>उपयोग करने वाले</value>
+  </data>
+  <data name="Version pages" xml:space="preserve">
+    <value>संस्करण पृष्ठ</value>
   </data>
   <data name="Versions" xml:space="preserve">
     <value>संस्करण</value>

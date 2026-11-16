@@ -18,8 +18,14 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Authors" xml:space="preserve">
+      <data name="Added to registry" xml:space="preserve">
+    <value>Kayıt defterine eklendi</value>
+  </data>
+  <data name="Authors" xml:space="preserve">
     <value>Yazarlar</value>
+  </data>
+  <data name="Available versions" xml:space="preserve">
+    <value>Mevcut sürümler</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>Kopyala</value>
@@ -29,6 +35,9 @@
   </data>
   <data name="Dependent package pages" xml:space="preserve">
     <value>Bağımlı paket sayfaları</value>
+  </data>
+  <data name="Dependent packages" xml:space="preserve">
+    <value>Bağımlı paketler</value>
   </data>
   <data name="Download package" xml:space="preserve">
     <value>Paketi indir</value>
@@ -47,6 +56,9 @@
   </data>
   <data name="Last updated" xml:space="preserve">
     <value>Son güncelleme</value>
+  </data>
+  <data name="Latest registry update" xml:space="preserve">
+    <value>Son kayıt defteri güncellemesi</value>
   </data>
   <data name="License" xml:space="preserve">
     <value>Lisans</value>
@@ -75,8 +87,20 @@
   <data name="Package Manager" xml:space="preserve">
     <value>Paket Yöneticisi</value>
   </data>
+  <data name="Package details" xml:space="preserve">
+    <value>Paket ayrıntıları</value>
+  </data>
+  <data name="Package information" xml:space="preserve">
+    <value>Paket bilgileri</value>
+  </data>
+  <data name="Package metadata" xml:space="preserve">
+    <value>Paket meta verileri</value>
+  </data>
   <data name="Packages" xml:space="preserve">
     <value>Paketler</value>
+  </data>
+  <data name="Packages on this registry that declare a dependency on this package. This is not a list of projects or download counts." xml:space="preserve">
+    <value>Bu kayıt defterinde bu pakete bağımlılık bildiren paketler. Bu, bir proje veya indirme sayısı listesi değildir.</value>
   </data>
   <data name="Prerelease" xml:space="preserve">
     <value>Ön Sürüm</value>
@@ -90,6 +114,9 @@
   <data name="Published" xml:space="preserve">
     <value>Yayınlanma tarihi</value>
   </data>
+  <data name="Registry" xml:space="preserve">
+    <value>Kayıt Defteri</value>
+  </data>
   <data name="Release notes" xml:space="preserve">
     <value>Sürüm notları</value>
   </data>
@@ -99,8 +126,14 @@
   <data name="Tags" xml:space="preserve">
     <value>Etiketler</value>
   </data>
+  <data name="The install command selects this registry explicitly." xml:space="preserve">
+    <value>Yükleme komutu bu kayıt defterini açıkça seçer.</value>
+  </data>
   <data name="Used by" xml:space="preserve">
     <value>Kullanıcılar</value>
+  </data>
+  <data name="Version pages" xml:space="preserve">
+    <value>Sürüm sayfaları</value>
   </data>
   <data name="Versions" xml:space="preserve">
     <value>Sürümler</value>

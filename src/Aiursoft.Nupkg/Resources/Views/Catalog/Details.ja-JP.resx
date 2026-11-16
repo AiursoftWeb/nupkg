@@ -18,8 +18,14 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-      <data name="Authors" xml:space="preserve">
+      <data name="Added to registry" xml:space="preserve">
+    <value>レジストリに追加された日</value>
+  </data>
+  <data name="Authors" xml:space="preserve">
     <value>作成者</value>
+  </data>
+  <data name="Available versions" xml:space="preserve">
+    <value>利用可能なバージョン</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>コピー</value>
@@ -29,6 +35,9 @@
   </data>
   <data name="Dependent package pages" xml:space="preserve">
     <value>依存パッケージのページ</value>
+  </data>
+  <data name="Dependent packages" xml:space="preserve">
+    <value>依存パッケージ</value>
   </data>
   <data name="Download package" xml:space="preserve">
     <value>パッケージをダウンロード</value>
@@ -47,6 +56,9 @@
   </data>
   <data name="Last updated" xml:space="preserve">
     <value>最終更新日</value>
+  </data>
+  <data name="Latest registry update" xml:space="preserve">
+    <value>レジストリの最終更新</value>
   </data>
   <data name="License" xml:space="preserve">
     <value>ライセンス</value>
@@ -75,8 +87,20 @@
   <data name="Package Manager" xml:space="preserve">
     <value>Package Manager</value>
   </data>
+  <data name="Package details" xml:space="preserve">
+    <value>パッケージの詳細</value>
+  </data>
+  <data name="Package information" xml:space="preserve">
+    <value>パッケージ情報</value>
+  </data>
+  <data name="Package metadata" xml:space="preserve">
+    <value>パッケージメタデータ</value>
+  </data>
   <data name="Packages" xml:space="preserve">
     <value>パッケージ</value>
+  </data>
+  <data name="Packages on this registry that declare a dependency on this package. This is not a list of projects or download counts." xml:space="preserve">
+    <value>このレジストリ上で、このパッケージへの依存関係が宣言されているパッケージの一覧です。これはプロジェクトの一覧やダウンロード数ではありません。</value>
   </data>
   <data name="Prerelease" xml:space="preserve">
     <value>プレリリース</value>
@@ -90,6 +114,9 @@
   <data name="Published" xml:space="preserve">
     <value>公開日</value>
   </data>
+  <data name="Registry" xml:space="preserve">
+    <value>レジストリ</value>
+  </data>
   <data name="Release notes" xml:space="preserve">
     <value>リリースノート</value>
   </data>
@@ -99,8 +126,14 @@
   <data name="Tags" xml:space="preserve">
     <value>タグ</value>
   </data>
+  <data name="The install command selects this registry explicitly." xml:space="preserve">
+    <value>インストールコマンドは、このレジストリを明示的に選択します。</value>
+  </data>
   <data name="Used by" xml:space="preserve">
     <value>使用元</value>
+  </data>
+  <data name="Version pages" xml:space="preserve">
+    <value>バージョンページ</value>
   </data>
   <data name="Versions" xml:space="preserve">
     <value>バージョン</value>
