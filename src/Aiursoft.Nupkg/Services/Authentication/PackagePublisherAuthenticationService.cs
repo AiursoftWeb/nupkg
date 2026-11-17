@@ -14,6 +14,8 @@ public class PackagePublisherAuthenticationService(
     IUserClaimsPrincipalFactory<User> claimsFactory,
     LegacyAuthentication legacyAuthentication)
 {
+    private readonly HashSet<int> _usedKeys = [];
+
     public static string ComputeSha256Hex(string rawKey) =>
         Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(rawKey))).ToLowerInvariant();
 
@@ -22,14 +24,13 @@ public class PackagePublisherAuthenticationService(
         if (!string.IsNullOrEmpty(rawKey))
         {
             var hash = ComputeSha256Hex(rawKey);
-            var key = await db.UserApiKeys.Include(k => k.User)
+            var key = await db.UserApiKeys.AsNoTracking().Include(k => k.User)
                 .SingleOrDefaultAsync(k => k.KeyHash == hash, cancellationToken);
             if (key != null)
             {
                 if (key.IsExpired || key.User == null) return null;
-                key.LastUsedAt = DateTime.UtcNow;
-                await db.SaveChangesAsync(cancellationToken);
-                return await ForUserAsync(key.User);
+                if (_usedKeys.Add(key.Id) && !await db.RecordUseAsync(key.Id, cancellationToken)) return null;
+                return (await ForUserAsync(key.User)) with { ApiKeyId = key.Id };
             }
         }
 

@@ -21,7 +21,7 @@ public class MigrationTests
             .UseSqlite("DataSource=:memory:").Options);
         await context.Database.OpenConnectionAsync();
         var migrator = context.GetService<IMigrator>();
-        var previous = context.Database.GetMigrations().Reverse().Skip(1).First();
+        var previous = context.Database.GetMigrations().TakeWhile(m => !m.EndsWith("_LocalPackageAuthority", StringComparison.Ordinal)).Last();
         await migrator.MigrateAsync(previous);
         for (var id = 1; id <= 2; id++)
         {

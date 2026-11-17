@@ -16,7 +16,8 @@ namespace Aiursoft.Nupkg.Core.Indexing
         ISearchIndexer search,
         SystemTime time,
         IOptionsSnapshot<NupkgOptions> options,
-        ILogger<PackageIndexingService> logger)
+        ILogger<PackageIndexingService> logger,
+        NupkgDbContext db)
         : IPackageIndexingService
     {
         private readonly PackageDatabase _packages = packages ?? throw new ArgumentNullException(nameof(packages));
@@ -164,6 +165,9 @@ namespace Aiursoft.Nupkg.Core.Indexing
                 "Successfully persisted package {Id} {Version} metadata to database. Indexing in search...",
                 package.Id,
                 package.NormalizedVersionString);
+
+            if (publisher.MirrorSource == null)
+                await db.RecordPublicationAsync(publisher.ApiKeyId, package.Id, package.NormalizedVersionString, cancellationToken);
 
             await _search.IndexAsync(package, cancellationToken);
 
