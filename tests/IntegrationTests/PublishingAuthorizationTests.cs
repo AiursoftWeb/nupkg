@@ -185,6 +185,28 @@ public class PublishingAuthorizationTests : TestBase
         Assert.AreEqual(HttpStatusCode.Forbidden, await SendAsync(HttpMethod.Put, "/api/v2/package", other.Key, PackageBytes(id, "1.0.2")));
     }
 
+    [TestMethod]
+    public async Task KeyStatisticsCountNewVersionsAndExcludeDuplicatesAndRejectedUploads()
+    {
+        var owner = await CreatePublisherAsync();
+        var other = await CreatePublisherAsync();
+        var id = NewId();
+        Assert.AreEqual(HttpStatusCode.Created, await SendAsync(HttpMethod.Put, "/api/v2/package", owner.Key, PackageBytes(id)));
+        Assert.AreEqual(HttpStatusCode.Conflict, await SendAsync(HttpMethod.Put, "/api/v2/package", owner.Key, PackageBytes(id)));
+        Assert.AreEqual(HttpStatusCode.BadRequest, await SendAsync(HttpMethod.Put, "/api/v2/package", owner.Key, [1, 2, 3]));
+        Assert.AreEqual(HttpStatusCode.Forbidden, await SendAsync(HttpMethod.Put, "/api/v2/package", other.Key, PackageBytes(id, "1.0.1")));
+        Assert.AreEqual(HttpStatusCode.Created, await SendAsync(HttpMethod.Put, "/api/v2/package", owner.Key, PackageBytes(id, "1.0.1")));
+        using var scope = Server!.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<NupkgDbContext>();
+        var key = await db.UserApiKeys.AsNoTracking().SingleAsync(k => k.Id == owner.KeyId);
+        Assert.AreEqual(4L, key.TotalUses);
+        Assert.AreEqual(2L, key.PublishedPackagesCount);
+        Assert.AreEqual(id, key.LastPublishedPackage);
+        Assert.AreEqual("1.0.1", key.LastPublishedVersion);
+        Assert.IsNotNull(key.LastPublishedAt);
+        Assert.AreEqual(0L, (await db.UserApiKeys.AsNoTracking().SingleAsync(k => k.Id == other.KeyId)).PublishedPackagesCount);
+    }
+
     private sealed record Publisher(string UserId, string Email, string Key, int KeyId);
 
     private async Task<Publisher> CreatePublisherAsync(bool publish = true, bool manage = false)

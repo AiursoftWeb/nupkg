@@ -391,6 +391,17 @@ namespace Aiursoft.Nupkg.MySql.Migrations
                         .HasMaxLength(8)
                         .HasColumnType("varchar(8)");
 
+                    b.Property<DateTime?>("LastPublishedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("LastPublishedPackage")
+                        .HasMaxLength(214)
+                        .HasColumnType("varchar(214)");
+
+                    b.Property<string>("LastPublishedVersion")
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
+
                     b.Property<DateTime?>("LastUsedAt")
                         .HasColumnType("datetime(6)");
 
@@ -398,6 +409,12 @@ namespace Aiursoft.Nupkg.MySql.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
+
+                    b.Property<long>("PublishedPackagesCount")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TotalUses")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("UserId")
                         .IsRequired()
