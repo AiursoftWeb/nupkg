@@ -52,17 +52,16 @@ Installation starts after three seconds; press Ctrl+C to cancel. Then open `http
 Requires .NET 10 and Node.js.
 
 ```sh
-cd src/Aiursoft.Nupkg/wwwroot
-npm ci
-cd ..
-dotnet run
+dotnet run --project src/Aiursoft.Nupkg/Aiursoft.Nupkg.csproj -- --urls http://localhost:5000
 ```
+
+The .NET build automatically runs `npm ci` and `npm run build` to prepare the frontend assets. Node.js and npm must be available when building from source.
 
 The default local administrator is `admin@default.com` with password `Admin@123456!`. Configure authentication and roles before exposing a deployment.
 
 ## Run in Microsoft Visual Studio
 
-1. Prepare the frontend assets as described above.
+1. Install the requirements described above; the build prepares the frontend assets.
 2. Open `Aiursoft.Nupkg.sln`, select `Aiursoft.Nupkg` as the startup project, and press `F5`.
 
 ## Run in Docker
