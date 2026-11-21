@@ -164,7 +164,6 @@ public class Startup : IWebStartup
             ui.UseExceptionHandler("/Error/Code500");
             ui.UseStatusCodePagesWithReExecute("/Error/Code{0}");
         });
-        app.UseUIStack();
         app.UseStaticFiles();
         app.UseRouting();
         app.UseCors(ConfigureNupkgOptions.CorsPolicy);
