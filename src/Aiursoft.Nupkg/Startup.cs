@@ -20,7 +20,6 @@ using Aiursoft.Nupkg.MySql;
 using Aiursoft.Nupkg.Services.Authentication;
 using Aiursoft.Nupkg.Services.BackgroundJobs;
 using Aiursoft.Nupkg.Sqlite;
-using Aiursoft.UiStack;
 using Aiursoft.UiStack.Layout;
 using Aiursoft.UiStack.Navigation;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -164,7 +163,6 @@ public class Startup : IWebStartup
             ui.UseExceptionHandler("/Error/Code500");
             ui.UseStatusCodePagesWithReExecute("/Error/Code{0}");
         });
-        app.UseUIStack();
         app.UseStaticFiles();
         app.UseRouting();
         app.UseCors(ConfigureNupkgOptions.CorsPolicy);
