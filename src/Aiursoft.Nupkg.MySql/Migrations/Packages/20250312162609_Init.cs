@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Aiursoft.Nupkg.MySql.Migrations.Packages
 {
     /// <inheritdoc />
+    [ExcludeFromCodeCoverage]
     public partial class Init : Migration
     {
         /// <inheritdoc />
