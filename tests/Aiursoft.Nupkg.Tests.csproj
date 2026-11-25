@@ -25,4 +25,8 @@
     <Compile Remove="Aiursoft.Nupkg.Core.Tests/**/*.cs" />
     <Compile Remove="Aiursoft.Nupkg.Protocol.Tests/**/*.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="../src/Aiursoft.Nupkg/wwwroot/scripts/uploader.js" TargetPath="wwwroot/scripts/uploader.js" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../src/Aiursoft.Nupkg/wwwroot/styles/uploader.css" TargetPath="wwwroot/styles/uploader.css" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>
