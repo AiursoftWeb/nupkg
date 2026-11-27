@@ -209,6 +209,34 @@ public class PublishingAuthorizationTests : TestBase
 
     private sealed record Publisher(string UserId, string Email, string Key, int KeyId);
 
+    [TestMethod]
+    public async Task UnlistingLatestVersionFallsBackInSearchAndRelistingRestoresIt()
+    {
+        var publisher = await CreatePublisherAsync();
+        var id = NewId();
+        var latest = PackageBytes(id, "2.0.0");
+        var releaseUrl = $"/api/v2/package/{id}/2.0.0";
+
+        async Task<string?> SearchVersionAsync()
+        {
+            using var results = System.Text.Json.JsonDocument.Parse(await Http.GetStringAsync($"/v3/search?q={id}&semVerLevel=2.0.0"));
+            var match = results.RootElement.GetProperty("data").EnumerateArray().Single();
+            Assert.AreEqual(id, match.GetProperty("id").GetString());
+            return match.GetProperty("version").GetString();
+        }
+
+        Assert.AreEqual(HttpStatusCode.Created, await SendAsync(HttpMethod.Put, "/api/v2/package", publisher.Key, PackageBytes(id)));
+        Assert.AreEqual(HttpStatusCode.Created, await SendAsync(HttpMethod.Put, "/api/v2/package", publisher.Key, latest));
+        Assert.AreEqual("2.0.0", await SearchVersionAsync());
+
+        Assert.AreEqual(HttpStatusCode.NoContent, await SendAsync(HttpMethod.Delete, releaseUrl, publisher.Key));
+        Assert.AreEqual("1.0.0", await SearchVersionAsync());
+        CollectionAssert.AreEqual(latest, await Http.GetByteArrayAsync($"/v3/package/{id}/2.0.0/{id}.2.0.0.nupkg"));
+
+        Assert.AreEqual(HttpStatusCode.OK, await SendAsync(HttpMethod.Post, releaseUrl, publisher.Key));
+        Assert.AreEqual("2.0.0", await SearchVersionAsync());
+    }
+
     private async Task<Publisher> CreatePublisherAsync(bool publish = true, bool manage = false)
     {
         using var scope = Server!.Services.CreateScope();
