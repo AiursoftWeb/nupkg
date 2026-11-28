@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Net;
 using System.Text.RegularExpressions;
 using Aiursoft.Nupkg.Entities;
@@ -82,7 +83,7 @@ public class UserApiKeyTests : TestBase
         Assert.AreEqual(HttpStatusCode.OK, (await PostForm(edit, new Dictionary<string, string>
         {
             ["Name"] = "Production release",
-            ["ExpiresAt"] = DateTime.UtcNow.AddDays(36502).ToString("yyyy-MM-ddTHH:mm:ssZ")
+            ["ExpiresAt"] = DateTime.UtcNow.AddDays(36502).ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture)
         })).StatusCode);
 
         // Confirm valid expiration was preserved after rejected edits.
@@ -122,7 +123,7 @@ public class UserApiKeyTests : TestBase
             Assert.IsNull(await scope.ServiceProvider.GetRequiredService<PackagePublisherAuthenticationService>().AuthenticateAsync(raw, default));
             Assert.AreEqual(0L, (await scope.ServiceProvider.GetRequiredService<NupkgDbContext>().UserApiKeys.SingleAsync(k => k.Id == id)).TotalUses);
         }
-        var renewedUntil = DateTime.UtcNow.AddDays(36500).ToString("yyyy-MM-ddTHH:mm:ssZ");
+        var renewedUntil = DateTime.UtcNow.AddDays(36500).ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture);
         var renewResponse = await PostForm(edit, new Dictionary<string, string>
         {
             ["Name"] = "Renewed key", ["ExpiresAt"] = renewedUntil
