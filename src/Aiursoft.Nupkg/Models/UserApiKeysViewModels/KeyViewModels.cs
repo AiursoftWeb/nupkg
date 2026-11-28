@@ -11,11 +11,13 @@ public class IndexViewModel : UiStackLayoutViewModel
 
 public class CreateViewModel : UiStackLayoutViewModel
 {
+    public const int MaxExpirationDays = 36500;
+
     [Required, MaxLength(100)]
-    [Display(Name = "Name")]
+    [Display(Name = "Friendly Name")]
     public string Name { get; set; } = string.Empty;
 
-    [Range(0, 36500)]
+    [Range(1, MaxExpirationDays)]
     [Display(Name = "Expiration")]
     public int ExpirationDays { get; set; } = 365;
 }
@@ -35,10 +37,17 @@ public class DeleteViewModel : UiStackLayoutViewModel
 
 public class EditViewModel : UiStackLayoutViewModel
 {
+    public int Id { get; set; }
+    public string KeyPrefix { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; }
+    public DateTime? LastUsedAt { get; set; }
+    public long TotalUses { get; set; }
+
     [Required, MaxLength(100)]
-    [Display(Name = "Name")]
+    [Display(Name = "Friendly Name")]
     public string Name { get; set; } = string.Empty;
 
-    [Display(Name = "Expiration time (UTC)")]
+    [Required]
+    [Display(Name = "Expiration Time")]
     public DateTime? ExpiresAt { get; set; }
 }

@@ -13,10 +13,22 @@ public class UserApiKeyTests : TestBase
     public async Task EditingPreservesCredentialsAndStatisticsAndEnforcesOwnershipAndCsrf()
     {
         await LoginAsAdmin();
+
+        // Reject out-of-range expiration days (0 and > 100 years).
+        Assert.AreEqual(HttpStatusCode.OK, (await PostForm("/UserApiKeys/Create", new Dictionary<string, string>
+        {
+            ["Name"] = "Invalid never key", ["ExpirationDays"] = "0"
+        })).StatusCode);
+        Assert.AreEqual(HttpStatusCode.OK, (await PostForm("/UserApiKeys/Create", new Dictionary<string, string>
+        {
+            ["Name"] = "Invalid too long key", ["ExpirationDays"] = "36501"
+        })).StatusCode);
+
         var created = await PostForm("/UserApiKeys/Create", new Dictionary<string, string>
         {
             ["Name"] = "Release pipeline", ["ExpirationDays"] = "30"
         });
+        Assert.AreEqual(HttpStatusCode.Found, created.StatusCode);
         var location = created.Headers.Location!.ToString();
         var html = await Http.GetStringAsync(location);
         var raw = Regex.Match(html, "id=\"new-api-key\"[^>]*>([^<]+)</code>").Groups[1].Value;
@@ -32,7 +44,7 @@ public class UserApiKeyTests : TestBase
         var edit = $"/UserApiKeys/Edit/{id}";
         var form = new Dictionary<string, string>
         {
-            ["Name"] = " Production release ", ["ExpiresAt"] = "2035-06-01T12:30:45",
+            ["Name"] = " Production release ", ["ExpiresAt"] = "2035-06-01T12:30:45Z",
             ["KeyHash"] = "forged", ["TotalUses"] = "9000", ["PublishedPackagesCount"] = "9000"
         };
         Assert.AreEqual(HttpStatusCode.BadRequest, (await PostForm(edit, new(form), includeToken: false)).StatusCode);
@@ -42,7 +54,7 @@ public class UserApiKeyTests : TestBase
             var db = scope.ServiceProvider.GetRequiredService<NupkgDbContext>();
             var key = await db.UserApiKeys.AsNoTracking().SingleAsync(k => k.Id == id);
             Assert.AreEqual("Production release", key.Name);
-            Assert.AreEqual(new DateTime(2035, 6, 1, 12, 30, 45), key.ExpiresAt);
+            Assert.AreEqual(new DateTime(2035, 6, 1, 12, 30, 45, DateTimeKind.Utc), key.ExpiresAt);
             Assert.AreEqual(PackagePublisherAuthenticationService.ComputeSha256Hex(raw), key.KeyHash);
             Assert.AreEqual(1L, key.TotalUses);
             Assert.AreEqual(1L, key.PublishedPackagesCount);
@@ -57,17 +69,28 @@ public class UserApiKeyTests : TestBase
         Assert.DoesNotContain(raw, index);
         Assert.DoesNotContain(PackagePublisherAuthenticationService.ComputeSha256Hex(raw), index);
         Assert.Contains("API key updated.", index);
+
+        // Reject invalid name/expiration, blank expiration, and expiration beyond 100 years.
         Assert.AreEqual(HttpStatusCode.OK, (await PostForm(edit, new Dictionary<string, string>
         {
             ["Name"] = "   ", ["ExpiresAt"] = "invalid"
         })).StatusCode);
-        Assert.AreEqual(HttpStatusCode.Found, (await PostForm(edit, new Dictionary<string, string>
+        Assert.AreEqual(HttpStatusCode.OK, (await PostForm(edit, new Dictionary<string, string>
         {
             ["Name"] = "Production release", ["ExpiresAt"] = ""
         })).StatusCode);
+        Assert.AreEqual(HttpStatusCode.OK, (await PostForm(edit, new Dictionary<string, string>
+        {
+            ["Name"] = "Production release",
+            ["ExpiresAt"] = DateTime.UtcNow.AddDays(36502).ToString("yyyy-MM-ddTHH:mm:ssZ")
+        })).StatusCode);
+
+        // Confirm valid expiration was preserved after rejected edits.
         using (var scope = Server!.Services.CreateScope())
-            Assert.IsNull((await scope.ServiceProvider.GetRequiredService<NupkgDbContext>()
-                .UserApiKeys.SingleAsync(k => k.Id == id)).ExpiresAt);
+            Assert.AreEqual(new DateTime(2035, 6, 1, 12, 30, 45, DateTimeKind.Utc),
+                (await scope.ServiceProvider.GetRequiredService<NupkgDbContext>()
+                    .UserApiKeys.SingleAsync(k => k.Id == id)).ExpiresAt);
+
         await RegisterAndLoginAsync();
         Assert.DoesNotContain("Production release", await Http.GetStringAsync("/UserApiKeys/Index"));
         Assert.AreEqual(HttpStatusCode.NotFound, (await Http.GetAsync(edit)).StatusCode);
@@ -80,8 +103,9 @@ public class UserApiKeyTests : TestBase
         await LoginAsAdmin();
         var created = await PostForm("/UserApiKeys/Create", new Dictionary<string, string>
         {
-            ["Name"] = "Expiring key", ["ExpirationDays"] = "0"
+            ["Name"] = "Expiring key", ["ExpirationDays"] = "36500"
         });
+        Assert.AreEqual(HttpStatusCode.Found, created.StatusCode);
         var html = await Http.GetStringAsync(created.Headers.Location!.ToString());
         var raw = Regex.Match(html, "id=\"new-api-key\"[^>]*>([^<]+)</code>").Groups[1].Value;
         int id;
@@ -89,13 +113,21 @@ public class UserApiKeyTests : TestBase
             id = (await scope.ServiceProvider.GetRequiredService<NupkgDbContext>()
                 .UserApiKeys.SingleAsync(k => k.Name == "Expiring key")).Id;
         var edit = $"/UserApiKeys/Edit/{id}";
-        await PostForm(edit, new Dictionary<string, string> { ["Name"] = "Expired key", ["ExpiresAt"] = "2020-01-01T00:00:00" });
+        await PostForm(edit, new Dictionary<string, string>
+        {
+            ["Name"] = "Expired key", ["ExpiresAt"] = "2020-01-01T00:00:00"
+        });
         using (var scope = Server!.Services.CreateScope())
         {
             Assert.IsNull(await scope.ServiceProvider.GetRequiredService<PackagePublisherAuthenticationService>().AuthenticateAsync(raw, default));
             Assert.AreEqual(0L, (await scope.ServiceProvider.GetRequiredService<NupkgDbContext>().UserApiKeys.SingleAsync(k => k.Id == id)).TotalUses);
         }
-        await PostForm(edit, new Dictionary<string, string> { ["Name"] = "Renewed key", ["ExpiresAt"] = "" });
+        var renewedUntil = DateTime.UtcNow.AddDays(36500).ToString("yyyy-MM-ddTHH:mm:ssZ");
+        var renewResponse = await PostForm(edit, new Dictionary<string, string>
+        {
+            ["Name"] = "Renewed key", ["ExpiresAt"] = renewedUntil
+        });
+        Assert.AreEqual(HttpStatusCode.Found, renewResponse.StatusCode);
         using (var scope = Server!.Services.CreateScope())
             Assert.IsNotNull(await scope.ServiceProvider.GetRequiredService<PackagePublisherAuthenticationService>().AuthenticateAsync(raw, default));
         await PostForm($"/UserApiKeys/Delete/{id}", []);

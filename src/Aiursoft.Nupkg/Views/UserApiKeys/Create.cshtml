@@ -1,10 +1,51 @@
 @model Aiursoft.Nupkg.Models.UserApiKeysViewModels.CreateViewModel
-<h1 class="h3">@Localizer["New API key"]</h1>
-<div class="row"><div class="col-lg-6"><div class="card"><div class="card-body">
-    <form asp-action="Create" method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="mb-3"><label asp-for="Name" class="form-label"></label><input asp-for="Name" class="form-control" placeholder="@Localizer["e.g. CI pipeline"]" autofocus /><span asp-validation-for="Name" class="text-danger"></span></div>
-        <div class="mb-3"><label asp-for="ExpirationDays" class="form-label"></label><select asp-for="ExpirationDays" class="form-select"><option value="7">@Localizer["7 days"]</option><option value="30">@Localizer["30 days"]</option><option value="365">@Localizer["1 year"]</option><option value="3650">@Localizer["10 years"]</option><option value="0">@Localizer["Never"]</option></select><span asp-validation-for="ExpirationDays" class="text-danger"></span></div>
-        <div class="d-flex gap-2"><button type="submit" class="btn btn-primary">@Localizer["Generate key"]</button><a asp-action="Index" class="btn btn-outline-secondary">@Localizer["Cancel"]</a></div>
-    </form>
-</div></div></div></div>
+
+<div class="container-fluid p-0">
+    <div class="row mb-3">
+        <div class="col-auto">
+            <h1 class="h3 mb-1">@Localizer["Create New API Key"]</h1>
+            <p class="text-muted mb-0">@Localizer["Generate a personal credential for publishing packages with your account permissions."]</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-lg-5">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Localizer["New Key Details"]</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">@Localizer["Friendly Name"]</label>
+                            <input asp-for="Name" class="form-control" placeholder="@Localizer["e.g. GitLab CI, My Laptop"]" autofocus />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                            <div class="form-text">@Localizer["A name to help you identify where this key is used."]</div>
+                        </div>
+                        <div class="mb-4">
+                            <label asp-for="ExpirationDays" class="form-label">@Localizer["Expiration"]</label>
+                            <select asp-for="ExpirationDays" class="form-select">
+                                <option value="1">@Localizer["1 Day"]</option>
+                                <option value="7">@Localizer["1 Week"]</option>
+                                <option value="30">@Localizer["1 Month"]</option>
+                                <option value="365">@Localizer["1 Year"]</option>
+                                <option value="3650">@Localizer["10 Years"]</option>
+                                <option value="36500">@Localizer["100 Years"]</option>
+                            </select>
+                            <span asp-validation-for="ExpirationDays" class="text-danger"></span>
+                            <div class="form-text">@Localizer["Keys expire automatically (maximum 100 years). You can adjust the expiration time later without rotating the key."]</div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="align-middle me-1" data-lucide="key-round" aria-hidden="true"></i>
+                                @Localizer["Generate Key"]
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">@Localizer["Cancel"]</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

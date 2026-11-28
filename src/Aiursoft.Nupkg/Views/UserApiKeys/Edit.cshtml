@@ -1,31 +1,85 @@
+@using Aiursoft.WebTools
 @model Aiursoft.Nupkg.Models.UserApiKeysViewModels.EditViewModel
-<h1 class="h3 mb-3">@Localizer["Edit API key"]</h1>
-<div class="row">
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-header"><h2 class="card-title mb-0">@Localizer["Key details"]</h2></div>
-            <div class="card-body">
-                <form method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="mb-3">
-                        <label asp-for="Name" class="form-label"></label>
-                        <input asp-for="Name" class="form-control" autofocus />
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                        <div class="form-text">@Localizer["A name to help you identify where this key is used."]</div>
+
+<div class="container-fluid p-0">
+    <div class="row mb-3">
+        <div class="col-auto">
+            <h1 class="h3 mb-1">@Localizer["Edit API Key"]</h1>
+            <p class="text-muted mb-0">@Localizer["Update the key's friendly name or expiration time without rotating the secret."]</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-lg-5">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Localizer["Key Details"]</h5>
+                </div>
+                <div class="card-body">
+                    <div class="border rounded p-3 mb-3 bg-body-tertiary">
+                        <div class="row g-2 small">
+                            <div class="col-6">
+                                <div class="text-muted">@Localizer["Key Prefix"]</div>
+                                <code>@(Model.KeyPrefix)&#8230;</code>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-muted">@Localizer["Total Calls"]</div>
+                                <div class="fw-semibold">@Model.TotalUses.ToString("N0")</div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-muted">@Localizer["Created"]</div>
+                                <label class="mb-0" data-utc-time="@Model.CreatedAt.ToHtmlDateTime()"></label>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-muted">@Localizer["Last Used"]</div>
+                                @if (Model.LastUsedAt.HasValue)
+                                {
+                                    <label class="mb-0" data-utc-time="@Model.LastUsedAt.Value.ToHtmlDateTime()"></label>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">@Localizer["Never"]</span>
+                                }
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label asp-for="ExpiresAt" class="form-label"></label>
-                        <input asp-for="ExpiresAt" type="datetime-local" asp-format="{0:yyyy-MM-ddTHH:mm:ss}" class="form-control" />
-                        <span asp-validation-for="ExpiresAt" class="text-danger"></span>
-                        <div class="form-text">@Localizer["Enter a UTC time, or leave blank for no expiration."]</div>
-                    </div>
-                    <p class="text-muted small">@Localizer["Saving keeps the same key. Applications do not need to update their credentials."]</p>
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-primary">@Localizer["Save changes"]</button>
-                        <a asp-action="Index" class="btn btn-outline-secondary">@Localizer["Cancel"]</a>
-                    </div>
-                </form>
+
+                    <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">@Localizer["Friendly Name"]</label>
+                            <input asp-for="Name" class="form-control" placeholder="@Localizer["e.g. GitLab CI, My Laptop"]" autofocus />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                            <div class="form-text">@Localizer["A name to help you identify where this key is used."]</div>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="ExpiresAt" class="form-label">@Localizer["Expiration Time"]</label>
+                            <input asp-for="ExpiresAt" type="datetime-local"
+                                   asp-format="{0:yyyy-MM-ddTHH:mm:ss}"
+                                   class="form-control" data-utc-input data-quick-expire-target />
+                            <span asp-validation-for="ExpiresAt" class="text-danger"></span>
+                            <partial name="_UtcInput" />
+                            <div class="d-flex flex-wrap gap-1 mb-2">
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-set-expire-days="30">@Localizer["+30 Days"]</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-set-expire-days="365">@Localizer["+1 Year"]</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-set-expire-days="3650">@Localizer["+10 Years"]</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-set-expire-days="36500">@Localizer["+100 Years"]</button>
+                            </div>
+                            <div class="form-text">@Localizer["Expiration is required and cannot exceed 100 years from now."]</div>
+                        </div>
+                        <p class="text-muted small mb-3">@Localizer["Saving keeps the same key. Applications do not need to update their credentials."]</p>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">@Localizer["Save Changes"]</button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">@Localizer["Cancel"]</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+@* ReSharper disable once Razor.SectionNotResolved *@
+@section scripts {
+    <script src="~/scripts/api-keys.js" asp-append-version="true"></script>
+}
