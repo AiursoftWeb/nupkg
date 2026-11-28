@@ -1,15 +1,204 @@
+@using Aiursoft.WebTools
 @model Aiursoft.Nupkg.Models.UserApiKeysViewModels.UsageViewModel
-@* ReSharper disable once Razor.SectionNotResolved *@
-@section styles { <link rel="stylesheet" href="~/styles/packages.css" asp-append-version="true" /> }
-<div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3"><h1 class="h3 mb-0 text-break">@Model.Key.Name @if (Model.Key.IsExpired) { <span class="badge bg-danger">@Localizer["Expired"]</span> }</h1><a asp-action="Index" class="btn btn-outline-secondary">@Localizer["API Keys"]</a></div>
-@if (!Model.CanPublish)
-{
-    <div class="alert alert-info"><div class="alert-message">@Localizer["Publishing permission is required. Ask an administrator to grant it to your account."]</div></div>
+@{
+    var now = DateTime.UtcNow;
+    var isExpired = Model.Key.ExpiresAt.HasValue && Model.Key.ExpiresAt <= now;
+    var isExpiringSoon = !isExpired && Model.Key.ExpiresAt.HasValue && Model.Key.ExpiresAt <= now.AddDays(14);
 }
-@if (Model.RawKey != null)
-{
-    <div class="card"><div class="card-body"><h2 class="h5">@Localizer["Your new key"]</h2><p class="text-muted">@Localizer["Save this key now. It is shown only once."]</p><div class="package-command"><div class="d-flex justify-content-end"><button type="button" class="btn btn-sm btn-outline-secondary copy-command">@Localizer["Copy"]</button></div><pre class="bg-body-tertiary text-body border rounded p-3 mt-2 mb-0"><code id="new-api-key" tabindex="-1">@Model.RawKey</code></pre><p class="copy-status small mb-0 mt-1" role="status"></p></div></div></div>
-}
-<div class="card"><div class="card-body"><h2 class="h5">@Localizer["Publish with NuGet"]</h2><p class="text-muted">@Localizer["Replace YOUR_API_KEY with your saved key."]</p><div class="package-command"><div class="d-flex justify-content-end"><button type="button" class="btn btn-sm btn-outline-secondary copy-command">@Localizer["Copy"]</button></div><pre class="bg-body-tertiary text-body border rounded p-3 mt-2 mb-0"><code tabindex="-1">dotnet nuget push package.nupkg --source @Model.ServiceIndexUrl --api-key YOUR_API_KEY</code></pre><p class="copy-status small mb-0 mt-1" role="status"></p></div></div></div>
+
 @* ReSharper disable once Razor.SectionNotResolved *@
-@section scripts { <partial name="_PackageCopy" /> }
+@section styles {
+    <link rel="stylesheet" href="~/styles/packages.css" asp-append-version="true" />
+}
+
+<div class="container-fluid p-0">
+    <div class="row mb-3 align-items-center g-2">
+        <div class="col">
+            <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                <h1 class="h3 mb-0 text-break">@Model.Key.Name</h1>
+                @if (isExpired)
+                {
+                    <span class="badge bg-danger">@Localizer["Expired"]</span>
+                }
+                else if (isExpiringSoon)
+                {
+                    <span class="badge bg-warning text-dark">@Localizer["Expiring Soon"]</span>
+                }
+                else
+                {
+                    <span class="badge bg-success">@Localizer["Active"]</span>
+                }
+            </div>
+            <p class="text-muted mb-0">
+                @Localizer["Use this key to authenticate NuGet CLI or CI pipelines with this package registry."]
+            </p>
+        </div>
+        <div class="col-auto d-flex flex-wrap gap-2">
+            <a asp-action="Edit" asp-route-id="@Model.Key.Id" class="btn btn-outline-secondary">
+                <i class="align-middle me-1" data-lucide="edit" aria-hidden="true"></i>
+                @Localizer["Edit"]
+            </a>
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                <i class="align-middle me-1" data-lucide="arrow-left" aria-hidden="true"></i>
+                @Localizer["Back to API Keys"]
+            </a>
+        </div>
+    </div>
+
+    @if (!Model.CanPublish)
+    {
+        <div class="alert alert-warning" role="alert">
+            <div class="alert-icon">
+                <i data-lucide="alert-triangle" aria-hidden="true"></i>
+            </div>
+            <div class="alert-message">
+                @Localizer["Publishing permission is required. Ask an administrator to grant it to your account."]
+            </div>
+        </div>
+    }
+
+    @if (Model.RawKey != null)
+    {
+        <div class="alert alert-success" role="status">
+            <div class="alert-icon">
+                <i data-lucide="check-circle" aria-hidden="true"></i>
+            </div>
+            <div class="alert-message">
+                <strong>@Localizer["API Key Created!"]</strong>
+                @Localizer["Please copy your new API key now. You won't be able to see it again!"]
+            </div>
+        </div>
+
+        <div class="card border-success mb-3">
+            <div class="card-header d-flex align-items-center justify-content-between gap-2">
+                <h5 class="card-title mb-0">@Localizer["Your New API Key"]</h5>
+                <span class="badge bg-success">@Localizer["Shown Once"]</span>
+            </div>
+            <div class="card-body">
+                <div class="package-command">
+                    <div class="d-flex justify-content-between align-items-center gap-2">
+                        <span class="small text-muted">@Localizer["Store this secret in your password manager or CI secrets vault."]</span>
+                        <button type="button" class="btn btn-sm btn-success copy-command flex-shrink-0">
+                            <i class="align-middle me-1" data-lucide="copy" aria-hidden="true"></i>
+                            @Localizer["Copy"]
+                        </button>
+                    </div>
+                    <pre class="bg-body-tertiary text-body border rounded p-3 mt-2 mb-0"><code id="new-api-key" tabindex="-1">@Model.RawKey</code></pre>
+                    <p class="copy-status small mb-0 mt-1" role="status"></p>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="row g-3 small">
+                <div class="col-6 col-md-3">
+                    <div class="text-muted mb-1">@Localizer["Key Prefix"]</div>
+                    <code>@(Model.Key.KeyPrefix)&#8230;</code>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="text-muted mb-1">@Localizer["Expires"]</div>
+                    @if (Model.Key.ExpiresAt.HasValue)
+                    {
+                        <label class="mb-0" data-utc-time="@Model.Key.ExpiresAt.Value.ToHtmlDateTime()"></label>
+                    }
+                    else
+                    {
+                        <span>@Localizer["No expiration"]</span>
+                    }
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="text-muted mb-1">@Localizer["Last Used"]</div>
+                    @if (Model.Key.LastUsedAt.HasValue)
+                    {
+                        <label class="mb-0" data-utc-time="@Model.Key.LastUsedAt.Value.ToHtmlDateTime()"></label>
+                    }
+                    else
+                    {
+                        <span class="text-muted">@Localizer["Never"]</span>
+                    }
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="text-muted mb-1">@Localizer["Usage"]</div>
+                    <div class="fw-semibold">
+                        @string.Format(@Localizer["{0} calls"].Value, Model.Key.TotalUses.ToString("N0"))
+                        &middot;
+                        @string.Format(@Localizer["{0} publications"].Value, Model.Key.PublishedPackagesCount.ToString("N0"))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-12">
+            <div class="card mb-0">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Localizer["Publish with NuGet"]</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-2">@Localizer["Replace YOUR_API_KEY with your saved key."]</p>
+                    <div class="package-command">
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-sm btn-outline-secondary copy-command">
+                                <i class="align-middle me-1" data-lucide="copy" aria-hidden="true"></i>
+                                @Localizer["Copy"]
+                            </button>
+                        </div>
+                        <pre class="bg-body-tertiary text-body border rounded p-3 mt-2 mb-0"><code tabindex="-1">dotnet nuget push package.nupkg --source @Model.ServiceIndexUrl --api-key YOUR_API_KEY</code></pre>
+                        <p class="copy-status small mb-0 mt-1" role="status"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card h-100 mb-0">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Localizer["Use in CI / Environment Variables"]</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-2">@Localizer["Store the key as a masked CI secret instead of committing it to source control."]</p>
+                    <div class="package-command">
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-sm btn-outline-secondary copy-command">
+                                <i class="align-middle me-1" data-lucide="copy" aria-hidden="true"></i>
+                                @Localizer["Copy"]
+                            </button>
+                        </div>
+                        <pre class="bg-body-tertiary text-body border rounded p-3 mt-2 mb-0"><code tabindex="-1">export NUPKG_API_KEY="YOUR_API_KEY"
+dotnet nuget push *.nupkg --source @Model.ServiceIndexUrl --api-key "$NUPKG_API_KEY" --skip-duplicate</code></pre>
+                        <p class="copy-status small mb-0 mt-1" role="status"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card h-100 mb-0">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">@Localizer["Register NuGet Source"]</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-2">@Localizer["Add this registry once so your local SDK can restore packages from it."]</p>
+                    <div class="package-command">
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-sm btn-outline-secondary copy-command">
+                                <i class="align-middle me-1" data-lucide="copy" aria-hidden="true"></i>
+                                @Localizer["Copy"]
+                            </button>
+                        </div>
+                        <pre class="bg-body-tertiary text-body border rounded p-3 mt-2 mb-0"><code tabindex="-1">dotnet nuget add source @Model.ServiceIndexUrl --name Nupkg</code></pre>
+                        <p class="copy-status small mb-0 mt-1" role="status"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* ReSharper disable once Razor.SectionNotResolved *@
+@section scripts {
+    <partial name="_PackageCopy" />
+}

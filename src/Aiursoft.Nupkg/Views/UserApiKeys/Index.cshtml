@@ -2,94 +2,298 @@
 @model Aiursoft.Nupkg.Models.UserApiKeysViewModels.IndexViewModel
 @{
     var now = DateTime.UtcNow;
-    var active = Model.Keys.Count(k => !k.ExpiresAt.HasValue || k.ExpiresAt > now);
+    var soonThreshold = now.AddDays(14);
+    var activeCount = Model.Keys.Count(k => !k.ExpiresAt.HasValue || k.ExpiresAt > now);
+    var expiringSoonCount = Model.Keys.Count(k => k.ExpiresAt.HasValue && k.ExpiresAt > now && k.ExpiresAt <= soonThreshold);
+    var expiredCount = Model.Keys.Count - activeCount;
+    var totalCalls = Model.Keys.Sum(k => k.TotalUses);
+    var totalPublications = Model.Keys.Sum(k => k.PublishedPackagesCount);
 }
-<div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
-    <div>
-        <h1 class="h3 mb-1">@Localizer["API Keys"]</h1>
-        <p class="text-muted mb-0">@Localizer["Manage publishing credentials and see how they are used."]</p>
+
+<div class="container-fluid p-0">
+    <div class="row mb-3 align-items-center g-2">
+        <div class="col">
+            <h1 class="h3 mb-1">@Localizer["API Keys"]</h1>
+            <p class="text-muted mb-0">@Localizer["Manage publishing credentials, monitor usage, and control key expiration."]</p>
+        </div>
+        <div class="col-auto">
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="align-middle me-1" data-lucide="plus" aria-hidden="true"></i>
+                @Localizer["Create New Key"]
+            </a>
+        </div>
     </div>
-    <a asp-action="Create" class="btn btn-primary"><i data-lucide="plus" class="me-1" aria-hidden="true"></i>@Localizer["New key"]</a>
-</div>
-@if (TempData["SuccessMessage"] is string message)
-{
-    <div class="alert alert-success" role="status"><div class="alert-message">
-        @if (message == "API key updated.") { @Localizer["API key updated."] }
-        else { @Localizer["API key revoked."] }
-    </div></div>
-}
-<div class="row g-3 mb-3">
-    <div class="col-6 col-lg-3"><div class="card h-100 mb-0"><div class="card-body"><div class="text-muted">@Localizer["Active keys"]</div><div class="h2 mb-0">@active</div></div></div></div>
-    <div class="col-6 col-lg-3"><div class="card h-100 mb-0"><div class="card-body"><div class="text-muted">@Localizer["Expired keys"]</div><div class="h2 mb-0">@(Model.Keys.Count - active)</div></div></div></div>
-    <div class="col-6 col-lg-3"><div class="card h-100 mb-0"><div class="card-body"><div class="text-muted">@Localizer["Authenticated requests"]</div><div class="h2 mb-0">@Model.Keys.Sum(k => k.TotalUses)</div></div></div></div>
-    <div class="col-6 col-lg-3"><div class="card h-100 mb-0"><div class="card-body"><div class="text-muted">@Localizer["Successful publications"]</div><div class="h2 mb-0">@Model.Keys.Sum(k => k.PublishedPackagesCount)</div></div></div></div>
-</div>
-<div class="card">
-    <div class="card-header"><h2 class="card-title mb-0">@Localizer["Your API keys"]</h2></div>
-    @if (Model.Keys.Count == 0)
+
+    @if (TempData["SuccessMessage"] is string message)
     {
-        <div class="card-body p-4 text-center text-muted">
-            <i data-lucide="key-round" class="d-block mx-auto mb-3" aria-hidden="true"></i>
-            <h2 class="h5">@Localizer["Your first release starts here"]</h2>
-            <p>@Localizer["Create a personal key to publish packages with your account permissions."]</p>
-            <a asp-action="Create" class="btn btn-outline-primary">@Localizer["Create your first key"]</a>
+        <div class="alert alert-success alert-dismissible" role="status">
+            <div class="alert-icon">
+                <i data-lucide="check-circle" aria-hidden="true"></i>
+            </div>
+            <div class="alert-message">
+                @if (message == "API key updated.") { @Localizer["API key updated."] }
+                else { @Localizer["API key revoked."] }
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="@Localizer["Close"]"></button>
         </div>
     }
-    else
-    {
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0" style="min-width: 1050px;">
-                <thead><tr>
-                    <th scope="col">@Localizer["Name / key"]</th>
-                    <th scope="col">@Localizer["Status / expiration"]</th>
-                    <th scope="col">@Localizer["Last used"]</th>
-                    <th scope="col" class="text-end">@Localizer["Requests"]</th>
-                    <th scope="col" class="text-end">@Localizer["Publications"]</th>
-                    <th scope="col">@Localizer["Last published package"]</th>
-                    <th scope="col" class="text-end">@Localizer["Actions"]</th>
-                </tr></thead>
-                <tbody>
-                @foreach (var key in Model.Keys)
+
+    <div class="row g-3 mb-3">
+        <div class="col-6 col-xl-3">
+            <div class="card h-100 mb-0">
+                <div class="card-body">
+                    <div class="d-flex align-items-start justify-content-between gap-2">
+                        <div>
+                            <div class="text-muted small mb-1">@Localizer["Active Keys"]</div>
+                            <div class="h2 mb-0">@activeCount</div>
+                        </div>
+                        <div class="stat stat-sm flex-shrink-0">
+                            <i data-lucide="key-round" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-xl-3">
+            <div class="card h-100 mb-0">
+                <div class="card-body">
+                    <div class="d-flex align-items-start justify-content-between gap-2">
+                        <div>
+                            <div class="text-muted small mb-1">@Localizer["Expired Keys"]</div>
+                            <div class="h2 mb-0 @(expiredCount > 0 ? "text-danger" : string.Empty)">@expiredCount</div>
+                        </div>
+                        <div class="stat stat-sm flex-shrink-0">
+                            <i data-lucide="clock" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-xl-3">
+            <div class="card h-100 mb-0">
+                <div class="card-body">
+                    <div class="d-flex align-items-start justify-content-between gap-2">
+                        <div>
+                            <div class="text-muted small mb-1">@Localizer["Total Calls"]</div>
+                            <div class="h2 mb-0">@totalCalls.ToString("N0")</div>
+                        </div>
+                        <div class="stat stat-sm flex-shrink-0">
+                            <i data-lucide="activity" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-xl-3">
+            <div class="card h-100 mb-0">
+                <div class="card-body">
+                    <div class="d-flex align-items-start justify-content-between gap-2">
+                        <div>
+                            <div class="text-muted small mb-1">@Localizer["Published Packages"]</div>
+                            <div class="h2 mb-0">@totalPublications.ToString("N0")</div>
+                        </div>
+                        <div class="stat stat-sm flex-shrink-0">
+                            <i data-lucide="package" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+                <h5 class="card-title mb-0">
+                    @Localizer["Your API Keys"]
+                    <span class="badge bg-secondary ms-1" id="api-keys-visible-count">@Model.Keys.Count</span>
+                </h5>
+                @if (Model.Keys.Count > 0)
                 {
-                    <tr>
-                        <th scope="row" class="text-break">
-                            <div>@key.Name</div><code class="fw-normal">@(key.KeyPrefix)…</code>
-                            <div class="small text-muted fw-normal">@Localizer["Created"] <label class="mb-0" data-utc-time="@key.CreatedAt.ToHtmlDateTime()"></label></div>
-                        </th>
-                        <td>
-                            @if (key.ExpiresAt.HasValue && key.ExpiresAt <= now) { <span class="badge bg-danger">@Localizer["Expired"]</span> }
-                            else { <span class="badge bg-success">@Localizer["Active"]</span> }
-                            <div class="small text-muted mt-1">
-                                @if (key.ExpiresAt.HasValue) { <label class="mb-0" data-utc-time="@key.ExpiresAt.Value.ToHtmlDateTime()"></label> }
-                                else { @Localizer["No expiration"] }
-                            </div>
-                        </td>
-                        <td class="small">
-                            @if (key.LastUsedAt.HasValue) { <label class="mb-0" data-utc-time="@key.LastUsedAt.Value.ToHtmlDateTime()"></label> }
-                            else { <span class="text-muted">@Localizer["Never"]</span> }
-                        </td>
-                        <td class="text-end">@key.TotalUses</td>
-                        <td class="text-end">@key.PublishedPackagesCount</td>
-                        <td class="text-break">
-                            @if (key.LastPublishedAt.HasValue)
-                            {
-                                <div>@key.LastPublishedPackage <span class="badge bg-secondary">@key.LastPublishedVersion</span></div>
-                                <label class="small text-muted mb-0" data-utc-time="@key.LastPublishedAt.Value.ToHtmlDateTime()"></label>
-                            }
-                            else { <span class="text-muted">@Localizer["No publications recorded"]</span> }
-                        </td>
-                        <td>
-                            <div class="d-flex justify-content-end flex-wrap gap-1">
-                                <a asp-action="Usage" asp-route-id="@key.Id" class="btn btn-sm btn-outline-primary">@Localizer["Use"]</a>
-                                <a asp-action="Edit" asp-route-id="@key.Id" class="btn btn-sm btn-outline-secondary">@Localizer["Edit"]</a>
-                                <a asp-action="Delete" asp-route-id="@key.Id" class="btn btn-sm btn-outline-danger">@Localizer["Revoke"]</a>
-                            </div>
-                        </td>
-                    </tr>
+                    <div class="d-flex flex-wrap align-items-center gap-2">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="@Localizer["Filter by status"]">
+                            <button type="button" class="btn btn-outline-secondary active" data-key-filter="all" aria-pressed="true">
+                                @Localizer["All"]
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" data-key-filter="active" aria-pressed="false">
+                                @Localizer["Active"]
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" data-key-filter="expiring" aria-pressed="false">
+                                @Localizer["Expiring Soon"]
+                                @if (expiringSoonCount > 0)
+                                {
+                                    <span class="badge bg-warning text-dark ms-1">@expiringSoonCount</span>
+                                }
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" data-key-filter="expired" aria-pressed="false">
+                                @Localizer["Expired"]
+                                @if (expiredCount > 0)
+                                {
+                                    <span class="badge bg-danger ms-1">@expiredCount</span>
+                                }
+                            </button>
+                        </div>
+                        <div class="input-group input-group-sm" style="width: 220px;">
+                            <span class="input-group-text">
+                                <i data-lucide="search" style="width: 14px; height: 14px;" aria-hidden="true"></i>
+                            </span>
+                            <input type="search" id="api-keys-search" class="form-control"
+                                   placeholder="@Localizer["Search name or package..."]"
+                                   aria-label="@Localizer["Search API keys"]" />
+                        </div>
+                        <select id="api-keys-sort" class="form-select form-select-sm" style="width: auto;"
+                                aria-label="@Localizer["Sort API keys"]">
+                            <option value="created-desc">@Localizer["Newest First"]</option>
+                            <option value="expires-asc">@Localizer["Expiring Soonest"]</option>
+                            <option value="calls-desc">@Localizer["Most Calls"]</option>
+                            <option value="used-desc">@Localizer["Recently Used"]</option>
+                        </select>
+                    </div>
                 }
-                </tbody>
-            </table>
+            </div>
         </div>
-    }
-    <div class="card-footer small text-muted">@Localizer["Statistics cover existing keys since usage tracking was enabled. Requests count successful authentications; publications count newly stored package versions."]</div>
+
+        @if (Model.Keys.Count == 0)
+        {
+            <div class="card-body py-5 text-center">
+                <div class="stat mx-auto mb-3">
+                    <i data-lucide="key-round" aria-hidden="true"></i>
+                </div>
+                <h2 class="h5 mb-2">@Localizer["Your first release starts here"]</h2>
+                <p class="text-muted mb-3">@Localizer["Create a personal API key to publish NuGet packages using your account permissions."]</p>
+                <a asp-action="Create" class="btn btn-primary">
+                    <i class="align-middle me-1" data-lucide="plus" aria-hidden="true"></i>
+                    @Localizer["Create Your First Key"]
+                </a>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0" id="api-keys-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">@Localizer["Name / Key"]</th>
+                            <th scope="col">@Localizer["Status / Expires"]</th>
+                            <th scope="col">@Localizer["Last Used"]</th>
+                            <th scope="col" class="text-end">@Localizer["Total Calls"]</th>
+                            <th scope="col" class="text-end">@Localizer["Publications"]</th>
+                            <th scope="col">@Localizer["Last Published Package"]</th>
+                            <th scope="col" class="text-end">@Localizer["Actions"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var key in Model.Keys)
+                        {
+                            var isExpired = key.ExpiresAt.HasValue && key.ExpiresAt <= now;
+                            var isExpiringSoon = !isExpired && key.ExpiresAt.HasValue && key.ExpiresAt <= soonThreshold;
+                            var status = isExpired ? "expired" : isExpiringSoon ? "expiring" : "active";
+                            var searchHaystack = $"{key.Name} {key.KeyPrefix} {key.LastPublishedPackage} {key.LastPublishedVersion}";
+
+                            <tr data-key-row
+                                data-status="@status"
+                                data-search="@searchHaystack"
+                                data-created="@key.CreatedAt.Ticks"
+                                data-expires="@(key.ExpiresAt?.Ticks ?? long.MaxValue)"
+                                data-calls="@key.TotalUses"
+                                data-used="@(key.LastUsedAt?.Ticks ?? 0)">
+                                <th scope="row" class="text-break">
+                                    <div class="fw-semibold">@key.Name</div>
+                                    <div class="d-flex flex-wrap align-items-center gap-2 small mt-1 fw-normal">
+                                        <code>@(key.KeyPrefix)&#8230;</code>
+                                        <span class="text-muted">
+                                            @Localizer["Created"] <label class="mb-0" data-utc-time="@key.CreatedAt.ToHtmlDateTime()"></label>
+                                        </span>
+                                    </div>
+                                </th>
+                                <td class="text-nowrap">
+                                    @if (isExpired)
+                                    {
+                                        <span class="badge bg-danger">@Localizer["Expired"]</span>
+                                    }
+                                    else if (isExpiringSoon)
+                                    {
+                                        <span class="badge bg-warning text-dark">@Localizer["Expiring Soon"]</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-success">@Localizer["Active"]</span>
+                                    }
+                                    <div class="small text-muted mt-1">
+                                        @if (key.ExpiresAt.HasValue)
+                                        {
+                                            <label class="mb-0" data-utc-time="@key.ExpiresAt.Value.ToHtmlDateTime()"></label>
+                                        }
+                                        else
+                                        {
+                                            @Localizer["No expiration"]
+                                        }
+                                    </div>
+                                </td>
+                                <td class="small text-nowrap">
+                                    @if (key.LastUsedAt.HasValue)
+                                    {
+                                        <label class="mb-0" data-utc-time="@key.LastUsedAt.Value.ToHtmlDateTime()"></label>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">@Localizer["Never"]</span>
+                                    }
+                                </td>
+                                <td class="text-end text-nowrap">@key.TotalUses.ToString("N0")</td>
+                                <td class="text-end text-nowrap">@key.PublishedPackagesCount.ToString("N0")</td>
+                                <td class="text-break">
+                                    @if (key.LastPublishedAt.HasValue)
+                                    {
+                                        <div>
+                                            <span>@key.LastPublishedPackage</span>
+                                            <span class="badge bg-secondary ms-1">@key.LastPublishedVersion</span>
+                                        </div>
+                                        <label class="small text-muted mb-0" data-utc-time="@key.LastPublishedAt.Value.ToHtmlDateTime()"></label>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">@Localizer["No publications recorded"]</span>
+                                    }
+                                </td>
+                                <td class="text-end text-nowrap">
+                                    <div class="btn-group">
+                                        <a asp-action="Usage" asp-route-id="@key.Id" class="btn btn-sm btn-outline-primary">
+                                            <i class="align-middle me-1" data-lucide="terminal" aria-hidden="true"></i>
+                                            @Localizer["Use"]
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@key.Id" class="btn btn-sm btn-outline-secondary">
+                                            <i class="align-middle me-1" data-lucide="edit" aria-hidden="true"></i>
+                                            @Localizer["Edit"]
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@key.Id" class="btn btn-sm btn-outline-danger"
+                                           title="@Localizer["Revoke"]" aria-label="@Localizer["Revoke"]">
+                                            <i class="align-middle" data-lucide="trash-2" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        <tr id="api-keys-empty-filter" hidden>
+                            <td colspan="7" class="text-center text-muted py-4">
+                                @Localizer["No API keys match your current filter."]
+                                <button type="button" class="btn btn-sm btn-outline-secondary ms-2" id="api-keys-clear-filters">
+                                    @Localizer["Clear Filters"]
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        <div class="card-footer small text-muted">
+            @Localizer["Create separate keys per machine or pipeline and rotate them regularly. You can adjust any key's expiration time (up to 100 years) without changing the secret."]
+        </div>
+    </div>
 </div>
+
+@* ReSharper disable once Razor.SectionNotResolved *@
+@section scripts {
+    <script src="~/scripts/api-keys.js" asp-append-version="true"></script>
+}
